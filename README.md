@@ -1,1 +1,29 @@
 # coffeeTimer
+
+Goal: create a better coffee timer, initially for personal use.
+
+Stretch-Goal: be able to pull data from bluetooth coffee scales (like Acaia) to actually agregate the brewing data.
+
+Super-Stretch-Goal: create a web app that allows users to connect with their favorite baristas and make coffee the way the pros do, by mimicking their brew-guides.
+
+## Brew Timer
+
+- [ ] Start, Stop
+    - [ ] Add styling so it actually looks like a minute timer "0:00"
+- [ ] Events
+    - [ ] Be able to name events (e.g. Bloom, Pour, Pulse, Stir, Drip, etc...)
+    - [ ] Algorithmically guess events (first is bloom)
+    - [ ] Until Bluetooth functionality, be able to input volume and create a graph
+- [ ] Brewer Type (e.g. V60, Kalita, Chemex, etc...)
+- [ ] Input coffee (for now just a text input)
+- [ ] Export brew (make it pretty for people to export ☺️)
+
+## Coffee Database
+
+- [ ] User Save
+- [ ] Save Brews
+- [ ] Save Coffees
+    - Issues:
+        - Same coffee from different roasters
+        - Same Coffee different **roasts**
+        - Social element
