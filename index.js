@@ -52,17 +52,36 @@ function infoSubmit() {
   let ratio = document.getElementById("ratio").value;
   let dose = document.getElementById("dose").value;
   let coffee = document.getElementById("coffee").value;
-  let totalVolume = ratio * dose;
-  console.log(totalVolume);
+  let totalVolume = (ratio * dose).toFixed(1);
   
-  // this removes the <input> elements and <button> but not completely. Needs more work
-  document.getElementById("ratio").style.visibility = "hidden";
-  document.getElementById("dose").style.visibility = "hidden";
-  document.getElementById("coffee").style.visibility = "hidden";
-  document.getElementById("infoSubmit").style.visibility = "hidden";
-  
-  // shows brew recipe content on submit
-  document.getElementById('coffeeYourBrewing').innerText = coffee;
-  document.getElementById('volume').innerText = totalVolume;
-  document.getElementById("ratio1").innerText = ratio;
+  // Remove Submit Button
+  let infoSubmit = document.getElementById('infoSubmit');
+  infoSubmit.remove();
+
+  // Make "Card" for Brew Details
+    // Ratio
+  let ratioAnchor = document.getElementById("ratio");
+  let ratioSpan = document.createElement("span");
+  ratioSpan.innerHTML = "Ratio 1:"+ratio;
+  ratioAnchor.parentNode.replaceChild(ratioSpan, ratioAnchor);
+    // Dose
+  let doseAnchor = document.getElementById('dose');
+  let doseSpan =  document.createElement("span");
+  doseSpan.innerHTML = "Dose: "+dose;
+  doseAnchor.parentNode.replaceChild(doseSpan, doseAnchor);
+
+    // Coffee
+  let coffeeAnchor = document.getElementById('coffee');
+  let coffeeSpan = document.createElement('span');
+  coffeeSpan.innerHTML = "Coffee: "+coffee;
+  coffeeAnchor.parentNode.replaceChild(coffeeSpan, coffeeAnchor);
+
+    // Target Volume
+  let cardParent = document.getElementById("recipeCard");
+  let targetSpan = document.createElement('span');
+  targetSpan.id = "targetVolume";
+  totalVolume = document.createTextNode("Target Volume: "+totalVolume+"g");
+  targetSpan.appendChild(totalVolume);
+  cardParent.append(targetSpan);
+
 }
