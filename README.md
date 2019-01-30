@@ -14,8 +14,9 @@ Super-Stretch-Goal: create a web app that allows users to connect with their fav
     - [ ] Be able to name events (e.g. Bloom, Pour, Pulse, Stir, Drip, etc...)
     - [ ] Algorithmically guess events (first is bloom)
     - [ ] Until Bluetooth functionality, be able to input volume and create a graph
-- [ ] Brewer Type (e.g. V60, Kalita, Chemex, etc...)
-- [ ] Input coffee (for now just a text input)
+- [x] Brewer Type (e.g. V60, Kalita, Chemex, etc...)
+- [x] Input coffee (for now just a text input)
+- [ ] Add Optional information: roaster, producer, MASL
 - [ ] Export brew (make it pretty for people to export ☺️)
 
 ## Coffee Database
@@ -27,3 +28,7 @@ Super-Stretch-Goal: create a web app that allows users to connect with their fav
         - Same coffee from different roasters
         - Same Coffee different **roasts**
         - Social element
+
+## Design
+
+- [ ] Don't do, until you are happy with FUNCTIONALITY. This is about self-restraint, Andy.

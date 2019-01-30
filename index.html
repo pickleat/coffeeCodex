@@ -13,13 +13,20 @@
 <div>Time: <span id="timer">0:0</span></div>
 <div><span id="laps"></span><div>
   <div id="recipeCard">
-    <input id="coffee" placeholder="enter coffee you're brewing"></input><br>
-    <input id="dose" placeholder="enter your dose"></input><br>
-    <input id="ratio" placeholder="enter ratio between 14 and 18" ></input><br>
-    
-    
-<button id="infoSubmit" onclick="infoSubmit()">Submit</button>
-</div>
+    Enter Your Coffee Info and we'll make a recipe card for you:
+    <input id="coffee" placeholder="enter coffee you're brewing"><br></input>
+    <input id="dose" placeholder="enter your dose"><br></input>
+    <input id="ratio" placeholder="enter ratio between 14 and 18"><br></input>
+    <label id="brewerLabel" for="brewer">Choose a brewing device:<br></label>
+      <select id="brewer">
+        <option value="v60">v60</option>
+        <option value="Kalita Wave">Kalita Wave</option>
+        <option value="Chemex">Chemex</option>
+        <option value="Aeropress">Aeropress</option>
+        <option value="December Dripper">December Dripper</option>
+        <br></select> 
+    <button id="infoSubmit" onclick="infoSubmit()">Submit</button>
+  </div>
 <!-- <div id="recipe">
   <span id="coffeeYourBrewing"></span><br>
   <span id="Targetvolume"></span><br>
