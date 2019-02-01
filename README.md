@@ -9,7 +9,7 @@ Super-Stretch-Goal: create a web app that allows users to connect with their fav
 ## Brew Timer
 
 - [ ] Start, Stop
-    - [ ] Add styling so it actually looks like a minute timer "0:00"
+    - [ ] Add styling so it actually looks like a minute timer "0:00" // Consider using a library, (like moment.js).
 - [ ] Events
     - [ ] Be able to name events (e.g. Bloom, Pour, Pulse, Stir, Drip, etc...)
     - [ ] Algorithmically guess events (first is bloom)

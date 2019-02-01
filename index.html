@@ -4,16 +4,20 @@
     <link rel="icon" href="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/mozilla/36/hot-beverage_2615.png">
     <link stylesheet="main.css" type="css">
     <script  src="index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
 </head>
+<html>
 <header>Brew Timer by <a href="https://twitter.com/pickleat">@pickleat</a></header>
+<body>
 <button onclick="begin()" id="start">Start</button>
 <button onclick="stop()" id="stop">Stop</button><br>
 <button onclick="reset()" id="reset">Reset</button>
 <button id="lap" onclick="lap()">Event</button>
-<div>Time: <span id="timer">0:0</span></div>
+<div>Time: <span id="timer">0:00</span></div>
 <div><span id="laps"></span><div>
+  <div>
   <div id="recipeCard">
-    Enter Your Coffee Info and we'll make a recipe card for you:
+    <span id="recipeHeader">Enter Your Coffee Info and we'll make a recipe card:</span>
     <input id="coffee" placeholder="enter coffee you're brewing"><br></input>
     <input id="dose" placeholder="enter your dose"><br></input>
     <input id="ratio" placeholder="enter ratio between 14 and 18"><br></input>
@@ -27,8 +31,7 @@
         <br></select> 
     <button id="infoSubmit" onclick="infoSubmit()">Submit</button>
   </div>
-<!-- <div id="recipe">
-  <span id="coffeeYourBrewing"></span><br>
-  <span id="Targetvolume"></span><br>
-  <span id="ratio1"></span><br>
-  </div> -->
+  <canvas id="myChart"></canvas>
+</div>
+</body>
+</html>

@@ -35,11 +35,12 @@ function exit() {
   console.log('kill button')
   location.reload(true)
 }
-var lapNum = 0;
+var eventNum = 0;
 function lap() {
-  lapNum += 1;
-  console.log(timerMinutes+":"+timerSeconds);
-  var lap = "Pour "+lapNum+" - "+timerMinutes + ":" + timerSeconds+"\n";
+  eventNum += 1;
+  let input = document.createElement("input");
+  input.id = `event${eventNum}`;
+  var lap = `Event ${eventNum} - ${timerMinutes}:${timerSeconds}\n`;
   document.getElementById('laps').innerText += lap;
 }
 
@@ -100,7 +101,32 @@ function infoSubmit() {
     // Remove Submit Button
   let infoSubmit = document.getElementById('infoSubmit');
   let lable = document.getElementById("brewerLabel");
+  let recipeHeader = document.getElementById('recipeHeader');
   infoSubmit.remove();
   brewingDevice.remove();
   lable.remove();
+  recipeHeader.remove();
+
 }
+
+// Planning on adding a chart that follows your brewing progress. That's 
+// addEventListener
+// var ctx = document.getElementById('myChart');
+// var chart = new Chart(ctx, {
+//     // The type of chart we want to create
+//     type: 'line',
+
+//     // The data for our dataset
+//     data: {
+//         labels: ["January", "February", "March", "April", "May", "June", "July"],
+//         datasets: [{
+//             label: "My First dataset",
+//             backgroundColor: 'rgb(255, 99, 132)',
+//             borderColor: 'rgb(255, 99, 132)',
+//             data: [0, 10, 5, 2, 20, 30, 45],
+//         }]
+//     },
+
+//     // Configuration options go here
+//     options: {}
+// });
