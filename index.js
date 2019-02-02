@@ -1,7 +1,7 @@
 var timerSeconds = 0;
 var timerMinutes = 0;
 var timer; 
-
+var labels = []; 
 function begin() {
   timer = setInterval(start, 1000);
 }
@@ -31,10 +31,10 @@ function stop() {
   clearInterval(timer);
   document.getElementById('start').disabled = false;
 }
-function exit() {
-  console.log('kill button')
-  location.reload(true)
-}
+// function exit() {
+//   console.log('kill button')
+//   location.reload(true)
+// }
 var eventNum = 0;
 function lap() {
   eventNum += 1;
@@ -46,7 +46,10 @@ function lap() {
 
 function display(secs, mins) {
   var clock = mins + ":" + secs;
+  labels.push(clock);
   document.getElementById('timer').innerText = clock;
+  console.log(labels);
+  chartEnter(labels);
 }
 
 function infoSubmit() {
@@ -110,23 +113,28 @@ function infoSubmit() {
 }
 
 // Planning on adding a chart that follows your brewing progress. That's 
-// addEventListener
-// var ctx = document.getElementById('myChart');
-// var chart = new Chart(ctx, {
-//     // The type of chart we want to create
-//     type: 'line',
+function chartEnter(labels) {
+var ctx = document.getElementById('myChart');
+// var chartButton = document.getElementById('chartButton');
+// chartButton.remove();
+var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'line',
 
-//     // The data for our dataset
-//     data: {
-//         labels: ["January", "February", "March", "April", "May", "June", "July"],
-//         datasets: [{
-//             label: "My First dataset",
-//             backgroundColor: 'rgb(255, 99, 132)',
-//             borderColor: 'rgb(255, 99, 132)',
-//             data: [0, 10, 5, 2, 20, 30, 45],
-//         }]
-//     },
+    // The data for our dataset
+    data: {
+        // labels: ["0:0", "0:15", "0:30", "0:45", "1:00", "1:15", "1:30", "1:45", "2:00", "2:15", "2:30", "2:45", "3:00", "3:15", "3:30", "3:45", "4:00", "4:15", "4:30"],
+        labels,
+        datasets: [{
+            label: "Coffee Brewing",
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: [0, 50, 100, 150, 200, 250, 300, 350, 400, 450],
+        }]
+    },
 
-//     // Configuration options go here
-//     options: {}
-// });
+    // Configuration options go here
+    options: {}
+});
+
+}
