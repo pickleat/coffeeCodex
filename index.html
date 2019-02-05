@@ -14,10 +14,10 @@
 <button onclick="reset()" id="reset">Reset</button>
 <button id="lap" onclick="addEvent()">Event</button>
 <div>Time: <span id="timer">0:00</span></div>
-<div><span id="laps"></span><div>
+<div id="events"></div>
   <div>
   <div id="recipeCard">
-    <span id="recipeHeader">Enter Your Coffee Info and we'll make a recipe card:</span>
+    <span id="recipeHeader">Enter Your Coffee Info and we'll make a recipe card:<br></span>
     <input id="coffee" placeholder="enter coffee you're brewing"><br></input>
     <input id="dose" placeholder="enter your dose"><br></input>
     <input id="ratio" placeholder="enter ratio between 14 and 18"><br></input>
@@ -28,7 +28,7 @@
         <option value="Chemex">Chemex</option>
         <option value="Aeropress">Aeropress</option>
         <option value="December Dripper">December Dripper</option>
-        <br></select> 
+        <br></select> <br>
     <button id="infoSubmit" onclick="infoSubmit()">Submit</button>
   </div>
   <canvas id="myChart"></canvas>
