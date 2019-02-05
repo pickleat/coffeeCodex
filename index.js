@@ -1,7 +1,10 @@
+var eventNum = 0;
 var timerSeconds = 0;
 var timerMinutes = 0;
 var timer; 
 var labels = []; 
+var data = []; 
+var y = 30; 
 function begin() {
   timer = setInterval(start, 1000);
 }
@@ -20,36 +23,61 @@ function secondsReset() {
   timerMinutes += 1; 
 }
 function reset() {
+  stop()
   timerSeconds = 0;
   timerMinutes = 0;
-  display(timerSeconds, timerMinutes)
-  console.log('reset button')
+  labels = []; 
+  display(timerSeconds, timerMinutes, labels)
   document.getElementById('start').disabled = false;
+  chartEnter(labels, eventInfo())
 }
 function stop() {
-  console.log('stop button')
   clearInterval(timer);
   document.getElementById('start').disabled = false;
 }
-// function exit() {
-//   console.log('kill button')
-//   location.reload(true)
-// }
-var eventNum = 0;
-function lap() {
+
+function clock(secs, mins) {
+  if (secs < 10) {
+    clock = `${mins}:0${secs}`;
+    labels.push(clock);
+    return clock;
+  } else {
+    clock = `${mins}:${secs}`;
+    labels.push(clock);
+    return clock;
+  }
+}
+
+function addEvent() {
   eventNum += 1;
   let input = document.createElement("input");
   input.id = `event${eventNum}`;
-  var lap = `Event ${eventNum} - ${timerMinutes}:${timerSeconds}\n`;
+  clock = clock(timerSeconds, timerMinutes);
+  var lap = `Event ${eventNum} - ${clock}\n`;
   document.getElementById('laps').innerText += lap;
+  chartEnter(labels, eventInfo());
 }
+
+function eventInfo() {
+  // time = clock(timerSeconds, timerMinutes);
+  var time = timerMinutes + ":" + timerSeconds;
+  yAxis = dataAdd();
+  data.push({x: time, y: yAxis})
+  return data;
+}
+
+function dataAdd() {
+  y += 10;
+  return y;
+}
+
+
 
 function display(secs, mins) {
   var clock = mins + ":" + secs;
   labels.push(clock);
   document.getElementById('timer').innerText = clock;
-  console.log(labels);
-  chartEnter(labels);
+  chartEnter(labels, eventInfo());
 }
 
 function infoSubmit() {
@@ -64,20 +92,20 @@ function infoSubmit() {
   let ratioAnchor = document.getElementById("ratio");
   let ratioSpan = document.createElement("span");
   ratioSpan.id = "ratio"
-  ratioSpan.innerHTML = "Ratio 1:"+ratio;
+  ratioSpan.innerHTML = `Ratio 1:${ratio}`;
   ratioAnchor.parentNode.replaceChild(ratioSpan, ratioAnchor);
     // Dose
   let doseAnchor = document.getElementById('dose');
   let doseSpan =  document.createElement("span");
   doseSpan.id = "dose"
-  doseSpan.innerHTML = "Dose: "+dose;
+  doseSpan.innerHTML = `Dose: ${dose}g`;
   doseAnchor.parentNode.replaceChild(doseSpan, doseAnchor);
 
     // Coffee
   let coffeeAnchor = document.getElementById('coffee');
   let coffeeSpan = document.createElement('span');
   coffeeSpan.id = "coffee"
-  coffeeSpan.innerHTML = "Coffee: "+coffee;
+  coffeeSpan.innerHTML = `Coffee: ${coffee}`;
   coffeeAnchor.parentNode.replaceChild(coffeeSpan, coffeeAnchor);
 
     // Brewing Device
@@ -85,7 +113,7 @@ function infoSubmit() {
   deviceSpan.id = "brewerType";
   let brewingDevice = document.getElementById("brewer");
   let index = brewingDevice.selectedIndex
-  let brewer = document.createTextNode("Brewing on: "+brewingDevice[index].innerText);
+  let brewer = document.createTextNode(`Brewing on: ${brewingDevice[index].innerText}`);
   deviceSpan.appendChild(brewer);
   cardParent.append(deviceSpan); 
   cardParent.append(brk); 
@@ -93,15 +121,12 @@ function infoSubmit() {
     // Target Volume
   let targetSpan = document.createElement('span');
   targetSpan.id = "targetVolume";
-  totalVolume = document.createTextNode("Target Volume: "+totalVolume+"g");
+  totalVolume = document.createTextNode(`Target Volume: ${totalVolume}g`);
   targetSpan.appendChild(totalVolume);
   cardParent.append(targetSpan);
   // cardParent.append(brk);
 
-    
-
-
-    // Remove Submit Button
+  // Remove Submit Button
   let infoSubmit = document.getElementById('infoSubmit');
   let lable = document.getElementById("brewerLabel");
   let recipeHeader = document.getElementById('recipeHeader');
@@ -113,14 +138,14 @@ function infoSubmit() {
 }
 
 // Planning on adding a chart that follows your brewing progress. That's 
-function chartEnter(labels) {
+function chartEnter(labels, data) {
 var ctx = document.getElementById('myChart');
 // var chartButton = document.getElementById('chartButton');
 // chartButton.remove();
 var chart = new Chart(ctx, {
     // The type of chart we want to create
     type: 'line',
-
+ 
     // The data for our dataset
     data: {
         // labels: ["0:0", "0:15", "0:30", "0:45", "1:00", "1:15", "1:30", "1:45", "2:00", "2:15", "2:30", "2:45", "3:00", "3:15", "3:30", "3:45", "4:00", "4:15", "4:30"],
@@ -129,7 +154,22 @@ var chart = new Chart(ctx, {
             label: "Coffee Brewing",
             backgroundColor: 'rgb(255, 99, 132)',
             borderColor: 'rgb(255, 99, 132)',
-            data: [0, 50, 100, 150, 200, 250, 300, 350, 400, 450],
+            // data: [0, 50, 100, 150, 200, 250, 300, 350, 400, 450],
+        //     data: [{
+        //       x: "0:0",
+        //       y: 0
+        //   }, {
+        //       x: "0:1",
+        //       y: 10
+        //   }, {
+        //     x: '0:3',
+        //     y: 20
+        //   }, {
+        //     x: '0:4',
+        //     y: 30
+        //   },
+        // ],
+        data,
         }]
     },
 
