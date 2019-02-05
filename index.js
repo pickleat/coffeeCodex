@@ -4,7 +4,8 @@ var timerMinutes = 0;
 var timer; 
 var labels = []; 
 var data = []; 
-var y = 30; 
+var y = 0; 
+
 function begin() {
   timer = setInterval(start, 1000);
 }
@@ -13,22 +14,18 @@ function start() {
   document.getElementById('start').disabled = true;
   timerSeconds += 1;
   if (timerSeconds>59) {
-   secondsReset() 
+   timerMinutes += 1;
+   timerSeconds = 0;
   }
   display(timerSeconds, timerMinutes);
-  console.log(timerSeconds);
 }
-function secondsReset() {
-  timerSeconds = 0;
-  timerMinutes += 1; 
-}
+
 function reset() {
   stop()
   timerSeconds = 0;
   timerMinutes = 0;
   labels = []; 
-  display(timerSeconds, timerMinutes, labels)
-  document.getElementById('start').disabled = false;
+  // display(timerSeconds, timerMinutes, labels)
   chartEnter(labels, eventInfo())
 }
 function stop() {
@@ -36,31 +33,35 @@ function stop() {
   document.getElementById('start').disabled = false;
 }
 
-function clock(secs, mins) {
-  if (secs < 10) {
-    clock = `${mins}:0${secs}`;
-    labels.push(clock);
-    return clock;
-  } else {
+function display(secs, mins) {
+  var clock = clockFormat(secs,mins);
+  document.getElementById('timer').innerText = clock;
+  labels.push(clock);
+  chartEnter(labels, eventInfo());
+}
+
+function clockFormat(secs, mins) {
+  if (secs >= 10) {
     clock = `${mins}:${secs}`;
-    labels.push(clock);
-    return clock;
+  } else {
+    clock = `${mins}:0${secs}`;
   }
+  return clock
 }
 
 function addEvent() {
   eventNum += 1;
   let input = document.createElement("input");
   input.id = `event${eventNum}`;
-  clock = clock(timerSeconds, timerMinutes);
+  clock = clockFormat(timerSeconds, timerMinutes);
   var lap = `Event ${eventNum} - ${clock}\n`;
   document.getElementById('laps').innerText += lap;
   chartEnter(labels, eventInfo());
 }
 
 function eventInfo() {
-  // time = clock(timerSeconds, timerMinutes);
-  var time = timerMinutes + ":" + timerSeconds;
+  time = clockFormat(timerSeconds, timerMinutes);
+  // var time = clockFormat(timerSeconds, timerMinutes);
   yAxis = dataAdd();
   data.push({x: time, y: yAxis})
   return data;
@@ -73,12 +74,7 @@ function dataAdd() {
 
 
 
-function display(secs, mins) {
-  var clock = mins + ":" + secs;
-  labels.push(clock);
-  document.getElementById('timer').innerText = clock;
-  chartEnter(labels, eventInfo());
-}
+
 
 function infoSubmit() {
   let ratio = document.getElementById("ratio").value;
@@ -154,8 +150,8 @@ var chart = new Chart(ctx, {
             label: "Coffee Brewing",
             backgroundColor: 'rgb(255, 99, 132)',
             borderColor: 'rgb(255, 99, 132)',
-            // data: [0, 50, 100, 150, 200, 250, 300, 350, 400, 450],
-        //     data: [{
+            // Data is an array of objects, each containing an x and y value, like so:
+            //     data: [{
         //       x: "0:0",
         //       y: 0
         //   }, {
@@ -176,5 +172,6 @@ var chart = new Chart(ctx, {
     // Configuration options go here
     options: {}
 });
-
+// Uncomment to show the data in the object containing the events
+// console.log(chart.chart.data.datasets[0].data);
 }
