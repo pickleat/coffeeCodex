@@ -49,13 +49,25 @@ function clockFormat(secs, mins) {
   return clock
 }
 
+// let coffeeAnchor = document.getElementById('coffee');
+// let coffeeSpan = document.createElement('span');
+// coffeeSpan.id = "coffee"
+// coffeeSpan.innerHTML = `Coffee: ${coffee}`;
+// coffeeAnchor.parentNode.replaceChild(coffeeSpan, coffeeAnchor);
+
 function addEvent() {
   eventNum += 1;
+  let eventAnchor = document.getElementById('events');
+  let eventSpan = document.createElement('span');
+  eventSpan.id = `event${eventNum}`;
   let input = document.createElement("input");
-  input.id = `event${eventNum}`;
+  // input.id = `event${eventNum}`;
   clock = clockFormat(timerSeconds, timerMinutes);
-  var lap = `Event ${eventNum} - ${clock}\n`;
-  document.getElementById('laps').innerText += lap;
+  eventSpan = `Event ${eventNum} - ${clock}\n`;
+  eventAnchor.innerHTML += eventSpan; 
+  // var lap = `Event ${eventNum} - ${clock}\n`;
+  // document.getElementById('events').innerText += lap;
+  
   chartEnter(labels, eventInfo());
 }
 
