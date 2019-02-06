@@ -60,11 +60,15 @@ function addEvent() {
   let eventAnchor = document.getElementById('events');
   let eventSpan = document.createElement('span');
   eventSpan.id = `event${eventNum}`;
-  let input = document.createElement("input");
+  let eventName = document.createElement("input");
+  eventName.value = `event ${eventNum}`;
+  let grams = document.createElement("input");
+  grams.placeholder = `enter the mass`
   // input.id = `event${eventNum}`;
   clock = clockFormat(timerSeconds, timerMinutes);
-  eventSpan = `Event ${eventNum} - ${clock}\n`;
-  eventAnchor.innerHTML += eventSpan; 
+  eventSpan.innerText = `- ${clock} - `;
+  eventAnchor.append(eventName); 
+
   // var lap = `Event ${eventNum} - ${clock}\n`;
   // document.getElementById('events').innerText += lap;
   
