@@ -8,6 +8,7 @@ var y = 0;
 
 function begin() {
   timer = setInterval(start, 1000);
+  addEvent();
 }
 
 function start() {
@@ -37,7 +38,7 @@ function display(secs, mins) {
   var clock = clockFormat(secs,mins);
   document.getElementById('timer').innerText = clock;
   labels.push(clock);
-  chartEnter(labels, eventInfo());
+  chartEnter(labels);
 }
 
 function clockFormat(secs, mins) {
@@ -60,31 +61,39 @@ function addEvent() {
   let eventAnchor = document.getElementById('events');
   let eventSpan = document.createElement('span');
   eventSpan.id = `event${eventNum}`;
+  eventAnchor.append(eventSpan);
   let eventName = document.createElement("input");
-  eventName.value = `event ${eventNum}`;
   let grams = document.createElement("input");
-  grams.placeholder = `enter the mass`
+  if (eventNum === 1) {
+    eventName.value = `Start`;
+    grams.id = `event${eventNum}mass`
+    grams.value = `0`
+  } else {
+    eventName.value = `event ${eventNum}`;
+    grams.placeholder = `enter the mass`;
+    // adds fake value
+    grams.value = dataAdd();
+  }
   // input.id = `event${eventNum}`;
   clock = clockFormat(timerSeconds, timerMinutes);
-  eventSpan.innerText = `- ${clock} - `;
-  eventAnchor.append(eventName); 
-
-  // var lap = `Event ${eventNum} - ${clock}\n`;
-  // document.getElementById('events').innerText += lap;
-  
-  chartEnter(labels, eventInfo());
+  eventSpan.innerText = clock;
+  eventSpan.append(eventName); 
+  eventSpan.append(grams);
+  chartEnter(labels, eventInfo(eventNum));
 }
 
-function eventInfo() {
+function eventInfo(num) {
   time = clockFormat(timerSeconds, timerMinutes);
   // var time = clockFormat(timerSeconds, timerMinutes);
-  yAxis = dataAdd();
+  // yAxis = dataAdd();
+  yAxis = document.getElementById(`event${num}mass`).value;
+  
   data.push({x: time, y: yAxis})
   return data;
 }
 
 function dataAdd() {
-  y += 10;
+  y += 30;
   return y;
 }
 
