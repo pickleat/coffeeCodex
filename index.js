@@ -19,7 +19,6 @@ function start() {
    timerSeconds = 0;
   }
   display(timerSeconds, timerMinutes);
-  getData();
 }
 
 function reset() {
@@ -39,7 +38,8 @@ function display(secs, mins) {
   var clock = clockFormat(secs,mins);
   document.getElementById('timer').innerText = clock;
   labels.push(clock);
-  chartEnter(labels);
+  // chartEnter(labels);
+  return eventUpdate(labels);
 }
 
 function clockFormat(secs, mins) {
@@ -63,11 +63,11 @@ function addEvent() {
   eventSpan.id = `event${eventNum}`;
   eventAnchor.append(eventSpan);
   let eventName = document.createElement("input");
+  eventName.id = `event${eventNum}Title`;
   let grams = document.createElement("input");
-  grams.id = `event${eventNum}mass`
+  grams.id = `event${eventNum}Mass`
   if (eventNum === 1) {
     eventName.value = `Start`;
-    
     grams.value = `0`
   } else {
     eventName.value = `event ${eventNum}`;
@@ -80,23 +80,33 @@ function addEvent() {
   eventSpan.innerText = clock;
   eventSpan.append(eventName); 
   eventSpan.append(grams);
-  chartEnter(labels, eventInfo(eventNum));
+  let brk = document.createElement("br");
+  eventSpan.append(brk);
+  // chartEnter(labels, eventUpdate());
+  // chartEnter(labels);
 }
 
-// WIP not done
-// function eventUpdate() {
-//   events = document.getElementById('events').children
-//   console.log(events);
 
-//   for (i=0; i<events.length; i++) {
-    
-//     console.log(events[i].innerText)
-//     console.log(events[i].children)
+// WIP chart will watch and enter the changes in data, but appends it to the number of event and not the time of the event. 
+function eventUpdate(labels) {
+  events = document.getElementById('events').children
+  console.log(events.length);
 
-      
-//     });
-//   }
-// }
+  for (i=1; i<(events.length+1); i++) {
+    eventTime = document.getElementById(`event${i}`);
+    time = (eventTime.innerText).toString();
+    eventName = document.getElementById(`event${[i]}Title`);
+    eventMass = document.getElementById(`event${[i]}Mass`);
+    name = eventName.value;
+    mass = Number(eventMass.value);
+    // console.log({label: name, x: time, y: mass });
+    data[i-1] = {x: time, y: mass};
+
+  };
+  console.log(data)
+  chartEnter(labels, data);
+  }
+
 
 
 
@@ -105,7 +115,7 @@ function eventInfo(num) {
   time = clockFormat(timerSeconds, timerMinutes);
   // var time = clockFormat(timerSeconds, timerMinutes);
   // yAxis = dataAdd();
-  yAxis = document.getElementById(`event${num}mass`).value;
+  yAxis = document.getElementById(`event${num}Mass`).value;
   
   data.push({x: time, y: yAxis})
   return data;
@@ -192,20 +202,22 @@ var chart = new Chart(ctx, {
         labels,
         datasets: [{
             label: "Coffee Brewing",
+            // xAxisID: "Time",
+            // yAxisID: "Mass",
             backgroundColor: 'rgb(255, 99, 132)',
             borderColor: 'rgb(255, 99, 132)',
             // Data is an array of objects, each containing an x and y value, like so:
-            //     data: [{
-        //       x: "0:0",
+        //         data: [{
+        //       x: "0:00",
         //       y: 0
         //   }, {
-        //       x: "0:1",
+        //       x: "0:10",
         //       y: 10
         //   }, {
-        //     x: '0:3',
+        //     x: '0:13',
         //     y: 20
         //   }, {
-        //     x: '0:4',
+        //     x: '0:40',
         //     y: 30
         //   },
         // ],
@@ -214,8 +226,30 @@ var chart = new Chart(ctx, {
     },
 
     // Configuration options go here
-    options: {}
+    options: {
+      animation: {
+          duration: 0, // general animation time
+      },
+      hover: {
+          animationDuration: 0, // duration of animations when hovering an item
+      },
+      responsiveAnimationDuration: 0, // animation duration after a resize
+  }
+    
 });
 // Uncomment to show the data in the object containing the events
-// console.log(chart.chart.data.datasets[0].data);
+console.log(chart.chart.data.labels)
+console.log(chart.chart.data.datasets[0].data);
 }
+
+
+// 0: {x: "0:00", y: 0}
+// 1: {x: "0:10", y: 10}
+// 2: {x: "0:13", y: 20}
+// 3: {x: "0:40", y: 30}
+
+// 0: {x: "0:00↵", y: 0}
+// 1: {x: "0:12↵", y: 30}
+// 2: {x: "0:22↵", y: 60}
+// 3: {x: "0:32↵", y: 90}
+// 4: {x: "0:41↵", y: 120}
