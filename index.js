@@ -19,6 +19,7 @@ function start() {
    timerSeconds = 0;
   }
   display(timerSeconds, timerMinutes);
+  getData();
 }
 
 function reset() {
@@ -55,18 +56,18 @@ function clockFormat(secs, mins) {
 // coffeeSpan.id = "coffee"
 // coffeeSpan.innerHTML = `Coffee: ${coffee}`;
 // coffeeAnchor.parentNode.replaceChild(coffeeSpan, coffeeAnchor);
-
 function addEvent() {
+  var eventAnchor = document.getElementById('events');
   eventNum += 1;
-  let eventAnchor = document.getElementById('events');
   let eventSpan = document.createElement('span');
   eventSpan.id = `event${eventNum}`;
   eventAnchor.append(eventSpan);
   let eventName = document.createElement("input");
   let grams = document.createElement("input");
+  grams.id = `event${eventNum}mass`
   if (eventNum === 1) {
     eventName.value = `Start`;
-    grams.id = `event${eventNum}mass`
+    
     grams.value = `0`
   } else {
     eventName.value = `event ${eventNum}`;
@@ -81,6 +82,24 @@ function addEvent() {
   eventSpan.append(grams);
   chartEnter(labels, eventInfo(eventNum));
 }
+
+// WIP not done
+// function eventUpdate() {
+//   events = document.getElementById('events').children
+//   console.log(events);
+
+//   for (i=0; i<events.length; i++) {
+    
+//     console.log(events[i].innerText)
+//     console.log(events[i].children)
+
+      
+//     });
+//   }
+// }
+
+
+
 
 function eventInfo(num) {
   time = clockFormat(timerSeconds, timerMinutes);
