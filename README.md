@@ -8,12 +8,13 @@ Super-Stretch-Goal: create a web app that allows users to connect with their fav
 
 ## Brew Timer
 
-- [ ] Start, Stop
-    - [ ] Add styling so it actually looks like a minute timer "0:00" // Consider using a library, (like moment.js).
-- [ ] Events
-    - [ ] Be able to name events (e.g. Bloom, Pour, Pulse, Stir, Drip, etc...)
-    - [ ] Algorithmically guess events (first is bloom)
-    - [ ] Until Bluetooth functionality, be able to input volume and create a graph
+- [x] Start, Stop
+    - [x] Add styling so it actually looks like a minute timer "0:00" // Consider using a library, (like moment.js).
+        - Opted not to for the time being
+- [x] Events
+    - [x] Be able to name events (e.g. Bloom, Pour, Pulse, Stir, Drip, etc...)
+    - [ ] Algorithmically guess events (first is bloom) 
+    - [x] Until Bluetooth functionality, be able to input volume and create a graph
 - [x] Brewer Type (e.g. V60, Kalita, Chemex, etc...)
 - [x] Input coffee (for now just a text input)
 - [ ] Add Optional information: roaster, producer, MASL
