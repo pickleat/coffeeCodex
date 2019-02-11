@@ -54,7 +54,7 @@ function clockFormat(secs, mins) {
 function addEvent() {
   var eventAnchor = document.getElementById('events');
   eventNum += 1;
-  let eventSpan = document.createElement('span');
+  let eventSpan = document.createElement('div');
   eventSpan.id = `event${eventNum}`;
   eventAnchor.append(eventSpan);
   let eventName = document.createElement("input");
@@ -176,11 +176,11 @@ function infoSubmit() {
 
   // Remove Submit Button
   let infoSubmit = document.getElementById('infoSubmit');
-  let lable = document.getElementById("brewerLabel");
+  let label = document.getElementById("brewerLabel");
   let recipeHeader = document.getElementById('recipeHeader');
   infoSubmit.remove();
   brewingDevice.remove();
-  lable.remove();
+  label.remove();
   recipeHeader.remove();
 
 }
@@ -199,9 +199,7 @@ var chart = new Chart(ctx, {
         // labels: ["0:0", "0:15", "0:30", "0:45", "1:00", "1:15", "1:30", "1:45", "2:00", "2:15", "2:30", "2:45", "3:00", "3:15", "3:30", "3:45", "4:00", "4:15", "4:30"],
         labels,
         datasets: [{
-            label: "Coffee Brewing",
-            // xAxisID: "Time",
-            // yAxisID: "Mass",
+            label: getCoffee(),
             backgroundColor: 'rgb(255, 99, 132)',
             borderColor: 'rgb(255, 99, 132)',
             data
@@ -228,20 +226,14 @@ var chart = new Chart(ctx, {
   }
     
 });
-// Uncomment to show the data in the object containing the events
+// Uncomment to show the chart data
 // console.log(chart.chart.data.labels)
 // console.log(chart.chart.data.datasets[0].data);
-console.log(chart.chart)
+// console.log(chart.chart)
 }
 
-
-// 0: {x: "0:00", y: 0}
-// 1: {x: "0:10", y: 10}
-// 2: {x: "0:13", y: 20}
-// 3: {x: "0:40", y: 30}
-
-// 0: {x: "0:00↵", y: 0}
-// 1: {x: "0:12↵", y: 30}
-// 2: {x: "0:22↵", y: 60}
-// 3: {x: "0:32↵", y: 90}
-// 4: {x: "0:41↵", y: 120}
+function getCoffee() {
+  coffee = document.getElementById('coffee').innerText;
+  if (!coffee) {return 'Coffee Brewing'}
+  else return coffee
+}
