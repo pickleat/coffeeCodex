@@ -39,7 +39,7 @@ function display(secs, mins) {
   document.getElementById('timer').innerText = clock;
   labels.push(clock);
   // chartEnter(labels);
-  return eventUpdate(labels);
+  eventUpdate(labels);
 }
 
 function clockFormat(secs, mins) {
@@ -51,11 +51,6 @@ function clockFormat(secs, mins) {
   return clock
 }
 
-// let coffeeAnchor = document.getElementById('coffee');
-// let coffeeSpan = document.createElement('span');
-// coffeeSpan.id = "coffee"
-// coffeeSpan.innerHTML = `Coffee: ${coffee}`;
-// coffeeAnchor.parentNode.replaceChild(coffeeSpan, coffeeAnchor);
 function addEvent() {
   var eventAnchor = document.getElementById('events');
   eventNum += 1;
@@ -66,6 +61,7 @@ function addEvent() {
   eventName.id = `event${eventNum}Title`;
   let grams = document.createElement("input");
   grams.id = `event${eventNum}Mass`
+  grams.type = `number`;
   if (eventNum === 1) {
     eventName.value = `Start`;
     grams.value = `0`
@@ -75,13 +71,13 @@ function addEvent() {
     // adds fake value
     grams.value = dataAdd();
   }
-  // input.id = `event${eventNum}`;
+
   clock = clockFormat(timerSeconds, timerMinutes);
   eventSpan.innerText = clock;
   eventSpan.append(eventName); 
   eventSpan.append(grams);
   let brk = document.createElement("br");
-  eventSpan.append(brk);
+  // eventSpan.append(brk);
   // chartEnter(labels, eventUpdate());
   // chartEnter(labels);
 }
@@ -94,16 +90,18 @@ function eventUpdate(labels) {
 
   for (i=1; i<(events.length+1); i++) {
     eventTime = document.getElementById(`event${i}`);
-    time = (eventTime.innerText).toString();
+    time = eventTime.innerText;
+    console.log(time);
     eventName = document.getElementById(`event${[i]}Title`);
     eventMass = document.getElementById(`event${[i]}Mass`);
     name = eventName.value;
-    mass = Number(eventMass.value);
+    mass = eventMass.value;
     // console.log({label: name, x: time, y: mass });
-    data[i-1] = {x: time, y: mass};
+    data[i-1] = {label: name, x: time, y: mass};
 
   };
   console.log(data)
+  console.log(labels)
   chartEnter(labels, data);
   }
 
@@ -206,23 +204,16 @@ var chart = new Chart(ctx, {
             // yAxisID: "Mass",
             backgroundColor: 'rgb(255, 99, 132)',
             borderColor: 'rgb(255, 99, 132)',
-            // Data is an array of objects, each containing an x and y value, like so:
-        //         data: [{
-        //       x: "0:00",
-        //       y: 0
-        //   }, {
-        //       x: "0:10",
-        //       y: 10
-        //   }, {
-        //     x: '0:13',
-        //     y: 20
-        //   }, {
-        //     x: '0:40',
-        //     y: 30
-        //   },
-        // ],
-        data,
-        }]
+            data
+        }
+        // Implement a guide brew later.
+      //   ,
+      //       {label: "Guide",
+      //       backgroundColor: 'rgb(0,0,0, .5)',
+      //       borderColor: 'rgb(0,0,0, .5)',
+      //       data: [{x: "0:00", y: 0}, {x: "0:07", y: 34}, {x: "0:12", y: 40}]
+      // }
+      ]
     },
 
     // Configuration options go here
@@ -238,8 +229,9 @@ var chart = new Chart(ctx, {
     
 });
 // Uncomment to show the data in the object containing the events
-console.log(chart.chart.data.labels)
-console.log(chart.chart.data.datasets[0].data);
+// console.log(chart.chart.data.labels)
+// console.log(chart.chart.data.datasets[0].data);
+console.log(chart.chart)
 }
 
 
