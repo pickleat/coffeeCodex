@@ -2,7 +2,8 @@
     <head>
     <title>Coffee Timer</title>
     <link rel="icon" href="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/mozilla/36/hot-beverage_2615.png">
-    <link stylesheet="main.css" type="css">
+    <link rel="stylesheet" href="main.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto" rel="stylesheet">
     <script  src="index.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
 </head>
@@ -17,7 +18,7 @@
 <div id="events" onchange="eventUpdate()"></div>
   <div>
   <div id="recipeCard">
-    <span id="recipeHeader">Enter Your Coffee Info and we'll make a recipe card:<br></span>
+    <span id="recipeHeader">Enter Your Coffee Info:<br></span>
     <input id="coffee" placeholder="enter coffee you're brewing"><br></input>
     <input type="number" id="dose" placeholder="enter your dose"><br></input>
     <input type="number" ratio" placeholder="enter ratio between 14 and 18"><br></input>
