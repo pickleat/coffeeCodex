@@ -1,1 +1,34 @@
 /* Need to implement Styling at some point */
+/* Fonts */
+/* 
+Serif
+font-family: 'Open Sans', Georgia;
+Sans-Serif
+font-family: 'Roboto', Arial, sans-serif; 
+*/
+
+
+header {
+    color: greenyellow;
+    font-family: 'Open Sans', Georgia;
+}
+body {
+    background: rgba(0, 0, 0, .8);
+    font-family: 'Roboto', Arial, sans-serif;    
+}
+
+div {
+    color: aqua;
+   
+
+}
+
+button {
+    background: red;
+    color: white;
+    font-weight: bold;
+    
+}
+
+
+
