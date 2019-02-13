@@ -23,11 +23,16 @@ function start() {
 
 function reset() {
   stop()
-  timerSeconds = 0;
-  timerMinutes = 0;
-  labels = []; 
-  // display(timerSeconds, timerMinutes, labels)
-  chartEnter(labels, eventInfo())
+  // timerSeconds = 0;
+  // timerMinutes = 0;
+  // data = [];
+  // labels = []; 
+  // // display(timerSeconds, timerMinutes, labels)
+  // chartEnter(labels, data)
+  conf = confirm(`Are you sure? This will remove all info about your current brew.`)
+  if (conf == true) {
+  location.reload(true); 
+  } 
 }
 function stop() {
   clearInterval(timer);
@@ -109,15 +114,15 @@ function eventUpdate(labels) {
 
 
 
-function eventInfo(num) {
-  time = clockFormat(timerSeconds, timerMinutes);
-  // var time = clockFormat(timerSeconds, timerMinutes);
-  // yAxis = dataAdd();
-  yAxis = document.getElementById(`event${num}Mass`).value;
+// function eventInfo(num) {
+//   time = clockFormat(timerSeconds, timerMinutes);
+//   // var time = clockFormat(timerSeconds, timerMinutes);
+//   // yAxis = dataAdd();
+//   yAxis = document.getElementById(`event${num}Mass`).value;
   
-  data.push({x: time, y: yAxis})
-  return data;
-}
+//   data.push({x: time, y: yAxis})
+//   return data;
+// }
 
 function dataAdd() {
   y += 30;
