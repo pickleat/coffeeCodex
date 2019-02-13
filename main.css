@@ -11,6 +11,11 @@ font-family: 'Roboto', Arial, sans-serif;
 header {
     color: greenyellow;
     font-family: 'Open Sans', Georgia;
+    
+}
+
+a {
+    color: yellow;
 }
 body {
     background: rgba(0, 0, 0, .8);
@@ -19,7 +24,8 @@ body {
 
 div {
     color: aqua;
-   
+    font-family: 
+    font-family: 'Roboto', Arial, sans-serif;    
 
 }
 
@@ -27,8 +33,10 @@ button {
     background: red;
     color: white;
     font-weight: bold;
-    
+    border-style: none;
 }
 
-
+input {
+    border-style: none;
+}
 
