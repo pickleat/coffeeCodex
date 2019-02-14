@@ -33,3 +33,10 @@ Super-Stretch-Goal: create a web app that allows users to connect with their fav
 ## Design
 
 - [ ] Don't do, until you are happy with FUNCTIONALITY. This is about self-restraint, Andy.
+
+## Bluetooth
+
+- Research
+    - Google Devs: [Web Bluetooth](https://developers.google.com/web/updates/2015/07/interact-with-ble-devices-on-the-web)
+    - Github Repo: [Web Bluetooth](https://github.com/WebBluetoothCG/web-bluetooth)
+    
