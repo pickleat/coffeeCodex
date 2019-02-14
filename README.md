@@ -22,21 +22,30 @@ Super-Stretch-Goal: create a web app that allows users to connect with their fav
 
 ## Coffee Database
 
-- [ ] User Save
+- [ ] Create user sign-in (offload to someone)
+- [ ] User Settings/Save
 - [ ] Save Brews
 - [ ] Save Coffees
     - Issues:
         - Same coffee from different roasters
         - Same Coffee different **roasts**
         - Social element
+- [ ] Social
+    - [ ] Share? Have a feed of brews?
+    - [ ] Link to roasters?
 
 ## Design
 
-- [ ] Don't do, until you are happy with FUNCTIONALITY. This is about self-restraint, Andy.
+- [x] Don't do, until you are happy with FUNCTIONALITY. This is about self-restraint, Andy.
+- [ ] Make each section its own grid section, make the final card a single card that can be exported.
+- [ ] Do some design research to make sure it doesn't look bad
+- [ ] Decide on a CSS structure (Sass, other framework, vanilla?)
+- [ ] Decide on a color pallete
+- [ ] Decide on fonts
+- [ ] Don't over do it.
 
 ## Bluetooth
 
 - Research
     - Google Devs: [Web Bluetooth](https://developers.google.com/web/updates/2015/07/interact-with-ble-devices-on-the-web)
     - Github Repo: [Web Bluetooth](https://github.com/WebBluetoothCG/web-bluetooth)
-    
