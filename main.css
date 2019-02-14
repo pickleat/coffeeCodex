@@ -48,7 +48,9 @@ button {
     height: 25px;
     margin: 10px;
 }
-
+button:disabled {
+    background: rgb(164, 186, 183, .4);
+}
 input {
     border-style: none;
 }
