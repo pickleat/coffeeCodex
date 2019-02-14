@@ -6,34 +6,47 @@ font-family: 'Open Sans', Georgia;
 Sans-Serif
 font-family: 'Roboto', Arial, sans-serif; 
 */
+/* Colors */
+/* Black: rgb(11,17,29);
+Red: rgb(214, 40, 40);
+Blue: rgb(34, 85, 96);
+Light Blue/Green rgb(164, 186, 183);
+Yellow: rgb(240, 196, 44);
+White: rgb(251, 255, 254); */
+
 
 
 header {
-    color: greenyellow;
+    color: rgb(240, 196, 44);
     font-family: 'Open Sans', Georgia;
-    
 }
 
 a {
-    color: yellow;
+    color: rgb(164, 186, 183);
+}
+a:hover {
+    color: rgb(251, 255, 254);
 }
 body {
-    background: rgba(0, 0, 0, .8);
+    background: rgb(11, 17, 29);
     font-family: 'Roboto', Arial, sans-serif;    
 }
 
 div {
-    color: aqua;
-    font-family: 
+    color:rgb(251, 255, 254);
     font-family: 'Roboto', Arial, sans-serif;    
 
 }
 
 button {
-    background: red;
-    color: white;
+    background: rgb(164, 186, 183);
+    color: rgb(11, 17, 29);
     font-weight: bold;
     border-style: none;
+    border-radius: 5px;
+    width: 25%;
+    height: 25px;
+    margin: 10px;
 }
 
 input {
