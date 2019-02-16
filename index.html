@@ -1,21 +1,26 @@
 <!DOCTYPE html>
     <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coffee Timer</title>
     <link rel="icon" href="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/mozilla/36/hot-beverage_2615.png">
-    <link rel="stylesheet" href="main.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="main.css">
     <script  src="index.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
-</head>
+    </head>
 <html>
 <header>Brew Timer by <a href="https://twitter.com/pickleat">@pickleat</a></header>
 <body>
-<button onclick="begin()" id="start">Start</button>
-<button onclick="stop()" id="stop">Stop</button><br>
-<button onclick="reset()" id="reset">Reset</button>
-<button id="lap" onclick="addEvent()">Event</button>
-<div>Time: <span id="timer">0:00</span></div>
-<div id="events" onchange="eventUpdate()"></div>
+  
+  <div class="timerArea">
+  <div><span id="timer">0:00</span></div>
+  <button onclick="begin()" id="start">Start</button>
+  <button onclick="stop()" id="stop">Stop</button><br>
+  <button onclick="reset()" id="reset">Reset</button>
+  <button id="lap" onclick="addEvent()">Event</button>
+
+</div>
+<div id="events" class="eventsArea" onchange="eventUpdate()"></div>
   <div>
   <div id="recipeCard">
     <span id="recipeHeader">Enter Your Coffee Info:<br></span>

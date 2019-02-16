@@ -7,12 +7,14 @@ Sans-Serif
 font-family: 'Roboto', Arial, sans-serif; 
 */
 /* Colors */
-/* Black: rgb(11,17,29);
+/* 
+Black: rgb(11,17,29);
 Red: rgb(214, 40, 40);
 Blue: rgb(34, 85, 96);
 Light Blue/Green rgb(164, 186, 183);
 Yellow: rgb(240, 196, 44);
-White: rgb(251, 255, 254); */
+White: rgb(251, 255, 254); 
+*/
 
 
 
@@ -28,6 +30,7 @@ a:hover {
     color: rgb(251, 255, 254);
 }
 body {
+    display: grid;
     background: rgb(11, 17, 29);
     font-family: 'Roboto', Arial, sans-serif;    
 }
@@ -38,6 +41,11 @@ div {
 
 }
 
+#timer {
+    font-family: Helvetica, sans-serif;
+    font-weight: 100;
+    font-size: 100px;
+}
 button {
     background: rgb(164, 186, 183);
     color: rgb(11, 17, 29);
@@ -47,7 +55,9 @@ button {
     width: 25%;
     height: 25px;
     margin: 10px;
+    
 }
+
 button:disabled {
     background: rgb(164, 186, 183, .4);
 }
@@ -55,3 +65,8 @@ input {
     border-style: none;
 }
 
+.eventsArea {
+    margin: 5px;
+    /* padding: 5px; */
+    color: green;
+}
