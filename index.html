@@ -9,6 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
     </head>
 <html>
+<div class="container">
 <header>Brew Timer by <a href="https://twitter.com/pickleat">@pickleat</a></header>
 <body>
   
@@ -21,7 +22,7 @@
 
 </div>
 <div id="events" class="eventsArea" onchange="eventUpdate()"></div>
-  <div>
+<div>
   <div id="recipeCard">
     <span id="recipeHeader">Enter Your Coffee Info:<br></span>
     <input id="coffee" placeholder="enter coffee you're brewing"><br></input>
@@ -37,8 +38,9 @@
         <br></select> <br>
     <button id="infoSubmit" onclick="infoSubmit()">Submit</button>
   </div>
-  <canvas id="myChart"></canvas>
+  <div class="chart-container" ><canvas id="myChart"></canvas></div>
   <!-- <button id="chartButton" onclick="chartEnter()">Chart</button> -->
 </div>
 </body>
+</div>
 </html>

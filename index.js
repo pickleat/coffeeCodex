@@ -205,8 +205,8 @@ var chart = new Chart(ctx, {
         labels,
         datasets: [{
             label: getCoffee(),
-            backgroundColor: 'rgb(255, 99, 132)',
-            borderColor: 'rgb(255, 99, 132)',
+            backgroundColor: 'rgb(34, 85, 96, .8)',
+            borderColor: 'rgb(34, 85, 96, .8)',
             data
         }
         // Implement a guide brew later.
