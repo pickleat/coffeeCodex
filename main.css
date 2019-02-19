@@ -16,20 +16,25 @@ Yellow: rgb(240, 196, 44);
 White: rgb(251, 255, 254); 
 */
 
-
+html {
+    background: rgb(164, 186, 183);
+}
 
 header {
-    color: rgb(240, 196, 44);
+    background: rgb(240,196,44);
+    width: 100%;
+    height: 40px;
+    color: rgb(34,85,96);
     font-family: 'Open Sans', Georgia;
     grid-area: 'header';
-    justify-self: start;
+    justify-content: center;
 }
 
 a {
-    color: rgb(164, 186, 183);
+    color: rgb(251, 255, 254);
 }
 a:hover {
-    color: rgb(251, 255, 254);
+    color: rgb(34,85,96);
 }
 body {
     display: grid;
@@ -74,16 +79,18 @@ input {
 }
 
 .eventsArea {
-    margin: 5px;
+    margin: 10px;
+    padding: 10px;
     /* padding: 5px; */
-    background: green;
-    border-color: green;
+    background: rgb(164, 186, 183);
     justify-self: center;
     grid-area: "events";
 }
 
 #recipeCard {
-    background: black;
+    justify-self: center;
+    align-content: center;
+    margin: 10px;
 }
 .chart-container {
     display: grid;
@@ -92,7 +99,7 @@ input {
     grid-area: "chart";
 }
 .container {
-width: 100%;
+/* width: 100%; */
 /* min-height: 300px;
 max-height: 100%; */
 display: grid;
@@ -105,7 +112,7 @@ grid-template-areas:
     "coffee info"
     "events"
     "chart";
-background-color: rgb(11,17,29);
+background-color: rgb(30, 44, 71);
 align-items: center;
 justify-items: center;
 }
