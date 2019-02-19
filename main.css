@@ -21,9 +21,8 @@ White: rgb(251, 255, 254);
 header {
     color: rgb(240, 196, 44);
     font-family: 'Open Sans', Georgia;
-    grid-area: header;
+    grid-area: 'header';
     justify-self: start;
-    align-self: flex-start;
 }
 
 a {
@@ -45,15 +44,15 @@ div {
 }
 
 .timerArea {
-    /* grid-area: timer; */
+    grid-area: "timer";
     /* background: fuchsia; */
 }
 #timer {
-    font-family: Helvetica, sans-serif;
+    font-family: 'Roboto', Helvetica, sans-serif;
     font-weight: 100;
     font-size: 100px;
-    color: rgb(11, 17, 29);
-    /* grid-area: timer; */
+    color: rgb(251, 255, 254);
+    align-content: center;
 }
 button {
     background: rgb(164, 186, 183);
@@ -61,7 +60,7 @@ button {
     font-weight: bold;
     border-style: none;
     /* border-radius: 5px; */
-    width: 25%;
+    width: 100px;
     height: 25px;
     margin: 10px;
     
@@ -79,8 +78,8 @@ input {
     /* padding: 5px; */
     background: green;
     border-color: green;
-    justify-self: start;
-    grid-area: events;
+    justify-self: center;
+    grid-area: "events";
 }
 
 #recipeCard {
@@ -90,15 +89,15 @@ input {
     display: grid;
     min-width: 100%;
     position: relative;
-    grid-area: chart;
+    grid-area: "chart";
 }
 .container {
 width: 100%;
 /* min-height: 300px;
 max-height: 100%; */
 display: grid;
-grid-template-columns: 100%;
-grid-template-rows: 40px 40px 40px 40px 40px 40px;
+grid-template-columns: auto;
+grid-template-rows: auto;
 grid-template-areas: 
     "header"
     "timer"
@@ -106,5 +105,7 @@ grid-template-areas:
     "coffee info"
     "events"
     "chart";
-background-color: #2E3532;
+background-color: rgb(11,17,29);
+align-items: center;
+justify-items: center;
 }
