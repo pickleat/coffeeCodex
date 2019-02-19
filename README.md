@@ -22,7 +22,7 @@ Super-Stretch-Goal: create a web app that allows users to connect with their fav
 
 ## Coffee Database
 
-- [ ] Create user sign-in (offload to someone)
+- [ ] Create user sign-in (offload/outsource/library?)
 - [ ] User Settings/Save
 - [ ] Save Brews
 - [ ] Save Coffees
@@ -38,11 +38,17 @@ Super-Stretch-Goal: create a web app that allows users to connect with their fav
 
 - [x] Don't do, until you are happy with FUNCTIONALITY. This is about self-restraint, Andy.
 - [ ] Make each section its own grid section, make the final card a single card that can be exported.
+    - [ ] Learn how to export items, and to also send data. 
 - [ ] Do some design research to make sure it doesn't look bad
 - [ ] Decide on a CSS structure (Sass, other framework, vanilla?)
 - [ ] Decide on a color pallete
 - [ ] Decide on fonts
 - [ ] Don't over do it.
+
+## Progressive Web Application
+- [ ] Is this app a good use-case for a PWA?
+- [ ] Gather Resources for How to Publish as PWA
+- [ ] Publish PWA
 
 ## Bluetooth
 
