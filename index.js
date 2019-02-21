@@ -130,6 +130,10 @@ function dataAdd() {
 }
 
 
+// var recipeInfo = ['ratio', 'dose', 'country', 'producer', 'processing', 'elevation', 'varietal', 'roaster', 'exporter', 'roastType'];
+// recipeInfo.forEach( (element) => {
+//   let element = document.getElementById(`"${element}"`.value);
+// })
 
 
 
