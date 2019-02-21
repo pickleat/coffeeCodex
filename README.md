@@ -10,14 +10,15 @@ Super-Stretch-Goal: create a web app that allows users to connect with their fav
 
 - [x] Start, Stop
     - [x] Add styling so it actually looks like a minute timer "0:00" // Consider using a library, (like moment.js).
-        - Opted not to for the time being
+        - Opted not to use a library for the time being
 - [x] Events
     - [x] Be able to name events (e.g. Bloom, Pour, Pulse, Stir, Drip, etc...)
     - [ ] Algorithmically guess events (first is bloom) 
     - [x] Until Bluetooth functionality, be able to input volume and create a graph
 - [x] Brewer Type (e.g. V60, Kalita, Chemex, etc...)
 - [x] Input coffee (for now just a text input)
-- [ ] Add Optional information: roaster, producer, MASL
+    - [ ] Add Optional information: roaster, producer, MASL
+    - [ ] Abstract away the process of adding the input sections. Like an array: ```[coffeeName, producer, masl, brewer, dose, ratio]```
 - [ ] Export brew (make it pretty for people to export ☺️)
 
 ## Coffee Database
