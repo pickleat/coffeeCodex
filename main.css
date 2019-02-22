@@ -74,6 +74,9 @@ button {
 button:disabled {
     background: rgb(164, 186, 183, .4);
 }
+button:hover {
+    background: rgb(164, 186, 183, .8);
+}
 input {
     border-style: none;
 }
@@ -97,6 +100,7 @@ input {
     min-width: 100%;
     position: relative;
     grid-area: "chart";
+    background: rgb(251, 255, 254);
 }
 .container {
 /* width: 100%; */
