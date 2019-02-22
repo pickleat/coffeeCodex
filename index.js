@@ -225,6 +225,9 @@ var chart = new Chart(ctx, {
 
     // Configuration options go here
     options: {
+      line: {
+        tension: 0,
+      },
       animation: {
           duration: 0, // general animation time
       },
