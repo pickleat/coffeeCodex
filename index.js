@@ -70,8 +70,11 @@ function addEvent() {
   if (eventNum === 1) {
     eventName.value = `Start`;
     grams.value = `0`
+  } else if (eventNum === 2) {
+    eventName.value = `Bloom`
+    grams.value = dataAdd();
   } else {
-    eventName.value = `event ${eventNum}`;
+    eventName.value = `Event ${eventNum}`;
     grams.placeholder = `enter the mass`;
     // adds fake value
     grams.value = dataAdd();
