@@ -81,7 +81,8 @@ input {
     border-style: none;
 }
 
-.eventsArea {
+#events {
+    display: none;
     margin: 10px;
     padding: 10px;
     /* padding: 5px; */
@@ -96,7 +97,7 @@ input {
     margin: 10px;
 }
 .chart-container {
-    display: grid;
+    display: hidden;
     min-width: 100%;
     position: relative;
     grid-area: "chart";

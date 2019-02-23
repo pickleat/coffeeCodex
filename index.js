@@ -9,6 +9,9 @@ var y = 0;
 function begin() {
   timer = setInterval(start, 1000);
   addEvent();
+  document.getElementById('events').style.display = "grid";
+  document.getElementById('myChart').style.display = "grid";
+  document.getElementsByClassName('chart-container').style.display = "grid"
 }
 
 function start() {
