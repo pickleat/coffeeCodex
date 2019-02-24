@@ -262,5 +262,7 @@ var chart = new Chart(ctx, {
 function getCoffee() {
   coffee = document.getElementById('coffee').innerText;
   if (!coffee) {return 'Coffee Brewing'}
-  else return coffee
+  else {
+    return coffee
+  }
 }
