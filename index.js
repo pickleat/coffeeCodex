@@ -139,18 +139,17 @@ function dataAdd() {
 // var recipeInfo = ['coffee', 'ratio', 'dose', 'country', 'producer', 'processing', 'elevation', 'varietal', 'roaster', 'exporter', 'roastType', 'brewer'];
 
 
-
+var thisBrew = {};
 
 function infoSubmit() {
-  var recipeInfo = ['ratio', 'dose', 'coffee'];
+  var recipeInfo = ['country','roaster','ratio', 'dose', 'coffee', 'elevation', 'varietals', 'processing'];
   let ratio = document.getElementById("ratio").value;
   let dose = document.getElementById("dose").value;
   let totalVolume = (ratio * dose).toFixed(1);
   recipeInfo.forEach(element => {
-    console.log(element);
     let anchor = document.getElementById(`${element}`);
     let value = anchor.value;
-    console.log(value);
+    thisBrew[`${element}`] = value; 
     let span = document.createElement('span');
     span.id = `'${element}'`;
     span.innerHTML = `${element}: ${value}`;
@@ -207,7 +206,7 @@ function infoSubmit() {
   brewingDevice.remove();
   label.remove();
   recipeHeader.remove();
-
+  console.log(thisBrew);
 }
 
 // Planning on adding a chart that follows your brewing progress. That's 
