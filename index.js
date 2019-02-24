@@ -136,40 +136,50 @@ function dataAdd() {
 }
 
 
-// var recipeInfo = ['ratio', 'dose', 'country', 'producer', 'processing', 'elevation', 'varietal', 'roaster', 'exporter', 'roastType'];
-// recipeInfo.forEach( (element) => {
-//   let element = document.getElementById(`"${element}"`.value);
-// })
+// var recipeInfo = ['coffee', 'ratio', 'dose', 'country', 'producer', 'processing', 'elevation', 'varietal', 'roaster', 'exporter', 'roastType', 'brewer'];
+
 
 
 
 function infoSubmit() {
+  var recipeInfo = ['ratio', 'dose', 'coffee'];
   let ratio = document.getElementById("ratio").value;
   let dose = document.getElementById("dose").value;
-  let coffee = document.getElementById("coffee").value;
   let totalVolume = (ratio * dose).toFixed(1);
+  recipeInfo.forEach(element => {
+    console.log(element);
+    let anchor = document.getElementById(`${element}`);
+    let value = anchor.value;
+    console.log(value);
+    let span = document.createElement('span');
+    span.id = `'${element}'`;
+    span.innerHTML = `${element}: ${value}`;
+    anchor.parentNode.replaceChild(span, anchor);
+})
+  
   let cardParent = document.getElementById("recipeCard");
   let brk = document.createElement("br");
-  // Make "Card" for Brew Details
-    // Ratio
-  let ratioAnchor = document.getElementById("ratio");
-  let ratioSpan = document.createElement("span");
-  ratioSpan.id = "ratio"
-  ratioSpan.innerHTML = `Ratio 1:${ratio}`;
-  ratioAnchor.parentNode.replaceChild(ratioSpan, ratioAnchor);
-    // Dose
-  let doseAnchor = document.getElementById('dose');
-  let doseSpan =  document.createElement("span");
-  doseSpan.id = "dose"
-  doseSpan.innerHTML = `Dose: ${dose}g`;
-  doseAnchor.parentNode.replaceChild(doseSpan, doseAnchor);
+  // let coffee = document.getElementById("coffee").value;
+  // // Make "Card" for Brew Details
+  //   // Ratio
+  // let ratioAnchor = document.getElementById("ratio");
+  // let ratioSpan = document.createElement("span");
+  // ratioSpan.id = "ratio"
+  // ratioSpan.innerHTML = `Ratio 1:${ratio}`;
+  // ratioAnchor.parentNode.replaceChild(ratioSpan, ratioAnchor);
+  //   // Dose
+  // let doseAnchor = document.getElementById('dose');
+  // let doseSpan =  document.createElement("span");
+  // doseSpan.id = "dose"
+  // doseSpan.innerHTML = `Dose: ${dose}g`;
+  // doseAnchor.parentNode.replaceChild(doseSpan, doseAnchor);
 
-    // Coffee
-  let coffeeAnchor = document.getElementById('coffee');
-  let coffeeSpan = document.createElement('span');
-  coffeeSpan.id = "coffee"
-  coffeeSpan.innerHTML = `Coffee: ${coffee}`;
-  coffeeAnchor.parentNode.replaceChild(coffeeSpan, coffeeAnchor);
+  //   // Coffee
+  // let coffeeAnchor = document.getElementById('coffee');
+  // let coffeeSpan = document.createElement('span');
+  // coffeeSpan.id = "coffee"
+  // coffeeSpan.innerHTML = `Coffee: ${coffee}`;
+  // coffeeAnchor.parentNode.replaceChild(coffeeSpan, coffeeAnchor);
 
     // Brewing Device
   let deviceSpan = document.createElement('span');
