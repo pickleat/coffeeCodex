@@ -15,10 +15,10 @@
   
   <div class="timerArea">
   <div><span id="timer">0:00</span></div>
-  <button onclick="begin()" id="start">Start</button>
-  <button onclick="stop()" id="stop">Stop</button><br>
-  <button onclick="reset()" id="reset">Reset</button>
-  <button id="lap" onclick="addEvent()">Event</button>
+  <button onclick="begin()" id="start" title="start brewing your coffee">Start</button>
+  <button onclick="stop()" id="stop" title="stop the timer">Stop</button><br>
+  <button onclick="reset()" id="reset" title="reset the whole process">Reset</button>
+  <button id="lap" onclick="addEvent()" title="add a brew event">Event</button>
 </div>
 
 <div id="events" class="eventsArea" onchange="eventUpdate()"></div>
