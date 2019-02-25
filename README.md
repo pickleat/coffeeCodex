@@ -1,6 +1,7 @@
 # coffeeTimer
 
 ## Goals
+
 1. Create a better coffee timer, initially for personal use.
 2. Use the brews to create a database of coffees tied back to their data with more data (like most popular brews or multiple roasters for a specific coffee).
 3. Stretch-Goal: be able to pull data from bluetooth coffee scales (like Acaia) to actually agregate the brewing data.
@@ -48,8 +49,15 @@
 - [ ] Don't over do it.
 
 ## Progressive Web Application
+
 - [x] Is this app a good use-case for a PWA? (I believe it is)
 - [ ] Gather Resources for How to Publish as PWA
+1. [Google PWAs](https://developers.google.com/web/progressive-web-apps/)
+2. [Google PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist)
+3. [Mozilla PWAs](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps)
+4. [Max Firtman iOS Web Apps](https://medium.com/@firt/progressive-web-apps-on-ios-are-here-d00430dee3a7)
+5. [Microsoft PWAs](https://developer.microsoft.com/en-us/windows/pwa)
+6. [CodeNewbie Podcast](https://www.codenewbie.org/podcast/what-are-progressive-web-apps)
 - [ ] Publish PWA
 
 ## Bluetooth
