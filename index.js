@@ -218,10 +218,5 @@ function getCoffee() {
     if (!thisBrew['coffee']) {
       return 'Coffee Brewing'
     }
-    // console.log('not the second one')
   return thisBrew['coffee']
-  // if (!coffee) {return 'Coffee Brewing'}
-  // else {
-  //   return coffee
-  // }
 }
