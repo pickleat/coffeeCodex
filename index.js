@@ -11,7 +11,6 @@ function begin() {
   timer = setInterval(start, 1000);
   addEvent();
   document.getElementById('events').style.display = "grid";
-  
 }
 
 function start() {
