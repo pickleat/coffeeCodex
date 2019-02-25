@@ -151,27 +151,6 @@ function infoSubmit() {
   
   let cardParent = document.getElementById("recipeCard");
   let brk = document.createElement("br");
-  // let coffee = document.getElementById("coffee").value;
-  // // Make "Card" for Brew Details
-  //   // Ratio
-  // let ratioAnchor = document.getElementById("ratio");
-  // let ratioSpan = document.createElement("span");
-  // ratioSpan.id = "ratio"
-  // ratioSpan.innerHTML = `Ratio 1:${ratio}`;
-  // ratioAnchor.parentNode.replaceChild(ratioSpan, ratioAnchor);
-  //   // Dose
-  // let doseAnchor = document.getElementById('dose');
-  // let doseSpan =  document.createElement("span");
-  // doseSpan.id = "dose"
-  // doseSpan.innerHTML = `Dose: ${dose}g`;
-  // doseAnchor.parentNode.replaceChild(doseSpan, doseAnchor);
-
-  //   // Coffee
-  // let coffeeAnchor = document.getElementById('coffee');
-  // let coffeeSpan = document.createElement('span');
-  // coffeeSpan.id = "coffee"
-  // coffeeSpan.innerHTML = `Coffee: ${coffee}`;
-  // coffeeAnchor.parentNode.replaceChild(coffeeSpan, coffeeAnchor);
 
     // Brewing Device
   let deviceSpan = document.createElement('span');
@@ -204,7 +183,9 @@ function infoSubmit() {
 
 // Planning on adding a chart that follows your brewing progress. That's 
 function chartEnter(labels, data) {
+
 var ctx = document.getElementById('myChart');
+ctx.style.background = 'rgb(251, 255, 254)';
 // var chartButton = document.getElementById('chartButton');
 // chartButton.remove();
 var chart = new Chart(ctx, {
