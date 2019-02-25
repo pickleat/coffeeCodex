@@ -5,13 +5,15 @@ var timer;
 var labels = []; 
 var data = []; 
 var y = 0; 
+var thisBrew = {};
 
 function begin() {
   timer = setInterval(start, 1000);
   addEvent();
   document.getElementById('events').style.display = "grid";
   document.getElementById('myChart').style.display = "grid";
-  document.getElementsByClassName('chart-container').style.display = "grid"
+  chartBackground = document.getElementById('chart-container');
+  chartBackground.style.display = "grid";
 }
 
 function start() {
@@ -26,12 +28,6 @@ function start() {
 
 function reset() {
   stop()
-  // timerSeconds = 0;
-  // timerMinutes = 0;
-  // data = [];
-  // labels = []; 
-  // // display(timerSeconds, timerMinutes, labels)
-  // chartEnter(labels, data)
   conf = confirm(`Are you sure? This will remove all info about your current brew.`)
   if (conf == true) {
   location.reload(true); 
@@ -46,7 +42,6 @@ function display(secs, mins) {
   var clock = clockFormat(secs,mins);
   document.getElementById('timer').innerText = clock;
   labels.push(clock);
-  // chartEnter(labels);
   eventUpdate(labels);
 }
 
@@ -111,9 +106,10 @@ function eventUpdate(labels) {
     data[i-1] = {label: name, x: time, y: mass};
 
   };
-  console.log(data)
-  console.log(labels)
+  // console.log(data)
+  // console.log(labels)
   chartEnter(labels, data);
+  thisBrew[`events`] = data;
   }
 
 
@@ -139,7 +135,7 @@ function dataAdd() {
 // var recipeInfo = ['coffee', 'ratio', 'dose', 'country', 'producer', 'processing', 'elevation', 'varietal', 'roaster', 'exporter', 'roastType', 'brewer'];
 
 
-var thisBrew = {};
+
 
 function infoSubmit() {
   var recipeInfo = ['country','roaster','ratio', 'dose', 'coffee', 'elevation', 'varietals', 'processing'];
@@ -257,12 +253,17 @@ var chart = new Chart(ctx, {
 // console.log(chart.chart.data.labels)
 // console.log(chart.chart.data.datasets[0].data);
 // console.log(chart.chart)
+console.log(thisBrew);
 }
 
 function getCoffee() {
-  coffee = document.getElementById('coffee').innerText;
-  if (!coffee) {return 'Coffee Brewing'}
-  else {
-    return coffee
-  }
+    if (!thisBrew['coffee']) {
+      return 'Coffee Brewing'
+    }
+    // console.log('not the second one')
+  return thisBrew['coffee']
+  // if (!coffee) {return 'Coffee Brewing'}
+  // else {
+  //   return coffee
+  // }
 }

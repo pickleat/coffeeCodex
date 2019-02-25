@@ -96,12 +96,14 @@ input {
     align-content: center;
     margin: 10px;
 }
-.chart-container {
+
+
+#chart-container {
     display: hidden;
     min-width: 100%;
     position: relative;
     grid-area: "chart";
-    background: rgb(251, 255, 254);
+    /* background: rgb(251, 255, 254); */
 }
 .container {
 /* width: 100%; */
