@@ -109,30 +109,10 @@ function eventUpdate(labels) {
   thisBrew[`events`] = data;
   }
 
-
-
-
-
-// function eventInfo(num) {
-//   time = clockFormat(timerSeconds, timerMinutes);
-//   // var time = clockFormat(timerSeconds, timerMinutes);
-//   // yAxis = dataAdd();
-//   yAxis = document.getElementById(`event${num}Mass`).value;
-  
-//   data.push({x: time, y: yAxis})
-//   return data;
-// }
-
 function dataAdd() {
   y += 30;
   return y;
 }
-
-
-// var recipeInfo = ['coffee', 'ratio', 'dose', 'country', 'producer', 'processing', 'elevation', 'varietal', 'roaster', 'exporter', 'roastType', 'brewer'];
-
-
-
 
 function infoSubmit() {
   var recipeInfo = ['country','roaster','ratio', 'dose', 'coffee', 'elevation', 'varietals', 'processing'];
@@ -178,7 +158,7 @@ function infoSubmit() {
   brewingDevice.remove();
   label.remove();
   recipeHeader.innerText = `today's brew:`;
-  console.log(thisBrew);
+  // console.log(thisBrew);
 }
 
 // Planning on adding a chart that follows your brewing progress. That's 
