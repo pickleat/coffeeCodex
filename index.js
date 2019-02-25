@@ -11,9 +11,7 @@ function begin() {
   timer = setInterval(start, 1000);
   addEvent();
   document.getElementById('events').style.display = "grid";
-  document.getElementById('myChart').style.display = "grid";
-  chartBackground = document.getElementById('chart-container');
-  chartBackground.style.display = "grid";
+  
 }
 
 function start() {
@@ -201,7 +199,7 @@ function infoSubmit() {
   infoSubmit.remove();
   brewingDevice.remove();
   label.remove();
-  recipeHeader.remove();
+  recipeHeader.innerText = `today's brew:`;
   console.log(thisBrew);
 }
 
