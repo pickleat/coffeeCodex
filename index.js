@@ -34,11 +34,11 @@ function stop() {
   clearInterval(timer);
   document.getElementById('start').disabled = false;
   if (!document.getElementById('finalChart')) {
-  var chartSubmit = document.createElement('button');
-  chartSubmit.id = 'finalChart';
-  chartSubmit.innerText = 'Submit Chart';
-  container = document.getElementById('chartContainer');
-  container.appendChild(chartSubmit);
+    var chartSubmit = document.createElement('button');
+    chartSubmit.id = 'finalChart';
+    chartSubmit.innerText = 'Submit Chart';
+    container = document.getElementById('chartContainer');
+    container.appendChild(chartSubmit);
   }
 }
 
@@ -228,3 +228,9 @@ function getCoffee() {
   return `${thisBrew['country']} ${thisBrew['coffee']}`
 }
 
+document.getElementById('finalChart').onclick = () => {
+  let chart = document.getElementById('myChart');
+  let chartPNG = chart.toDataURL();
+  thisBrew['chartImage'] = chartPNG;
+  console.log('this wokred');
+}
