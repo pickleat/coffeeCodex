@@ -33,6 +33,13 @@ function reset() {
 function stop() {
   clearInterval(timer);
   document.getElementById('start').disabled = false;
+  if (!document.getElementById('finalChart')) {
+  var chartSubmit = document.createElement('button');
+  chartSubmit.id = 'finalChart';
+  chartSubmit.innerText = 'Submit Chart';
+  container = document.getElementById('chartContainer');
+  container.appendChild(chartSubmit);
+  }
 }
 
 function display(secs, mins) {
@@ -217,6 +224,7 @@ console.log(thisBrew);
 function getCoffee() {
     if (!thisBrew['coffee']) {
       return 'Coffee Brewing'
-    }
-  return thisBrew['coffee']
+    } else
+  return `${thisBrew['country']} ${thisBrew['coffee']}`
 }
+
