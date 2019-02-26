@@ -228,9 +228,10 @@ function getCoffee() {
   return `${thisBrew['country']} ${thisBrew['coffee']}`
 }
 
-document.getElementById('finalChart').onclick = () => {
+var finalChart = document.getElementById('finalChart');
+finalChart.addEventListener('onclick', () => {
   let chart = document.getElementById('myChart');
   let chartPNG = chart.toDataURL();
   thisBrew['chartImage'] = chartPNG;
   console.log('this wokred');
-}
+});
