@@ -137,7 +137,7 @@ function infoSubmit() {
   deviceSpan.id = "brewerType";
   let brewingDevice = document.getElementById("brewer");
   let index = brewingDevice.selectedIndex
-  let brewer = document.createTextNode(`Brewing on: ${brewingDevice[index].innerText}`);
+  let brewer = document.createTextNode(`brewing on: ${brewingDevice[index].innerText}`);
   thisBrew[`brewer`] = brewingDevice[index].innerText;
   deviceSpan.appendChild(brewer);
   cardParent.append(deviceSpan); 
@@ -146,7 +146,7 @@ function infoSubmit() {
     // Target Volume
   let targetSpan = document.createElement('span');
   targetSpan.id = "targetVolume";
-  totalVolume = document.createTextNode(`Target Volume: ${totalVolume}g`);
+  totalVolume = document.createTextNode(`target Volume: ${totalVolume}g`);
   targetSpan.appendChild(totalVolume);
   cardParent.append(targetSpan);
   // cardParent.append(brk);
