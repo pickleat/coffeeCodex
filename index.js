@@ -138,6 +138,7 @@ function infoSubmit() {
   let brewingDevice = document.getElementById("brewer");
   let index = brewingDevice.selectedIndex
   let brewer = document.createTextNode(`Brewing on: ${brewingDevice[index].innerText}`);
+  thisBrew[`brewer`] = brewingDevice[index].innerText;
   deviceSpan.appendChild(brewer);
   cardParent.append(deviceSpan); 
   cardParent.append(brk); 
@@ -164,10 +165,9 @@ function infoSubmit() {
 // Planning on adding a chart that follows your brewing progress. That's 
 function chartEnter(labels, data) {
 
-var ctx = document.getElementById('myChart');
+var ctx = document.getElementById('myChart')
 ctx.style.background = 'rgb(251, 255, 254)';
-// var chartButton = document.getElementById('chartButton');
-// chartButton.remove();
+
 var chart = new Chart(ctx, {
     // The type of chart we want to create
     type: 'line',
