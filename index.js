@@ -39,6 +39,7 @@ function stop() {
     chartSubmit.innerText = 'Submit Chart';
     container = document.getElementById('chartContainer');
     container.appendChild(chartSubmit);
+    document.getElementById('finalChart').addEventListener("click", chartPNG);
   }
 }
 
@@ -228,10 +229,11 @@ function getCoffee() {
   return `${thisBrew['country']} ${thisBrew['coffee']}`
 }
 
-var finalChart = document.getElementById('finalChart');
-finalChart.addEventListener('onclick', () => {
+
+
+function chartPNG() {
   let chart = document.getElementById('myChart');
-  let chartPNG = chart.toDataURL();
-  thisBrew['chartImage'] = chartPNG;
-  console.log('this wokred');
-});
+  let png = chart.toDataURL();
+  thisBrew['chartPNG'] = png;
+  console.log(thisBrew);
+}
