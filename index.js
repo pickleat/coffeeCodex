@@ -130,6 +130,10 @@ function infoSubmit() {
   recipeInfo.forEach(element => {
     let anchor = document.getElementById(`${element}`);
     let value = anchor.value;
+    if (!anchor.value) {
+      anchor.remove();
+      return;
+    }
     thisBrew[`${element}`] = value; 
     let span = document.createElement('span');
     span.id = `'${element}'`;
