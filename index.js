@@ -223,7 +223,7 @@ var chart = new Chart(ctx, {
 // console.log(chart.chart.data.labels)
 // console.log(chart.chart.data.datasets[0].data);
 // console.log(chart.chart)
-console.log(thisBrew);
+// console.log(thisBrew);
 }
 
 function getCoffee() {
@@ -239,5 +239,4 @@ function chartPNG() {
   let chart = document.getElementById('myChart');
   let png = chart.toDataURL();
   thisBrew['chartPNG'] = png;
-  console.log(thisBrew);
 }
