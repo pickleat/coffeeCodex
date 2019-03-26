@@ -1,0 +1,22 @@
+{
+  "name": "coffeetimer",
+  "version": "1.0.0",
+  "description": "an app that allows you to add coffees and brews to a database",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pickleat/coffeeTimer.git"
+  },
+  "author": "andy pickle",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pickleat/coffeeTimer/issues"
+  },
+  "homepage": "https://github.com/pickleat/coffeeTimer#readme",
+  "dependencies": {
+    
+  }
+}

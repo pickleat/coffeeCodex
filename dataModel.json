@@ -1,0 +1,5 @@
+
+{
+"brew": { "coffeeId": "UUID", "ratio": "1:17", "dose": 20, "brewingDevice": "string", "events": [], "chartPNG": "string"},
+"coffee": {"id": "UUDI", "country": "string", "roaster": "string", "producer/name": "string", "elevation": 2090, "varietals": ["bourbon", "caturra"], "processing": "washed"}
+}
