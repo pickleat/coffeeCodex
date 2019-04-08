@@ -1,3 +1,13 @@
+
+window.addEventListener('load', () => {
+// gather buttons
+  const start = document.getElementById('start')
+  const stop = document.getElementById('stop')
+  const reset = document.getElementById('reset')
+  const addEventButton = document.getElementById('addEvent')
+
+
+// declaring data
 var eventNum = 0;
 var timerSeconds = 0;
 var timerMinutes = 0;
@@ -7,13 +17,32 @@ var data = [];
 var y = 0; 
 var thisBrew = {};
 
-function begin() {
-  timer = setInterval(start, 1000);
-  addEvent();
-  document.getElementById('events').style.display = "grid";
-}
+// adding listeners for each button
+start.addEventListener('click', () => {
+    timer = setInterval(startTimer, 1000);
+    addEvent();
+    document.getElementById('events').style.display = "grid";
 
-function start() {
+})
+
+stop.addEventListener('click', () => {
+  stopTimer();
+})
+
+reset.addEventListener('click', () => {
+  resetTimer();
+})
+
+addEventButton.addEventListener('click', () => {
+  addEvent();
+})
+// function begin() {
+//   timer = setInterval(start, 1000);
+//   addEvent();
+//   document.getElementById('events').style.display = "grid";
+// }
+
+function startTimer() {
   document.getElementById('start').disabled = true;
   timerSeconds += 1;
   if (timerSeconds>59) {
@@ -23,14 +52,14 @@ function start() {
   display(timerSeconds, timerMinutes);
 }
 
-function reset() {
-  stop()
+function resetTimer() {
+  stopTimer()
   conf = confirm(`Are you sure? This will remove all info about your current brew.`)
   if (conf == true) {
   location.reload(true); 
   } 
 }
-function stop() {
+function stopTimer() {
   clearInterval(timer);
   document.getElementById('start').disabled = false;
   if (!document.getElementById('finalChart')) {
@@ -171,7 +200,7 @@ function infoSubmit() {
   brewingDevice.remove();
   label.remove();
   recipeHeader.innerText = `today's brew:`;
-  // console.log(thisBrew);
+  console.log(thisBrew);
 }
 
 // Planning on adding a chart that follows your brewing progress. That's 
@@ -240,3 +269,4 @@ function chartPNG() {
   let png = chart.toDataURL();
   thisBrew['chartPNG'] = png;
 }
+})

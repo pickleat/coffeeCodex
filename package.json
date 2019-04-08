@@ -11,12 +11,12 @@
     "url": "git+https://github.com/pickleat/coffeeTimer.git"
   },
   "author": "andy pickle",
-  "license": "ISC",
+  "license": "UNLICENSED",
   "bugs": {
     "url": "https://github.com/pickleat/coffeeTimer/issues"
   },
   "homepage": "https://github.com/pickleat/coffeeTimer#readme",
   "dependencies": {
-    
+    "serverless": "^1.39.1"
   }
 }
