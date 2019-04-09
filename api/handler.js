@@ -60,7 +60,7 @@ const Create = (evt, ctx, cb) => {
   };
   console.log(params);
 
-  // write the todo to the database
+  // write the coffee to the database
   dynamoDb.put(params, (error) => {
     // handle potential errors
     if (error) {
@@ -112,6 +112,10 @@ const getAll = (evt, ctx, cb) => {
     // create a response
     const response = {
       statusCode: 200,
+      headers: {      
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+      },
       body: JSON.stringify(result.Items),
     };
     cb(null, response);
@@ -141,6 +145,10 @@ const getOne = (evt, ctx, cb) => {
     }
     const response = {
       statusCode: 200,
+      headers: {      
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+      },
       body: JSON.stringify(result.Item),
     };
     cb(null, response);

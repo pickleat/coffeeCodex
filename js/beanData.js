@@ -20,4 +20,14 @@ window.addEventListener('load', () => {
         // appContainer[0].style.display = 'block';
     })
 
+    var coffeeCard = document.getElementById('coffeeCard');
+    var children = coffeeCard.children
+    console.log(children);
+    var childArray = Array.from(children);
+    childArray.forEach(item => {
+        item.addEventListener('change', (e)=> {
+            console.log(e.srcElement.value);
+        })
+    })
+
 })
