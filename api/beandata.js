@@ -67,6 +67,7 @@ function infoSubmit() {
   //   if (http.readyState == XMLHttpRequest.DONE) {
   //       alert(http.responseText);
   //   }}
+  // the post request WORKS, but the reponse doesn't
   http.open("POST", url, true);
   http.send(beanData);
   http.onreadystatechange = function() {
