@@ -35,6 +35,9 @@ const Create = (evt, ctx, cb) => {
     if (data.varietals && Array.isArray(data.varietals) === false) {
       throw new Error('Varietals must be an array or nothing')
     }
+    if (data.notes && Array.isArray(data.notes) === false) {
+      throw new Error('Notes must be an array of stringss or nothing')
+    }
   } catch (err) {
     cb(null, {
       statusCode: 400, 
@@ -56,6 +59,7 @@ const Create = (evt, ctx, cb) => {
       masl: data.masl || 0,
       createdAt: timestamp,
       updatedAt: timestamp,
+      notes: data.notes || []
     },
   };
   console.log(params);
@@ -86,14 +90,7 @@ const Create = (evt, ctx, cb) => {
   });
 };
 
-const Read = (evt, ctx, cb) => {
-  const evtId = evt.pathParameters.id;
-  if (evtId == null) {
-    getAll(evt, ctx, cb);
-  }
-  getOne(evt, ctx, cb);
-};
-
+// currently a scan for ALL coffees in the db
 const getAll = (evt, ctx, cb) => {
   const params = {
     TableName: process.env.DYNAMODB_TABLE,
@@ -123,6 +120,7 @@ const getAll = (evt, ctx, cb) => {
 })
 }
 
+// finds a specific coffee with provided id
 const getOne = (evt, ctx, cb) => {
   const params = {
     TableName: process.env.DYNAMODB_TABLE,
@@ -267,17 +265,22 @@ const Update = (evt, ctx, cb) => {
   });
 }
 
-const RequestHandlers = {
+const collectionHandlers = {
   "POST": Create,
-  "GET": Read,
+  "GET": getAll,
+}
+
+const itemHandlers = {
+  "GET": getOne,
   "DELETE": Delete,
   "PUT": Update
 }
 
 module.exports.coffeeInfo = (evt, ctx, cb) => {
+  let handlers = (evt["pathParameters"] == null) ? collectionHandlers : itemHandlers;
 const httpMethod = evt["httpMethod"];
-if (httpMethod in RequestHandlers) {
-  return RequestHandlers[httpMethod](evt, ctx, cb);
+if (httpMethod in handlers) {
+  return handlers[httpMethod](evt, ctx, cb);
 }
 
 const response = {
@@ -294,7 +297,6 @@ const response = {
 cb(null, response);
 }
 
-module.exports.list = (evt, ctx, cb) => {
-  
-}
+
+
 
