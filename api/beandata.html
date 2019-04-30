@@ -9,7 +9,9 @@
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script> -->
     </head>
 <html>
-  <button id='beanDataButton'>Add Coffee</button><button id='getCoffeeData'>Find a coffee</button>
+  <button id='beanDataButton'>Add Coffee</button>
+  <button id='getCoffeeData'>Find a coffee</button>
+  <button id='seeAllCoffees'>See The Coffees</button>
   <body class="container">
     <div id="recipeCard">
       <span id="recipeHeader">enter your coffee info:<br></span>
@@ -20,11 +22,35 @@
       <input id="masl" placeholder="elevation in MASL" type="number"><br></input>
       <input id="varietals" placeholder="varietal(s)" title="enter a single varietal or multiple separated by comma"><br></input>
       <input id="processing" placeholder="processing"><br></input>
+      <input id='notes' placeholder='notes, separated by comma'><br></input>
       <button id="infoSubmit" title="submit coffee info">Submit Info</button>
     </div>
     <div id='getCoffeeDataCard'>
-      <input id="coffeeID" placeholder="enter the unique id of the coffee"></input>
-      <button type="button" id='getCoffeeInfoIDSubmit'>Get Coffee Info</button>
+      <!-- <input id="coffeeID" placeholder="enter the unique id of the coffee"></input><br> -->
+      <span id="recipeHeader">Search Coffees by:<br></span>
+      <input id="countrySearch" placeholder="country"><br></input>
+      <!-- <input id="roaster" placeholder="roaster"><br></input>
+      <input id="producer" placeholder="producer"><br></input>
+      <input id="name" placeholder="name"><br></input>
+      <input id="masl" placeholder="elevation in MASL" type="number"><br></input>
+      <input id="varietals" placeholder="varietal(s)" title="enter a single varietal or multiple separated by comma"><br></input>
+      <input id="processing" placeholder="processing"><br></input>
+      <input id='notes' placeholder='notes, separated by comma'><br></input> -->
+      <button type="button" id='getCoffeeInfoIDSubmit'>Search</button>
+      <div id='searchResults'></div>
+    </div>
+    <div id='seeAllCoffeesCard'>
+      <table id='allCoffees' style="background:rgb(51, 50, 54); outline: none;">
+        <thead style="background-color: indianred">
+          <tr>
+            <td>Roaster</td>
+            <td>Country</td>
+            <td>Producer</td>
+            <td>MASL</td>
+            <td>Processing</td>
+          </tr>
+        </thead>
+      </table>
     </div>
   </body>
 </html>

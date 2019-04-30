@@ -15,7 +15,7 @@ const Create = (evt, ctx, cb) => {
       throw new Error('Empty message body or does not parse to JSON');
     }
     if (!data.roaster || typeof data.roaster !== 'string' || data.roaster.length <= 0) {
-      throw new Error(`Roaster must be provided and by of type string`)
+      throw new Error(`Roaster must be provided and be of type string`)
     }
     if (!data.country || typeof data.country !== 'string' || data.country.length <= 0) {
       throw new Error(`Country must be input as a string`);
@@ -52,14 +52,14 @@ const Create = (evt, ctx, cb) => {
       id: uuid.v1(),
       roaster: data.roaster,
       country: data.country,
-      producer: data.producer || '',
-      name: data.name || '',
-      varietals: data.varietals || [],
-      processing: data.processing || '',
-      masl: data.masl || 0,
+      producer: data.producer,
+      name: data.name,
+      varietals: data.varietals,
+      processing: data.processing,
+      masl: data.masl,
       createdAt: timestamp,
       updatedAt: timestamp,
-      notes: data.notes || []
+      notes: data.notes
     },
   };
   console.log(params);
@@ -122,15 +122,20 @@ const getAll = (evt, ctx, cb) => {
 
 // finds a specific coffee with provided id
 const getOne = (evt, ctx, cb) => {
+  var roaster = evt.pathParameters.id;
+  console.log(roaster);
   const params = {
     TableName: process.env.DYNAMODB_TABLE,
-    Key: {
-      id: evt.pathParameters.id,
-    },
-  };
+    IndexName: "roaster-index",
+    KeyConditionExpression: `roaster = :a`,
+    ExpressionAttributeValues: {
+      ':a': roaster
+    }
+  }
+  
   console.log(params);
   // fetch todo from the database
-  dynamoDb.get(params, (error, result) => {
+  dynamoDb.query(params, (error, result) => {
     // handle potential errors
     if (error) {
       console.error(error);
@@ -141,13 +146,14 @@ const getOne = (evt, ctx, cb) => {
       });
       return;
     }
+    console.log(result);
     const response = {
       statusCode: 200,
       headers: {      
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Credentials': true,
       },
-      body: JSON.stringify(result.Item),
+      body: JSON.stringify(result),
     };
     cb(null, response);
     
@@ -187,18 +193,19 @@ const Delete = (evt, ctx, cb) => {
 
 const Update = (evt, ctx, cb) => {
   const timestamp = new Date().getTime();
-  const data = JSON.parse(event.body);
-
+  const data = JSON.parse(evt.body);
+  const coffeeID = evt.pathParameters.id;
+  console.log(data);
   // validation 
   // consider abstracting this into one helper function for both create and update because DRY
   try {
     if (Object.keys(data).length === 0) {
       throw new Error('Empty message body or does not parse to JSON');
     }
-    if (!data.roaster || typeof data.roaster !== 'string' || data.roaster.length <= 0) {
-      throw new Error(`Roaster must be provided and by of type string`)
+    if (data.roaster && typeof data.roaster !== 'string' && data.roaster.length <= 0) {
+      throw new Error(`Roaster must be of type string`)
     }
-    if (!data.country || typeof data.country !== 'string' || data.country.length <= 0) {
+    if (data.country && typeof data.country !== 'string' && data.country.length <= 0) {
       throw new Error(`Country must be input as a string`);
     }
     if (data.name && typeof data.name !== 'string') {
@@ -216,6 +223,9 @@ const Update = (evt, ctx, cb) => {
     if (data.varietals && Array.isArray(data.varietals) === false) {
       throw new Error('Varietals must be an array or nothing')
     }
+    if (data.notes && Array.isArray(data.notes) === false) {
+      throw new Error('Notes must be an array or nothing')
+    }
   } catch (err) {
     cb(null, {
       statusCode: 400, 
@@ -224,24 +234,39 @@ const Update = (evt, ctx, cb) => {
     })
   }
 
- 
+
+  const itemKeys = Object.keys(data)
+  const updatedAt = timestamp;
+  const possibleKeys = ['country','roaster','producer', 'name', 'masl', 'varietals', 'processing', 'notes'];
+  let UpdateExpressionStatement = 'set #updatedAt = :updatedAt, ';
+  let ExpressionAttributeNames = {'#updatedAt' : 'updatedAt'};
+  let ExpressionAttributeValues = {":updatedAt": updatedAt};
+  console.log(itemKeys);
+  itemKeys.forEach(key => {
+    // console.log(key)
+    if(possibleKeys.includes(key)){
+        UpdateExpressionStatement += `#${key} = :${key},`
+        ExpressionAttributeNames[`#${key}`] = key;
+        ExpressionAttributeValues[`:${key}`] = data[key];
+    }  
+})
+  
+UpdateExpressionStatement = UpdateExpressionStatement.slice(0, -1);
 
   const params = {
-    TableName: process.env.DYNAMODB_TABLE,
-    Key: {
-      id: event.pathParameters.id,
-    },
-    ExpressionAttributeNames: {
-      '#todo_text': 'text',
-    },
-    ExpressionAttributeValues: {
-      ':text': data.text,
-      ':checked': data.checked,
-      ':updatedAt': timestamp,
-    },
-    UpdateExpression: 'SET #todo_text = :text, checked = :checked, updatedAt = :updatedAt',
-    ReturnValues: 'ALL_NEW',
-  };
+  TableName: process.env.DYNAMODB_TABLE,
+  Key: {
+    id: coffeeID
+  },
+  ExpressionAttributeNames,
+  ExpressionAttributeValues,
+  UpdateExpression: UpdateExpressionStatement,
+  ReturnValues:"ALL_NEW"
+};
+
+  console.log(params);
+
+  
 
   // update the todo in the database
   dynamoDb.update(params, (error, result) => {
@@ -251,7 +276,7 @@ const Update = (evt, ctx, cb) => {
       cb(null, {
         statusCode: error.statusCode || 501,
         headers: { 'Content-Type': 'text/plain' },
-        body: 'Couldn\'t fetch the todo item.',
+        body: `Couldn't update the coffee.`,
       });
       return;
     }
@@ -261,13 +286,14 @@ const Update = (evt, ctx, cb) => {
       statusCode: 200,
       body: JSON.stringify(result.Attributes),
     };
-    callback(null, response);
+    cb(null, response);
   });
 }
 
 const collectionHandlers = {
   "POST": Create,
   "GET": getAll,
+  "PUT": Update
 }
 
 const itemHandlers = {

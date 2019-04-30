@@ -18,6 +18,11 @@ provider:
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
       Resource: arn:aws:dynamodb:us-east-1:462788651624:*table/roastedCoffee
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+      Resource: arn:aws:dynamodb:us-east-1:462788651624:*table/roastedCoffee/index/*
 
 functions:
   coffeeInfo:
@@ -44,10 +49,14 @@ functions:
         - http:
             path: /{id}
             method: GET
-            request:
+            request: 
               parameters:
                 paths:
-                  id: true
+                  country: id
+            # request:
+            # parameters:
+            #   querystrings:
+            #     url: true
             # integration: lambda-proxy
             # authorizer: auth
             cors: true
