@@ -72,11 +72,12 @@ function listCoffees(){
 
 
 function findCoffeeInfo() {
-  var input = document.getElementById('countrySearch')
+  var input = document.getElementById('roasterSearch')
   var getReturn = document.getElementById('searchResults');
-  var country = input.value;
-  console.log(country);
-  const newURL = `${url}${country}`
+  var roaster = input.value;
+  roaster = roaster.replace(/ /g, '_')
+  console.log(roaster);
+  const newURL = `${url}${roaster}`
   console.log(newURL);
   
   const http = new XMLHttpRequest();
@@ -84,13 +85,15 @@ function findCoffeeInfo() {
   http.onreadystatechange = function() {
     if (http.readyState == XMLHttpRequest.DONE) {
       console.log(http.responseText);
-      var returnData = JSON.parse(http.responseText);
+      const returnData = JSON.parse(http.responseText);
+      // console.log(returnData.Items);
       // returns the items found for each ROASTER needs to be formatted an shown to user.
       var recipeInfo = ['country','roaster','producer', 'name', 'masl', 'varietals', 'processing'];
-      var keys = Object.keys(returnData)
-      recipeInfo.forEach(key => {
-        getReturn.innerHTML += `<ul>${key}: ${returnData[key]}</ul>`
-        
+      var keys = returnData.Items
+      console.log(keys)
+      keys.forEach(item => {
+        console.log(item.producer);
+        getReturn.innerHTML += `<ul>${item.producer}</ul>`;
       })
     }}
 

@@ -124,6 +124,8 @@ const getAll = (evt, ctx, cb) => {
 const getOne = (evt, ctx, cb) => {
   var roaster = evt.pathParameters.id;
   console.log(roaster);
+  // Names with Spaces are sent with '_' and then removed by the API
+  roaster = roaster.replace(/_/g, ' ');
   const params = {
     TableName: process.env.DYNAMODB_TABLE,
     IndexName: "roaster-index",
