@@ -52,7 +52,7 @@ functions:
             request: 
               parameters:
                 paths:
-                  country: id
+                  id: true
             # request:
             # parameters:
             #   querystrings:
@@ -63,10 +63,16 @@ functions:
         - http:
             path: /
             method: GET
+            # integration: lambda-proxy
+            # authorizer: auth
+            cors: true
+        - http:
+            path: /
+            method: GET
             request:
-              parameters:
-                paths:
-                  id: false
+            parameters:
+              querystrings:
+                url: true
             # integration: lambda-proxy
             # authorizer: auth
             cors: true
@@ -90,6 +96,20 @@ functions:
             # integration: lambda-proxy
             # authorizer: auth
             cors: true
+
+# oneCoffee:
+#     handler: oneCoffeeHandler.oneCoffee
+#     events:
+#         - http:
+#             path: oneCoffee/
+#             method: GET
+#             request:
+#             parameters:
+#               querystrings:
+#                 url: true
+#             # integration: lambda-proxy
+#             # authorizer: auth
+#             cors: true
 
 resources:
   Resources:

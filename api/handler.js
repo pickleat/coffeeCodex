@@ -91,7 +91,7 @@ const Create = (evt, ctx, cb) => {
 };
 
 // currently a scan for ALL coffees in the db
-const getAll = (evt, ctx, cb) => {
+const List = (evt, ctx, cb) => {
   const params = {
     TableName: process.env.DYNAMODB_TABLE,
   };
@@ -120,9 +120,43 @@ const getAll = (evt, ctx, cb) => {
 })
 }
 
-// finds a specific coffee with provided id
-const getOne = (evt, ctx, cb) => {
-  var roaster = evt.pathParameters.id;
+const Get = (evt, ctx, cb) => {
+  const id = evt.pathParameters.id;
+  console.log(id);
+  const params = {
+    TableName: process.env.DYNAMODB_TABLE,
+    Key: {
+      id: id
+    }
+  }
+  console.log(params);
+
+  dynamoDb.get(params, (error, result) => {
+    if (error) {
+      console.error(error);
+      return cb(null, {
+        statusCode: error.statusCode || 501,
+        headers: { 'Content-Type': 'text/plain' },
+        body: 'Couldn\'t get the information for that coffee.',
+      })
+    }
+    console.log(result);
+    const response = {
+      statusCode: 200,
+      headers: {      
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+      },
+      body: JSON.stringify(result),
+    };
+    return cb(null, response)
+  })
+}
+
+
+// finds all Coffees from a specific Roaster
+const Query = (evt, ctx, cb) => {
+  var roaster = evt.queryStringParameters.roaster;
   console.log(roaster);
   // Names with Spaces are sent with '_' and then removed by the API
   roaster = roaster.replace(/_/g, ' ');
@@ -292,24 +326,44 @@ UpdateExpressionStatement = UpdateExpressionStatement.slice(0, -1);
   });
 }
 
-const collectionHandlers = {
+const notGetHandlers = {
   "POST": Create,
-  "GET": getAll,
-  "PUT": Update
-}
-
-const itemHandlers = {
-  "GET": getOne,
   "DELETE": Delete,
   "PUT": Update
 }
 
+
+
 module.exports.coffeeInfo = (evt, ctx, cb) => {
-  let handlers = (evt["pathParameters"] == null) ? collectionHandlers : itemHandlers;
-const httpMethod = evt["httpMethod"];
-if (httpMethod in handlers) {
-  return handlers[httpMethod](evt, ctx, cb);
-}
+  console.log(evt);
+  console.log('----------------------------------------------------');
+  console.log(evt.httpMethod);
+  const httpMethod = evt.httpMethod;
+  const queryStringParams = evt.queryStringParameters;
+  console.log(queryStringParams);
+  const evtPathParameters = evt.pathParameters;
+  console.log(evtPathParameters);
+
+
+  if(httpMethod != 'GET'){
+    console.log('its geting inside the not Gets')
+    return notGetHandlers[httpMethod](evt, ctx, cb);
+  }
+  if(httpMethod === 'GET'){
+    console.log('making it to the GETS')
+    if(queryStringParams){
+      console.log('you got dem queryStringParams')
+      return Query(evt, ctx, cb)
+      }
+    if(evtPathParameters){
+      console.log('you got dem path params');
+      return Get(evt, ctx, cb)
+      }
+    else{
+      console.log('list em')
+      return List(evt, ctx, cb)
+      }
+  }
 
 const response = {
   statusCode: 405,

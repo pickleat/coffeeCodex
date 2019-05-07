@@ -131,5 +131,21 @@ justify-items: center;
 }
 
 .beanDataContainer {
+    display: none;ƒ
+}
+
+#getCoffeeDataCard {
+    display: none;
+}
+
+#recipeCard {
+    display: none;
+}
+
+#seeAllCoffeesCard {
+    display: none;
+}
+
+#coffeeInfoCard {
     display: none;
 }
