@@ -109,7 +109,7 @@ function findCoffeeInfo() {
         var country = document.createElement('td');
         country.appendChild(document.createTextNode(item.country));
         var producer = document.createElement('td');
-        var link = document.createElement('button');
+        var link = document.createElement('a');
         link.setAttribute('onclick', `showOneCoffee('${item.id}')`)
         link.innerText = item.producer;
         producer.appendChild(link);
@@ -171,10 +171,18 @@ function infoSubmit() {
     
     xhr.onreadystatechange = function() {
       if (http.readyState == XMLHttpRequest.DONE){
-      console.log(xhr.readyState)
-      console.log(xhr)
       console.log(xhr.response);
-      alert(xhr.responseText)
+      var oneCoffeeInfo = JSON.parse(xhr.responseText);
+      console.log(oneCoffeeInfo);
+      coffeeInfoCard.innerHTML = `<h1>${oneCoffeeInfo.country} ${oneCoffeeInfo.name}</h1>
+      <li>Producer: ${oneCoffeeInfo.producer}</li>
+      <li>Roaster: ${oneCoffeeInfo.roaster}</li>
+      <li>Processing: ${oneCoffeeInfo.processing}</li>
+      <li>Flavor Notes: ${oneCoffeeInfo.notes}</li>
+      <li>Varietals: ${oneCoffeeInfo.varietals}</li>
+      <li>MASL: ${oneCoffeeInfo.masl}</li>
+      <li>ID: ${oneCoffeeInfo.id}</li>`
+
       }
     xhr.open("POST", url, true);
     // xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
@@ -194,8 +202,28 @@ function showOneCoffee(e) {
 
   http.onreadystatechange = function() {
     if (http.readyState == XMLHttpRequest.DONE) {
-      console.log(http.responseText); 
-      coffeeInfoCard.innerText = http.responseText;
+      var oneCoffeeInfo = JSON.parse(http.responseText)
+      oneCoffeeInfo = oneCoffeeInfo.Item;
+      console.log(oneCoffeeInfo); 
+      var keys = Object.keys(oneCoffeeInfo);
+
+      // keys.forEach(key => {
+      //   var keyElem = document.createElement('ul');
+      //   var value = oneCoffeeInfo[key];
+      //   console.log(value);
+      //   keyElem.innerHTML = `${key}: ${value}`;
+      //   coffeeInfoCard.appendChild(keyElem);
+      // })
+      // coffeeInfoCard.innerText = keys;
+      coffeeInfoCard.innerHTML = `<h1>${oneCoffeeInfo.country} ${oneCoffeeInfo.name}</h1>
+      <button>Edit</button>
+      <li>Producer: ${oneCoffeeInfo.producer}</li>
+      <li>Roaster: ${oneCoffeeInfo.roaster}</li>
+      <li>Processing: ${oneCoffeeInfo.processing}</li>
+      <li>Flavor Notes: ${oneCoffeeInfo.notes}</li>
+      <li>Varietals: ${oneCoffeeInfo.varietals}</li>
+      <li>MASL: ${oneCoffeeInfo.masl}</li>
+      <li>ID: ${oneCoffeeInfo.id}</li>`
 
     }
   }
