@@ -216,7 +216,7 @@ function showOneCoffee(e) {
       // })
       // coffeeInfoCard.innerText = keys;
       coffeeInfoCard.innerHTML = `<h1>${oneCoffeeInfo.country} ${oneCoffeeInfo.name}</h1>
-      <button>Edit</button>
+      <button id='editCoffee'>Edit</button>
       <li>Producer: ${oneCoffeeInfo.producer}</li>
       <li>Roaster: ${oneCoffeeInfo.roaster}</li>
       <li>Processing: ${oneCoffeeInfo.processing}</li>
@@ -224,10 +224,26 @@ function showOneCoffee(e) {
       <li>Varietals: ${oneCoffeeInfo.varietals}</li>
       <li>MASL: ${oneCoffeeInfo.masl}</li>
       <li>ID: ${oneCoffeeInfo.id}</li>`
-
+      editCoffeeListener(oneCoffeeInfo);
     }
   }
 
   http.open('GET', newURL, true);
   http.send();
+}
+
+function editCoffeeListener(coffeeInfo){
+  console.log('you made it to editcoffeelistener')
+  console.log(coffeeInfo);
+  var editCoffeeButton = document.getElementById('editCoffee');
+  editCoffeeButton.addEventListener('click', () => {
+    // Thinking of how to implement this. 
+    // Options: 
+      // 1. Take the data you already have (coffeeInfo) and replace all <li>s with it.
+      // 2. Make a Get Request to recieve a fresh object and then put each item in an <input> deleting all the current info. 
+    var liList = coffeeInfoCard.querySelectorAll("li"); 
+
+      editCoffeeButton.innerText = 'You clicked this mug';
+
+  })
 }
