@@ -97,20 +97,6 @@ functions:
             # authorizer: auth
             cors: true
 
-# oneCoffee:
-#     handler: oneCoffeeHandler.oneCoffee
-#     events:
-#         - http:
-#             path: oneCoffee/
-#             method: GET
-#             request:
-#             parameters:
-#               querystrings:
-#                 url: true
-#             # integration: lambda-proxy
-#             # authorizer: auth
-#             cors: true
-
 resources:
   Resources:
     # roastedCoffeeDynamoDbTable:

@@ -49,15 +49,17 @@ function listCoffees(){
       returnData.forEach(item => {
         console.log(item);
         var tr = document.createElement('tr');
-        var link = document.createElement('a');
         // link.setAttribute('onclick', `getCoffeeInfo(${item.id})`);
         var roaster = document.createElement('td');
         roaster.appendChild(document.createTextNode(item.roaster));
-        roaster.appendChild(link);
         var country = document.createElement('td');
         country.appendChild(document.createTextNode(item.country));
         var producer = document.createElement('td');
-        producer.appendChild(document.createTextNode(item.producer));
+        var link = document.createElement('a');
+        link.setAttribute('onclick', `showOneCoffee('${item.id}')`)
+        link.innerText = item.producer;
+        producer.appendChild(link);
+        // producer.appendChild(document.createTextNode(item.producer));
         var MASL = document.createElement('td');
         MASL.appendChild(document.createTextNode(item.masl));
         var processing = document.createElement('td');
@@ -113,7 +115,6 @@ function findCoffeeInfo() {
         link.setAttribute('onclick', `showOneCoffee('${item.id}')`)
         link.innerText = item.producer;
         producer.appendChild(link);
-        // producer.appendChild(document.createTextNode(`<a href='${item.id}>${item.producer}</a>`));
         var MASL = document.createElement('td');
         MASL.appendChild(document.createTextNode(item.masl));
         var processing = document.createElement('td');
@@ -170,7 +171,7 @@ function infoSubmit() {
     var xhr = new XMLHttpRequest();
     
     xhr.onreadystatechange = function() {
-      if (http.readyState == XMLHttpRequest.DONE){
+      if (xhr.readyState == XMLHttpRequest.DONE){
       console.log(xhr.response);
       var oneCoffeeInfo = JSON.parse(xhr.responseText);
       console.log(oneCoffeeInfo);
@@ -182,12 +183,11 @@ function infoSubmit() {
       <li>Varietals: ${oneCoffeeInfo.varietals}</li>
       <li>MASL: ${oneCoffeeInfo.masl}</li>
       <li>ID: ${oneCoffeeInfo.id}</li>`
-
       }
+    }
     xhr.open("POST", url, true);
     // xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
     xhr.send(beanData);
-    }
 }
 
 
@@ -237,13 +237,106 @@ function editCoffeeListener(coffeeInfo){
   console.log(coffeeInfo);
   var editCoffeeButton = document.getElementById('editCoffee');
   editCoffeeButton.addEventListener('click', () => {
+    console.log(coffeeInfo);
+    coffeeInfoCard.innerHTML = '';
+    var keys = Object.keys(coffeeInfo);
+    console.log(keys);
+    keys.forEach(key => {
+      if(key == 'createdAt' || key == 'updatedAt' || key == 'id'){
+        return
+      }
+      var input = document.createElement('input');
+      var br = document.createElement('br')
+      input.value = coffeeInfo[key];
+      input.id = `edit${key}`;
+      coffeeInfoCard.appendChild(input);
+      coffeeInfoCard.appendChild(br);
+    })
+
+    var submitEdits = document.createElement('button');
+    submitEdits.id = 'submitEdits';
+    submitEdits.innerText = 'Sumbit Your Edits';
+    coffeeInfoCard.appendChild(submitEdits);
+    submitEdits.addEventListener('click', () => {
+    var inputs = coffeeInfoCard.querySelectorAll('input');
+
+
+    inputs.forEach(input => {
+      // console.log(input.value);
+      var val = input.value;
+      var id = input.id;
+      id = id.substring(4);
+      if(id == 'varietals' || id == 'notes'){
+        val = val.split(',');
+      }
+      if(id == 'masl'){
+        val = parseInt(val);
+      }
+      if(coffeeInfo[id] == val){return}
+      coffeeInfo[id] = val;
+      // console.log(`id: ${id}
+      // val: ${val}
+      // coffeeInfo: ${coffeeInfo[id]}`)
+    })
+    var coffee_id = coffeeInfo.id
+    const newURL = `${url}${coffee_id}`
+    console.log(newURL);
+    coffeeInfo = JSON.stringify(coffeeInfo)
+
+  var http = new XMLHttpRequest();
+      http.onreadystatechange = function() {
+        if (http.readyState == XMLHttpRequest.DONE) {
+          console.log('you made it back');
+          console.log(typeof(http.response));
+          console.log(JSON.parse(http.response));
+
+          // console.log(JSON.parse(http.response));
+
+          // var editedCoffee = JSON.parse(http.response);
+          // showOneCoffee(editedCoffee);
+          // console.log(http.response);
+          // var oneCoffeeInfo = JSON.parse(http.responseText)
+          // oneCoffeeInfo = oneCoffeeInfo.Item;
+          // console.log(oneCoffeeInfo); 
+          // var keys = Object.keys(oneCoffeeInfo);
+    
+          // // keys.forEach(key => {
+          // //   var keyElem = document.createElement('ul');
+          // //   var value = oneCoffeeInfo[key];
+          // //   console.log(value);
+          // //   keyElem.innerHTML = `${key}: ${value}`;
+          // //   coffeeInfoCard.appendChild(keyElem);
+          // // })
+          // // coffeeInfoCard.innerText = keys;
+          // coffeeInfoCard.innerHTML = `<h1>${oneCoffeeInfo.country} ${oneCoffeeInfo.name}</h1>
+          // <button id='editCoffee'>Edit</button>
+          // <li>Producer: ${oneCoffeeInfo.producer}</li>
+          // <li>Roaster: ${oneCoffeeInfo.roaster}</li>
+          // <li>Processing: ${oneCoffeeInfo.processing}</li>
+          // <li>Flavor Notes: ${oneCoffeeInfo.notes}</li>
+          // <li>Varietals: ${oneCoffeeInfo.varietals}</li>
+          // <li>MASL: ${oneCoffeeInfo.masl}</li>
+          // <li>ID: ${oneCoffeeInfo.id}</li>`
+          // editCoffeeListener(oneCoffeeInfo);
+        }
+      }
+    
+      http.open('PUT', newURL, true);
+      http.send(coffeeInfo);
+    
+    })
     // Thinking of how to implement this. 
     // Options: 
       // 1. Take the data you already have (coffeeInfo) and replace all <li>s with it.
       // 2. Make a Get Request to recieve a fresh object and then put each item in an <input> deleting all the current info. 
-    var liList = coffeeInfoCard.querySelectorAll("li"); 
-
-      editCoffeeButton.innerText = 'You clicked this mug';
-
-  })
+    // var liList = coffeeInfoCard.querySelectorAll("li"); 
+    // liList.forEach(item => {
+    //   // console.log(item);
+    //   var text = item.innerText;
+    //   text = text.substring(text.indexOf(': ')+2, text.length);
+    //   console.log(text);
+    // })
+})
 }
+
+// This is the may 13 update

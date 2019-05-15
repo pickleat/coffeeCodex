@@ -146,6 +146,7 @@ const Get = (evt, ctx, cb) => {
       headers: {      
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Credentials': true,
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(result),
     };
@@ -320,8 +321,13 @@ UpdateExpressionStatement = UpdateExpressionStatement.slice(0, -1);
     // create a response
     const response = {
       statusCode: 200,
-      body: JSON.stringify(result.Attributes),
+      body: JSON.stringify(result),
+      headers: {      
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true
+      }
     };
+    console.log(response);
     cb(null, response);
   });
 }
