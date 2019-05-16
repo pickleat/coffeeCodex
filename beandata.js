@@ -1,7 +1,7 @@
 'use strict'
 
 const url = 'https://pucxrtxpt9.execute-api.us-east-1.amazonaws.com/dev/'
-
+const coffeeInfoKeys = ['country','roaster','producer', 'name', 'masl', 'varietals', 'processing', 'notes'];
 // const uuidv4 = require('uuid/v4');
 window.onload = () => {
   var submit = document.getElementById('infoSubmit');
@@ -15,29 +15,39 @@ window.onload = () => {
   var seeAllCoffees = document.getElementById('seeAllCoffees');
   
   getCoffeeInfoButton.addEventListener("click", () => {
-    var getCoffeeDataCard = document.getElementById('getCoffeeDataCard');
-    getCoffeeDataCard.style.display = 'block';
+    containerView(getCoffeeDataCard);
     })  
   
   submitcoffeeInfoButton.addEventListener("click", () => {
-    var recipeCard = document.getElementById('recipeCard');
-    recipeCard.style.display = 'block';
-    // listCoffees();
+    containerView(recipeCard);
     })  
 
   seeAllCoffees.addEventListener("click", () => {
-    var seeAllCoffeesCard = document.getElementById('seeAllCoffeesCard');
-    seeAllCoffeesCard.style.display = 'block';
+    containerView(seeAllCoffeesCard);
     listCoffees();
   })  
   
   oneCoffeeButton.addEventListener('click', () => {
-    var coffeeInfoCard = document.getElementById('coffeeInfoCard');
-    coffeeInfoCard.style.display = 'block';
+    containerView(coffeeInfoCard);
   })
 
 }
 
+function containerView(clickedContainer) {
+  var coffeeInfoCard = document.getElementById('coffeeInfoCard');
+  var seeAllCoffeesCard = document.getElementById('seeAllCoffeesCard');
+  var recipeCard = document.getElementById('recipeCard');
+  var getCoffeeDataCard = document.getElementById('getCoffeeDataCard');
+  var containers = [coffeeInfoCard, seeAllCoffeesCard, recipeCard, getCoffeeDataCard]
+  containers.forEach(container => {
+    if(clickedContainer == container){
+      clickedContainer.style.display = 'block';
+    }else {
+      container.style.display = 'none';
+    }
+  })
+
+}
 
 function listCoffees(){
   var allCoffees = document.getElementById('allCoffees');
@@ -143,8 +153,8 @@ console.log(beanData);
 
 
 function infoSubmit() {
-    var recipeInfo = ['country','roaster','producer', 'name', 'masl', 'varietals', 'processing', 'notes'];
-    recipeInfo.forEach(element => {
+  var keys = coffeeInfoKeys;
+  coffeeInfoKeys.forEach(element => {
       let anchor = document.getElementById(`${element}`);
       let value = anchor.value;
       if (!anchor.value) {
@@ -194,6 +204,7 @@ function infoSubmit() {
 function showOneCoffee(e) {
   var coffee_id = e || document.getElementById('coffee_id').value;
   var coffeeInfoCard = document.getElementById('coffeeInfoCard');
+  containerView(coffeeInfoCard);
   console.log(coffee_id);
   const newURL = `${url}/${coffee_id}`
   console.log(newURL);
@@ -239,7 +250,8 @@ function editCoffeeListener(coffeeInfo){
   editCoffeeButton.addEventListener('click', () => {
     console.log(coffeeInfo);
     coffeeInfoCard.innerHTML = '';
-    var keys = Object.keys(coffeeInfo);
+    // var keys = Object.keys(coffeeInfo);
+    var keys = coffeeInfoKeys;
     console.log(keys);
     keys.forEach(key => {
       if(key == 'createdAt' || key == 'updatedAt' || key == 'id'){
@@ -248,6 +260,7 @@ function editCoffeeListener(coffeeInfo){
       var input = document.createElement('input');
       var br = document.createElement('br')
       input.value = coffeeInfo[key];
+      input.placeholder = key;
       input.id = `edit${key}`;
       coffeeInfoCard.appendChild(input);
       coffeeInfoCard.appendChild(br);
