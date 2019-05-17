@@ -30,6 +30,9 @@ window.onload = () => {
   oneCoffeeButton.addEventListener('click', () => {
     containerView(coffeeInfoCard);
   })
+  var welcomeHeader = document.querySelector('h1');
+  welcomeHeader.innerHTML = `Welcome ${localStorage.name}`
+  
 
 }
 
