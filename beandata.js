@@ -2,37 +2,42 @@
 
 const url = 'https://pucxrtxpt9.execute-api.us-east-1.amazonaws.com/dev/'
 const coffeeInfoKeys = ['country','roaster','producer', 'name', 'masl', 'varietals', 'processing', 'notes'];
-// const uuidv4 = require('uuid/v4');
+var beanData = {}
+
 window.onload = () => {
+  // Declare Buttons
+  var homeButton = document.getElementById('btn-home-view');
   var submit = document.getElementById('infoSubmit');
-  submit.addEventListener("click", infoSubmit, false);
   var submitcoffeeInfoButton = document.getElementById('beanDataButton');
   var getCoffeeInfoButton = document.getElementById('getCoffeeData');
   var searchByRoaster = document.getElementById('searchByRoaster');
   var oneCoffeeButton = document.getElementById('oneCoffeeButton');
-  searchByRoaster.addEventListener('click', findCoffeeInfo, false);
-  getOneCoffeeInfo.addEventListener('click', showOneCoffee, false);
   var seeAllCoffees = document.getElementById('seeAllCoffees');
   
+  // Simple Listeners
+  submit.addEventListener("click", infoSubmit, false);
+  homeButton.addEventListener('click', () => {window.location.reload();})
+  searchByRoaster.addEventListener('click', findCoffeeInfo, false);
+  
+  // Complex Listeners
+  getOneCoffeeInfo.addEventListener('click', () => {
+    var coffee_id = document.getElementById('coffee_id').value;
+    if(coffee_id){return showOneCoffee(coffee_id);}
+    alert('you need a value for this to work')
+  });
   getCoffeeInfoButton.addEventListener("click", () => {
     containerView(getCoffeeDataCard);
     })  
-  
   submitcoffeeInfoButton.addEventListener("click", () => {
     containerView(recipeCard);
     })  
-
   seeAllCoffees.addEventListener("click", () => {
     containerView(seeAllCoffeesCard);
     listCoffees();
   })  
-  
   oneCoffeeButton.addEventListener('click', () => {
     containerView(coffeeInfoCard);
   })
-  
-  
-
 }
 
 function containerView(clickedContainer) {
@@ -48,52 +53,65 @@ function containerView(clickedContainer) {
       container.style.display = 'none';
     }
   })
-
 }
 
-function listCoffees(){
+async function listCoffees(returnData){
+  var returnData = await fetch(url, {method: "GET"})
+  returnData = await returnData.json()
+  console.log(returnData);
   var allCoffees = document.getElementById('allCoffees');
-  const http = new XMLHttpRequest();
+  allCoffees.innerHTML = `
+  <thead style="background-color: indianred">
+  <tr>
+    <td>Roaster</td>
+    <td>Country</td>
+    <td>Producer</td>
+    <td>MASL</td>
+    <td>Processing</td>
+  </tr>
+</thead>`
+  returnData = sortBy(returnData, 'roaster')
 
-  http.onreadystatechange = () => {
-    if (http.readyState == XMLHttpRequest.DONE) {
-      var returnData = JSON.parse(http.responseText);
-      returnData.forEach(item => {
-        console.log(item);
-        var tr = document.createElement('tr');
-        // link.setAttribute('onclick', `getCoffeeInfo(${item.id})`);
-        var roaster = document.createElement('td');
-        roaster.appendChild(document.createTextNode(item.roaster));
-        var country = document.createElement('td');
-        country.appendChild(document.createTextNode(item.country));
-        var producer = document.createElement('td');
-        var link = document.createElement('a');
-        link.setAttribute('onclick', `showOneCoffee('${item.id}')`)
-        link.innerText = item.producer;
-        producer.appendChild(link);
-        // producer.appendChild(document.createTextNode(item.producer));
-        var MASL = document.createElement('td');
-        MASL.appendChild(document.createTextNode(item.masl));
-        var processing = document.createElement('td');
-        processing.appendChild(document.createTextNode(item.processing));
-        tr.appendChild(roaster);
-        tr.appendChild(country);
-        tr.appendChild(producer);
-        tr.appendChild(MASL);
-        tr.appendChild(processing);
-        allCoffees.appendChild(tr)
-      })
-    }}
-
-  http.open('GET', url, true);
-  http.send();
-  
+  returnData.forEach(item => {
+    // console.log(item);
+    var tr = document.createElement('tr');
+    // link.setAttribute('onclick', `getCoffeeInfo(${item.id})`);
+    var roaster = document.createElement('td');
+    roaster.appendChild(document.createTextNode(item.roaster));
+    var country = document.createElement('td');
+    country.appendChild(document.createTextNode(item.country));
+    var producer = document.createElement('td');
+    var link = document.createElement('a');
+    link.setAttribute('onclick', `showOneCoffee('${item.id}')`)
+    link.innerText = item.producer;
+    producer.appendChild(link);
+    // producer.appendChild(document.createTextNode(item.producer));
+    var MASL = document.createElement('td');
+    MASL.appendChild(document.createTextNode(item.masl));
+    var processing = document.createElement('td');
+    processing.appendChild(document.createTextNode(item.processing));
+    tr.appendChild(roaster);
+    tr.appendChild(country);
+    tr.appendChild(producer);
+    tr.appendChild(MASL);
+    tr.appendChild(processing);
+    allCoffees.appendChild(tr)
+  })
 }
 
-
-function findCoffeeInfo() {
+async function findCoffeeInfo() {
   var input = document.getElementById('roasterSearch')
-  var getReturn = document.getElementById('searchResults');
+  var searchResults = document.getElementById('searchResults');
+  searchResults.innerHTML = ` 
+  <thead style="background-color: indianred">
+  <tr>
+    <td>Roaster</td>
+    <td>Country</td>
+    <td>Producer</td>
+    <td>MASL</td>
+    <td>Processing</td>
+  </tr>
+</thead>`
   var totalResultsNum = document.getElementById('totalResultsNum');
   var roaster = input.value;
   roaster = roaster.replace(/ /g, '_')
@@ -101,61 +119,44 @@ function findCoffeeInfo() {
   const newURL = `${url}?roaster=${roaster}`
   console.log(newURL);
 
-  const http = new XMLHttpRequest();
-
-  http.onreadystatechange = function() {
-    if (http.readyState == XMLHttpRequest.DONE) {
-      console.log(http.responseText);
-      const returnData = JSON.parse(http.responseText);
-      totalResultsNum.innerHTML = `Search returned ${returnData.Count} results.`
-      
-      // returns the items found for each ROASTER needs to be formatted an shown to user.
-      var recipeInfo = ['country','roaster','producer', 'name', 'masl', 'varietals', 'processing'];
-      var keys = returnData.Items
-      console.log(keys)
-      keys.forEach(item => {
-        var tr = document.createElement('tr');
-        var link = document.createElement('a');
-        // link.setAttribute('onclick', `getCoffeeInfo(${item.id})`);
-        var roaster = document.createElement('td');
-        roaster.appendChild(document.createTextNode(item.roaster));
-        roaster.appendChild(link);
-        var country = document.createElement('td');
-        country.appendChild(document.createTextNode(item.country));
-        var producer = document.createElement('td');
-        var link = document.createElement('a');
-        link.setAttribute('onclick', `showOneCoffee('${item.id}')`)
-        link.innerText = item.producer;
-        producer.appendChild(link);
-        var MASL = document.createElement('td');
-        MASL.appendChild(document.createTextNode(item.masl));
-        var processing = document.createElement('td');
-        processing.appendChild(document.createTextNode(item.processing));
-        tr.appendChild(roaster);
-        tr.appendChild(country);
-        tr.appendChild(producer);
-        tr.appendChild(MASL);
-        tr.appendChild(processing);
-        getReturn.appendChild(tr)
-        console.log(`${item.producer} coffee id is ${item.id}`)
-      })
-    }}
-
-  http.open('GET', newURL, true);
-  http.send();
+  var returnData = await fetch(newURL, {method: "GET"})
+  returnData = await returnData.json()
+  console.log(returnData);
+  // returns the items found for each ROASTER needs to be formatted as shown to user.
+  var keys = returnData.Items
+  keys = sortBy(keys, 'country')
+  
+  // console.log(keys)
+  keys.forEach(item => {
+    var tr = document.createElement('tr');
+    var link = document.createElement('a');
+    // link.setAttribute('onclick', `getCoffeeInfo(${item.id})`);
+    var roaster = document.createElement('td');
+    roaster.appendChild(document.createTextNode(item.roaster));
+    roaster.appendChild(link);
+    var country = document.createElement('td');
+    country.appendChild(document.createTextNode(item.country));
+    var producer = document.createElement('td');
+    var link = document.createElement('a');
+    link.setAttribute('onclick', `showOneCoffee('${item.id}')`)
+    link.innerText = item.producer;
+    producer.appendChild(link);
+    var MASL = document.createElement('td');
+    MASL.appendChild(document.createTextNode(item.masl));
+    var processing = document.createElement('td');
+    processing.appendChild(document.createTextNode(item.processing));
+    tr.appendChild(roaster);
+    tr.appendChild(country);
+    tr.appendChild(producer);
+    tr.appendChild(MASL);
+    tr.appendChild(processing);
+    searchResults.appendChild(tr)
+    console.log(`${item.producer} coffee id is ${item.id}`)
+  })
 }
 
-function uuid(a){return a?(a^Math.random()*16>>a/4).toString(16):([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g,uuid)}
-// var beanData = {'coffeeId': uuid()}
-var beanData = {}
-// const coffeeId = uuid();
-// console.log(coffeeId);
-console.log(beanData);
 
-
-
-function infoSubmit() {
-  var keys = coffeeInfoKeys;
+async function infoSubmit() {
   coffeeInfoKeys.forEach(element => {
       let anchor = document.getElementById(`${element}`);
       let value = anchor.value;
@@ -173,79 +174,54 @@ function infoSubmit() {
       anchor.parentNode.replaceChild(span, anchor);
   })
     
-  //   // Remove Submit Button
+    // Remove Submit Button
     let recipeHeader = document.getElementById('recipeHeader');
     let submit = document.getElementById('infoSubmit');
     submit.remove();
     recipeHeader.innerText = `today's brew:`;
     beanData = JSON.stringify(beanData);
-    console.log(beanData);
-    var xhr = new XMLHttpRequest();
-    
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState == XMLHttpRequest.DONE){
-      console.log(xhr.response);
-      var oneCoffeeInfo = JSON.parse(xhr.responseText);
-      console.log(oneCoffeeInfo);
-      coffeeInfoCard.innerHTML = `<h1>${oneCoffeeInfo.country} ${oneCoffeeInfo.name}</h1>
-      <li>Producer: ${oneCoffeeInfo.producer}</li>
-      <li>Roaster: ${oneCoffeeInfo.roaster}</li>
-      <li>Processing: ${oneCoffeeInfo.processing}</li>
-      <li>Flavor Notes: ${oneCoffeeInfo.notes}</li>
-      <li>Varietals: ${oneCoffeeInfo.varietals}</li>
-      <li>MASL: ${oneCoffeeInfo.masl}</li>
-      <li>ID: ${oneCoffeeInfo.id}</li>`
-      }
-    }
-    xhr.open("POST", url, true);
-    // xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
-    xhr.send(beanData);
+    // console.log(beanData);
+
+    // Send Data
+    var returnData = await fetch(url, {
+      method: "POST",
+      body: beanData,
+    })
+    returnData = await returnData.json()
+    console.log(returnData);
 }
 
 
-function showOneCoffee(e) {
-  var coffee_id = e || document.getElementById('coffee_id').value;
-  var coffeeInfoCard = document.getElementById('coffeeInfoCard');
-  containerView(coffeeInfoCard);
+async function showOneCoffee(coffee_id) {
+  console.log('showOneCoffee')
   console.log(coffee_id);
-  const newURL = `${url}/${coffee_id}`
-  console.log(newURL);
+  
+  // var coffee_id = document.getElementById('getOneCoffeeInfo').value || document.getElementById('coffee_id').value;
+  // var coffeeInfoCard = document.getElementById('coffeeInfoCard');
+  containerView(coffeeInfoCard);
+  // console.log(coffee_id);
+  const newURL = `${url}${coffee_id}`
+  // console.log(newURL);
+  var returnData = await fetch(newURL, {method: "GET"})
+  returnData = await returnData.json();
+  returnData = returnData.Item;
+  console.log(returnData);
+  var keys = Object.keys(returnData);
 
-  var http = new XMLHttpRequest();
-
-  http.onreadystatechange = function() {
-    if (http.readyState == XMLHttpRequest.DONE) {
-      var oneCoffeeInfo = JSON.parse(http.responseText)
-      oneCoffeeInfo = oneCoffeeInfo.Item;
-      console.log(oneCoffeeInfo); 
-      var keys = Object.keys(oneCoffeeInfo);
-
-      // keys.forEach(key => {
-      //   var keyElem = document.createElement('ul');
-      //   var value = oneCoffeeInfo[key];
-      //   console.log(value);
-      //   keyElem.innerHTML = `${key}: ${value}`;
-      //   coffeeInfoCard.appendChild(keyElem);
-      // })
-      // coffeeInfoCard.innerText = keys;
-      coffeeInfoCard.innerHTML = `<h1>${oneCoffeeInfo.country} ${oneCoffeeInfo.name}</h1>
-      <button id='editCoffee'>Edit</button>
-      <li>Producer: ${oneCoffeeInfo.producer}</li>
-      <li>Roaster: ${oneCoffeeInfo.roaster}</li>
-      <li>Processing: ${oneCoffeeInfo.processing}</li>
-      <li>Flavor Notes: ${oneCoffeeInfo.notes}</li>
-      <li>Varietals: ${oneCoffeeInfo.varietals}</li>
-      <li>MASL: ${oneCoffeeInfo.masl}</li>
-      <li>ID: ${oneCoffeeInfo.id}</li>`
-      editCoffeeListener(oneCoffeeInfo);
-    }
-  }
-
-  http.open('GET', newURL, true);
-  http.send();
+  coffeeInfoCard.innerHTML = `
+  <h1>${returnData.country} ${returnData.name}</h1>
+  <button id='editCoffee'>Edit</button>
+  <li>Producer: ${returnData.producer}</li>
+  <li>Roaster: ${returnData.roaster}</li>
+  <li>Processing: ${returnData.processing}</li>
+  <li>Flavor Notes: ${returnData.notes}</li>
+  <li>Varietals: ${returnData.varietals}</li>
+  <li>MASL: ${returnData.masl}</li>
+  <li>ID: ${returnData.id}</li>`
+  editCoffeeListener(returnData);
 }
 
-function editCoffeeListener(coffeeInfo){
+async function editCoffeeListener(coffeeInfo){
   console.log('you made it to editcoffeelistener')
   console.log(coffeeInfo);
   var editCoffeeButton = document.getElementById('editCoffee');
@@ -297,6 +273,16 @@ function editCoffeeListener(coffeeInfo){
     const newURL = `${url}${coffee_id}`
     console.log(newURL);
     coffeeInfo = JSON.stringify(coffeeInfo)
+    console.log(coffeeInfo)
+
+    // putReq(url, coffeeInfo).promise()
+    // .then( (res) => {
+    //   console.log('you made it back from putReq');
+    //   console.log(res);
+    // });
+
+    // var keys = Object.keys(returnData);
+  
 
   var http = new XMLHttpRequest();
       http.onreadystatechange = function() {
@@ -304,35 +290,37 @@ function editCoffeeListener(coffeeInfo){
           console.log('you made it back');
           console.log(typeof(http.response));
           console.log(JSON.parse(http.response));
+          var resp = JSON.parse(http.response.Attributes);
+          var respKeys = Object.keys(resp);
+          console.log(respKeys);
+          console.log(JSON.parse(http.response));
 
-          // console.log(JSON.parse(http.response));
-
-          // var editedCoffee = JSON.parse(http.response);
-          // showOneCoffee(editedCoffee);
-          // console.log(http.response);
-          // var oneCoffeeInfo = JSON.parse(http.responseText)
-          // oneCoffeeInfo = oneCoffeeInfo.Item;
-          // console.log(oneCoffeeInfo); 
-          // var keys = Object.keys(oneCoffeeInfo);
+          var editedCoffee = JSON.parse(http.response);
+          showOneCoffee(editedCoffee);
+          console.log(http.response);
+          var oneCoffeeInfo = JSON.parse(http.responseText)
+          oneCoffeeInfo = oneCoffeeInfo.Item;
+          console.log(oneCoffeeInfo); 
+          var keys = Object.keys(oneCoffeeInfo);
     
-          // // keys.forEach(key => {
-          // //   var keyElem = document.createElement('ul');
-          // //   var value = oneCoffeeInfo[key];
-          // //   console.log(value);
-          // //   keyElem.innerHTML = `${key}: ${value}`;
-          // //   coffeeInfoCard.appendChild(keyElem);
-          // // })
-          // // coffeeInfoCard.innerText = keys;
-          // coffeeInfoCard.innerHTML = `<h1>${oneCoffeeInfo.country} ${oneCoffeeInfo.name}</h1>
-          // <button id='editCoffee'>Edit</button>
-          // <li>Producer: ${oneCoffeeInfo.producer}</li>
-          // <li>Roaster: ${oneCoffeeInfo.roaster}</li>
-          // <li>Processing: ${oneCoffeeInfo.processing}</li>
-          // <li>Flavor Notes: ${oneCoffeeInfo.notes}</li>
-          // <li>Varietals: ${oneCoffeeInfo.varietals}</li>
-          // <li>MASL: ${oneCoffeeInfo.masl}</li>
-          // <li>ID: ${oneCoffeeInfo.id}</li>`
-          // editCoffeeListener(oneCoffeeInfo);
+          // keys.forEach(key => {
+          //   var keyElem = document.createElement('ul');
+          //   var value = oneCoffeeInfo[key];
+          //   console.log(value);
+          //   keyElem.innerHTML = `${key}: ${value}`;
+          //   coffeeInfoCard.appendChild(keyElem);
+          // })
+          // coffeeInfoCard.innerText = keys;
+          coffeeInfoCard.innerHTML = `<h1>${oneCoffeeInfo.country} ${oneCoffeeInfo.name}</h1>
+          <button id='editCoffee'>Edit</button>
+          <li>Producer: ${oneCoffeeInfo.producer}</li>
+          <li>Roaster: ${oneCoffeeInfo.roaster}</li>
+          <li>Processing: ${oneCoffeeInfo.processing}</li>
+          <li>Flavor Notes: ${oneCoffeeInfo.notes}</li>
+          <li>Varietals: ${oneCoffeeInfo.varietals}</li>
+          <li>MASL: ${oneCoffeeInfo.masl}</li>
+          <li>ID: ${oneCoffeeInfo.id}</li>`
+          editCoffeeListener(oneCoffeeInfo);
         }
       }
     
@@ -340,18 +328,30 @@ function editCoffeeListener(coffeeInfo){
       http.send(coffeeInfo);
     
     })
-    // Thinking of how to implement this. 
-    // Options: 
-      // 1. Take the data you already have (coffeeInfo) and replace all <li>s with it.
-      // 2. Make a Get Request to recieve a fresh object and then put each item in an <input> deleting all the current info. 
-    // var liList = coffeeInfoCard.querySelectorAll("li"); 
-    // liList.forEach(item => {
-    //   // console.log(item);
-    //   var text = item.innerText;
-    //   text = text.substring(text.indexOf(': ')+2, text.length);
-    //   console.log(text);
-    // })
 })
 }
 
-// This is the may 13 update
+function sortBy(data, sortKey){
+  data.sort(function(a, b) {
+      var nameA = a[sortKey].toUpperCase(); // ignore upper and lowercase
+      var nameB = b[sortKey].toUpperCase(); // ignore upper and lowercase
+      if (nameA < nameB) {return -1;}
+      if (nameA > nameB) {return 1;}
+      // If names are equal
+      return 0;
+      });
+  // console.log(data);
+  return data
+}
+
+function putReq(url, data){
+  fetch(url, {
+  method: "PUT",
+  body: JSON.stringify(data), 
+  headers:{
+    'Content-Type': 'application/json'
+  }
+}).then(res => res.json())
+.then(response => console.log('Success:', JSON.stringify(response)))
+.catch(error => console.error('Error:', error));
+}

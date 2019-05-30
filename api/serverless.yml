@@ -89,13 +89,13 @@ functions:
         - http:
             path: /{id}
             method: PUT
+            cors: true
             request: 
               parameters:
                 paths:
                   id: true
             # integration: lambda-proxy
             # authorizer: auth
-            cors: true
 
 resources:
   Resources:

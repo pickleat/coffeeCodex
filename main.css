@@ -34,6 +34,10 @@ header {
     padding-left: 20px;
 }
 
+h4 {
+    color: rgb(251, 255, 254);
+}
+
 a {
     color: rgb(251, 255, 254);
 }
