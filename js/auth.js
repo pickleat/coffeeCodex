@@ -17,7 +17,7 @@ window.addEventListener('load', function() {
     // ...
     var loginStatus = document.querySelector('h4');
     var loginView = document.getElementById('login-view');
-    var homeView = document.getElementById('home-view');
+    var homeView = document.getElementById('btn-home-view');
 
     // buttons and event listeners
     var homeViewBtn = document.getElementById('btn-home-view');
