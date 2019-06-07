@@ -1,0 +1,102 @@
+service: userData # NOTE: update this with your service name
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  environment:
+    DYNAMODB_TABLE: ${file(../env.yml):USER_DB}
+  stage: dev
+  region: us-east-1
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: arn:aws:dynamodb:us-east-1:${file(../env.yml):AWS_ID}:*table/${file(../env.yml):USER_DB}
+
+functions:
+  userCoffees: 
+    handler: handler.userCoffees
+  # create
+    events:
+      - http:
+          path: /
+          method: POST
+          cors: true
+          integration: lambda-proxy
+  # list:
+      - http:
+          path: /{user_id}
+          method: GET
+          request: 
+            parameters:
+              paths:
+                user_id: true
+          cors: true
+          integration: lambda-proxy
+  # read:
+      - http:
+          path: /
+          method: GET
+          request:
+            parameters:
+              querystrings:
+                url: true
+          cors: true
+          integration: lambda-proxy
+  # update: turned off for now
+      # - http:
+      #     path: /{user_id}
+      #     method: PUT
+      #     request: 
+      #       parameters:
+      #         paths:
+      #           user_id: true
+      #     cors: true
+      #     integration: lambda-proxy
+  # delete:
+  #   handler: handler.Delete
+  #   events:
+      - http:
+          path: /
+          method: DELETE
+          request:
+            parameters:
+              querystrings:
+                url: true
+          cors: true
+          integration: lambda-proxy
+
+
+resources:
+  # Resources:
+  #   coffeeUsers:
+  #     Type: 'AWS::DynamoDB::Table'
+  #     DeletionPolicy: Retain
+  #     Properties:
+  #       AttributeDefinitions:
+  #         -
+  #           AttributeName: user_id
+  #           AttributeType: S
+  #       KeySchema:
+  #         -
+  #           AttributeName: id
+  #           KeyType: HASH
+  #       ProvisionedThroughput:
+  #         ReadCapacityUnits: 1
+  #         WriteCapacityUnits: 1
+  #       TableName: coffeeUsers
+
+    # GatewayResponseDefault4XX:
+    #   Type: 'AWS::ApiGateway::GatewayResponse'
+    #   Properties:
+    #     ResponseParameters:
+    #       gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+    #       gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+    #     ResponseType: DEFAULT_4XX
+    #     RestApiId:
+    #       Ref: 'ApiGatewayRestApi'

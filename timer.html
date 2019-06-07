@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+    <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee Timer</title>
+    <link rel="icon" href="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/mozilla/36/hot-beverage_2615.png">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="main.css">
+    <script src="js/brew.js"></script>
+    <script src="js/beanData.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
+    </head>
+<html>
+    <header>Brew Timer by <a href="https://twitter.com/pickleat">@pickleat</a></header>
+<div class="container">
+
+<body>
+    <button id='coffeeData'>Add Coffee</button>
+  <div class="timerArea">
+  <div><span id="timer">0:00</span></div>
+  <button id="start" title="start brewing your coffee">Start</button>
+  <button id="stop" title="stop the timer">Stop</button><br>
+  <button id="reset" title="reset the whole process">Reset</button>
+  <button id="addEvent" title="add a brew event">Event</button>
+</div>
+
+<div id="events" class="eventsArea" onchange="eventUpdate()"></div>
+<div class="brewedCoffeeInfo">
+  <div id="recipeCard">
+    <!-- <span id="recipeHeader">enter your coffee info:<br></span>
+    <input id="country" placeholder="country"><br></input>
+    <input id="roaster" placeholder="roaster"><br></input>
+    <input id="coffee" placeholder="producer/name"><br></input> -->
+    <!-- <input id="elevation" placeholder="elevation in MASL"><br></input>
+    <input id="varietals" placeholder="varietal(s)"><br></input>
+    <input id="processing" placeholder="processing"><br></input> -->
+    <!-- <input type="number" id="dose" placeholder="dose"><br></input>
+    <input type="number" id="ratio" placeholder="18 < ratio > 14"><br></input>
+    <label id="brewerLabel" for="brewer">choose a brewing device:<br></label>
+      <select id="brewer">
+        <option value="v60">v60</option>
+        <option value="Kalita Wave">Kalita Wave</option>
+        <option value="Chemex">Chemex</option>
+        <option value="Aeropress">Aeropress</option>
+        <option value="December Dripper">December Dripper</option>
+        <br></select><br>
+    <button id="infoSubmit" onclick="infoSubmit()" title="submit coffee info">Submit Info</button> -->
+  </div>
+  <div id='chartContainer' class="chart-container" ><canvas id="myChart"></canvas></div>
+  <!-- <button id="chartButton" onclick="chartEnter()">Chart</button> -->
+</div>
+<div class="beanDataContainer">
+    
+  </div>
+</body>
+</div>
+</html>

@@ -4,7 +4,7 @@ provider:
   name: aws
   runtime: nodejs8.10
   environment:
-    DYNAMODB_TABLE: roastedCoffee
+    DYNAMODB_TABLE: ${file(../env.yml):COFFEE_DB}
 # AWS Defaults
   stage: dev
   region: us-east-1
@@ -17,12 +17,12 @@ provider:
         - dynamodb:PutItem
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
-      Resource: arn:aws:dynamodb:us-east-1:462788651624:*table/roastedCoffee
+      Resource: arn:aws:dynamodb:us-east-1:${file(../env.yml):AWS_ID}:*table/${file(../env.yml):COFFEE_DB}
     - Effect: Allow
       Action:
         - dynamodb:Query
         - dynamodb:Scan
-      Resource: arn:aws:dynamodb:us-east-1:462788651624:*table/roastedCoffee/index/*
+      Resource: arn:aws:dynamodb:us-east-1:${file(../env.yml):AWS_ID}:*table/${file(../env.yml):COFFEE_DB}/index/*
 
 functions:
   coffeeInfo:
@@ -32,7 +32,11 @@ functions:
             path: /
             method: POST
             cors: true
-            integration: lambda-proxy
+              # - enabled: true
+              # - origin: http://http://127.0.0.1:5500/
+              # - headers: "Content-Type,X-PINGOTHER"
+              # - methods: "PUT,POST,GET,DELETE"  
+            # integration: lambda-proxy
             # authorizer: auth
             # cors:
             #   origins:

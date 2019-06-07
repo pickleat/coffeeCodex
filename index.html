@@ -5,52 +5,137 @@
     <link rel="icon" href="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/mozilla/36/hot-beverage_2615.png">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto" rel="stylesheet">
     <link rel="stylesheet" href="main.css">
-    <script src="js/brew.js"></script>
-    <script src="js/beanData.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
+    <script src="js/beandata.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/lib.js"></script>
+    <script src="https://cdn.auth0.com/js/auth0/9.10/auth0.min.js"></script>
+    <!-- <script type="text/javascript" src="node_modules/auth0-js/build/auth0.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script> -->
     </head>
 <html>
-    <header>Brew Timer by <a href="https://twitter.com/pickleat">@pickleat</a></header>
-<div class="container">
-
-<body>
-    <button id='coffeeData'>Add Coffee</button>
-  <div class="timerArea">
-  <div><span id="timer">0:00</span></div>
-  <button id="start" title="start brewing your coffee">Start</button>
-  <button id="stop" title="stop the timer">Stop</button><br>
-  <button id="reset" title="reset the whole process">Reset</button>
-  <button id="addEvent" title="add a brew event">Event</button>
-</div>
-
-<div id="events" class="eventsArea" onchange="eventUpdate()"></div>
-<div class="brewedCoffeeInfo">
-  <div id="recipeCard">
-    <!-- <span id="recipeHeader">enter your coffee info:<br></span>
-    <input id="country" placeholder="country"><br></input>
-    <input id="roaster" placeholder="roaster"><br></input>
-    <input id="coffee" placeholder="producer/name"><br></input> -->
-    <!-- <input id="elevation" placeholder="elevation in MASL"><br></input>
-    <input id="varietals" placeholder="varietal(s)"><br></input>
-    <input id="processing" placeholder="processing"><br></input> -->
-    <!-- <input type="number" id="dose" placeholder="dose"><br></input>
-    <input type="number" id="ratio" placeholder="18 < ratio > 14"><br></input>
-    <label id="brewerLabel" for="brewer">choose a brewing device:<br></label>
-      <select id="brewer">
-        <option value="v60">v60</option>
-        <option value="Kalita Wave">Kalita Wave</option>
-        <option value="Chemex">Chemex</option>
-        <option value="Aeropress">Aeropress</option>
-        <option value="December Dripper">December Dripper</option>
-        <br></select><br>
-    <button id="infoSubmit" onclick="infoSubmit()" title="submit coffee info">Submit Info</button> -->
-  </div>
-  <div id='chartContainer' class="chart-container" ><canvas id="myChart"></canvas></div>
-  <!-- <button id="chartButton" onclick="chartEnter()">Chart</button> -->
-</div>
-<div class="beanDataContainer">
+  
+<nav>
+  <a id="btn-home-view" class="btn btn-primary btn-margin">Home</a>
+  <span>|</span>
+  <a id='beanDataButton'>+ Coffee</a>
+  <span>|</span>
+  <a id='getCoffeeData'>Search</a>
+  <span>|</span>
+  <a id='seeAllCoffees'>List Coffees</a>
+  <span>|</span>
+  <a id='oneCoffeeButton'>One Coffee</a>
+  <span>|</span>
+  <a id='btn-login'>Login</a>
+  <a id="btn-logout">Log Out</a>
+</nav>
+<main class="container">
+    <!-- home view -->
+    <div id="home-view"></div>
+    <div id='login-view'></div>
     
-  </div>
-</body>
-</div>
+  </main>
+  <body class="container">
+    <h1>Coffee Codex</h1>
+    <div id='coffeeCodex'>
+      <h4></h4>
+    </div>
+    <div id="recipeCard">
+      <span id="recipeHeader">enter your coffee info:<br></span>
+      <input id="country" placeholder="country"><br></input>
+      <input id="roaster" placeholder="roaster"><br></input>
+      <input id="producer" placeholder="producer"><br></input>
+      <input id="name" placeholder="name"><br></input>
+      <input id="masl" placeholder="elevation in MASL" type="number"><br></input>
+      <input id="varietals" placeholder="varietal(s)" title="enter a single varietal or multiple separated by comma"><br></input>
+      <input id="processing" placeholder="processing"><br></input>
+      <input id='notes' placeholder='flavor notes, separated by comma'><br></input>
+      <button id="infoSubmit" title="submit coffee info">Submit Info</button>
+    </div>
+    <div id='getCoffeeDataCard'>
+      <!-- <input id="coffeeID" placeholder="enter the unique id of the coffee"></input><br> -->
+      <span id="recipeHeader">Search Coffees by:<br></span>
+      <!-- <select>
+        <option value="AG">Antigua and Barbuda</option>
+        <option value="AR">Argentina</option>
+        <option value="AW">Aruba</option>
+        <option value="BS">Bahamas</option>
+        <option value="BB">Barbados</option>
+        <option value="BZ">Belize</option>
+        <option value="BM">Bermuda</option>
+        <option value="BO">Bolivia, Plurinational State of</option>
+        <option value="BW">Botswana</option>
+        <option value="BR">Brazil</option>
+        <option value="BI">Burundi</option>
+        <option value="CM">Cameroon</option>
+        <option value="CF">Central African Republic</option>
+        <option value="CL">Chile</option>
+        <option value="CN">China</option>
+        <option value="CO">Colombia</option>
+        <option value="CG">Congo</option>
+        <option value="CD">Congo, the Democratic Republic of the</option>
+        <option value="CR">Costa Rica</option>
+        <option value="CU">Cuba</option>
+        <option value="DM">Dominica</option>
+        <option value="DO">Dominican Republic</option>
+        <option value="EC">Ecuador</option>
+        <option value="SV">El Salvador</option>
+        <option value="ET">Ethiopia</option>
+        <option value="GH">Ghana</option>
+        <option value="GT">Guatemala</option>
+        <option value="HT">Haiti</option>
+        <option value="HN">Honduras</option>
+        <option value="IN">India</option>
+        <option value="ID">Indonesia</option>
+        <option value="JM">Jamaica</option>
+        <option value="KE">Kenya</option>
+        <option value="MG">Madagascar</option>
+        <option value="MW">Malawi</option>
+        <option value="MX">Mexico</option>
+        <option value="MA">Morocco</option>
+        <option value="MM">Myanmar</option>
+        <option value="NI">Nicaragua</option>
+        <option value="NE">Niger</option>
+        <option value="NG">Nigeria</option>
+        <option value="PA">Panama</option>
+        <option value="PG">Papua New Guinea</option>
+        <option value="PY">Paraguay</option>
+        <option value="PE">Peru</option>
+        <option value="PH">Philippines</option>
+        <option value="PR">Puerto Rico</option>
+        <option value="RW">Rwanda</option>
+        <option value="SN">Senegal</option>
+        <option value="SG">Singapore</option>
+        <option value="SO">Somalia</option>
+        <option value="ZA">South Africa</option>
+        <option value="SZ">Swaziland</option>
+        <option value="TZ">Tanzania, United Republic of</option>
+        <option value="TH">Thailand</option>
+        <option value="TT">Trinidad and Tobago</option>
+        <option value="TC">Turks and Caicos Islands</option>
+        <option value="TV">Tuvalu</option>
+        <option value="UG">Uganda</option>
+        <option value="US">United States</option>
+        <option value="UM">United States Minor Outlying Islands</option>
+        <option value="UY">Uruguay</option>
+        <option value="VE">Venezuela, Bolivarian Republic of</option>
+        <option value="VN">Vietnam</option>
+        <option value="YE">Yemen</option>
+        <option value="ZM">Zambia</option>
+        <option value="ZW">Zimbabwe</option>
+      </select> -->
+      <input id="roasterSearch" placeholder="roaster"><br></input>
+      <button type="button" id='searchByRoaster'>Search</button>
+      <div id='totalResultsNum'></div>
+        <table id='searchResults' style="background:rgb(51, 50, 54); outline: none;">
+        </table>
+    </div>
+    <div id='seeAllCoffeesCard'>
+      <table id='allCoffees' style="background:rgb(51, 50, 54); outline: none;">
+      </table>
+    </div>
+    <div id='coffeeInfoCard'>
+      <input id='coffee_id' placeholder="coffee_id">
+      <button type="button" id='getOneCoffeeInfo'>Search</button>
+    </div>
+  </body>
 </html>

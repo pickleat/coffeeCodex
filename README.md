@@ -65,3 +65,7 @@
 - Research
     - Google Devs: [Web Bluetooth](https://developers.google.com/web/updates/2015/07/interact-with-ble-devices-on-the-web)
     - Github Repo: [Web Bluetooth](https://github.com/WebBluetoothCG/web-bluetooth)
+
+## Web APIs
+
+- [Cache API](https://developers.google.com/web/fundamentals/instant-and-offline/web-storage/cache-api)

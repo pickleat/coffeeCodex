@@ -13,7 +13,7 @@ window.addEventListener('load', function() {
       scope: 'openid profile',
       redirectUri: window.location.href
     });
-    // 
+
     // ...
     var loginStatus = document.querySelector('h4');
     var loginView = document.getElementById('login-view');
@@ -45,12 +45,16 @@ window.addEventListener('load', function() {
     logoutBtn.addEventListener('click', logout);
     
       function handleAuthentication() {
-        var name; 
         webAuth.parseHash({ hash: window.location.hash }, function(err, authResult) {
           if (authResult && authResult.accessToken && authResult.idToken) {
             webAuth.client.userInfo(authResult.accessToken, function(err, user) {
-              console.log(user);
-              name = user.name;
+              var user_id = user.sub.substring(6);
+              console.log(user_id)
+              localStorage.setItem('name', user.name);
+              localStorage.setItem('picture', user.picture);
+              localStorage.setItem('user_id', user_id);
+              // localStorage.setItem('id', user.sub);
+              console.log(localStorage);
             });
             window.location.hash = '';
             localLogin(authResult);
@@ -63,7 +67,7 @@ window.addEventListener('load', function() {
               'Error: ' + err.error + '. Check the console for further details.'
             );
           }
-          displayButtons(name);
+          displayButtons();
         });
       }
     
@@ -100,6 +104,8 @@ window.addEventListener('load', function() {
       function logout() {
         // Remove isLoggedIn flag from localStorage
         localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('name');
+        localStorage.removeItem('picture');
         // Remove tokens and expiry time
         accessToken = '';
         idToken = '';
@@ -114,20 +120,17 @@ window.addEventListener('load', function() {
         return localStorage.getItem('isLoggedIn') === 'true' && new Date().getTime() < expiration;
       }
     
-      function displayButtons(name) {
+      function displayButtons() {
         if (isAuthenticated()) {
           loginBtn.style.display = 'none';
           logoutBtn.style.display = 'inline-block';
-          if(name){
-            console.log(name);
-            loginStatus.innerHTML = `Welcome ${name}`;
-          }
-          else {'You are logged in!';}
+          renderCodex();
+          // render homepage?
         } else {
           loginBtn.style.display = 'inline-block';
           logoutBtn.style.display = 'none';
           loginStatus.innerHTML =
-            'You are not logged in! Please log in to continue.';
+            'Login to see your Codex.';
         }
       }
   
