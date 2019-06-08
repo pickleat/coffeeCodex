@@ -367,6 +367,7 @@ async function renderCodex(){
       <td>Processing</td>
       <td>Date Added</td>
       <td>Rate Coffee</td>
+      <td>Remove</td>
     </tr>
     </thead>
   </table>`
@@ -386,7 +387,6 @@ async function renderCodex(){
     console.log(returnKeys);
 
       var row = document.createElement('tr');
-
       const roaster = (text) => makeElement('td', text);
       const country = (text) => makeElement('td', text);
       const MASL = (text) => makeElement('td', text);
@@ -396,8 +396,14 @@ async function renderCodex(){
       const producerLink = makeElement('a', returnData.producer);
       producerLink.setAttribute('onclick', `showOneCoffee('${returnData.id}')`)
       producer.appendChild(producerLink);
-      const addButton = makeElement('a', '+')
-      addButton.setAttribute('onclick', `addToMyCodex('${returnData.id}')`)
+      const rate = document.createElement('td');
+      const rateCoffee = makeElement('a', 'coming soon')
+      // rateCoffee.setAttribute('onclick', `rateCoffee('${returnData.id}')`)
+      rate.appendChild(rateCoffee);
+      const remove = document.createElement('td');
+      const removeLink = makeElement('a', 'X')
+      removeLink.setAttribute('onclick', `removeCoffeeFromCodex('${returnData.id}')`)
+      remove.appendChild(removeLink);
       
       row.appendChild(roaster(returnData.roaster));
       row.appendChild(country(returnData.country));
@@ -405,7 +411,8 @@ async function renderCodex(){
       row.appendChild(MASL(returnData.masl));
       row.appendChild(processing(returnData.processing));
       row.appendChild(dateAdded(formatTimestamp(item.createdAt)))
-      row.appendChild(addButton)
+      row.appendChild(rate)
+      row.appendChild(remove)
       codexTable.appendChild(row)
 
 })
@@ -429,6 +436,10 @@ async function addToMyCodex(id){
   // console.log(`user_id: ${localStorage.user_id}`);
   }
   else{console.log('you must be logged in to add a coffee to your Codex.')}
+}
+
+async function removeCoffeeFromCodex(id){
+  alert(`Thanks for trying, but this doesn't work yet. Coming soon!`)
 }
 
 function makeElement(type, text) {
