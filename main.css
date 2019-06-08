@@ -159,3 +159,12 @@ justify-items: center;
 #coffeeInfoCard {
     display: none;
 }
+
+table {
+    background: rgb(51, 50, 54);
+    outline: none;
+}
+
+thead {
+    background-color: indianred;
+}

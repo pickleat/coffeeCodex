@@ -59,10 +59,10 @@ function containerView(clickedContainer) {
 async function listCoffees(returnData){
   var returnData = await fetch(url, {method: "GET"})
   returnData = await returnData.json()
-  console.log(returnData);
+  localStorage.setItem('coffeeList', returnData);
   var allCoffees = document.getElementById('allCoffees');
   allCoffees.innerHTML = `
-  <thead style="background-color: indianred">
+  <thead>
   <tr>
     <td>Roaster</td>
     <td>Country</td>
@@ -102,7 +102,7 @@ async function findCoffeeInfo() {
   var input = document.getElementById('roasterSearch')
   var searchResults = document.getElementById('searchResults');
   searchResults.innerHTML = ` 
-  <thead style="background-color: indianred">
+  <thead>
   <tr>
     <td>Roaster</td>
     <td>Country</td>
@@ -121,6 +121,7 @@ async function findCoffeeInfo() {
   var returnData = await fetch(newURL, {method: "GET"})
   returnData = await returnData.json()
   console.log(returnData);
+  totalResultsNum.innerHTML = `Your Search Resulted in ${returnData.Count} coffees.`
   // returns the items found for each ROASTER needs to be formatted as shown to user.
   var keys = returnData.Items
   keys = sortBy(keys, 'country')
@@ -358,7 +359,7 @@ async function renderCodex(){
   var codex = document.getElementById('coffeeCodex');
   codex.innerHTML = `
   <table id="codexTable" style="background:rgb(51, 50, 54); outline: none;">
-    <thead style="background-color: indianred">
+    <thead>
     <tr>
       <td>Roaster</td>
       <td>Country</td>
