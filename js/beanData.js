@@ -126,7 +126,6 @@ async function findCoffeeInfo() {
   var keys = returnData.Items
   keys = sortBy(keys, 'country')
   
-  // console.log(keys)
   keys.forEach(item => {
     var tr = document.createElement('tr');
     var link = document.createElement('a');
