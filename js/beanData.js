@@ -357,7 +357,7 @@ function putReq(url, data){
 async function renderCodex(){
   var codex = document.getElementById('coffeeCodex');
   codex.innerHTML = `
-  <table id="codexTable" style="background:rgb(51, 50, 54); outline: none;">
+  <table id="codexTable">
     <thead>
     <tr>
       <td>Roaster</td>
