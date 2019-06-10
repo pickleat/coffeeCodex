@@ -403,6 +403,7 @@ async function renderCodex(){
       const remove = document.createElement('td');
       const removeLink = makeElement('a', 'X')
       removeLink.setAttribute('onclick', `removeCoffeeFromCodex('${returnData.id}')`)
+      remove.setAttribute('class', "cenText");
       remove.appendChild(removeLink);
       
       row.appendChild(roaster(returnData.roaster));
@@ -439,17 +440,17 @@ async function addToMyCodex(id){
 }
 
 async function removeCoffeeFromCodex(id){
-  alert(`Thanks for trying, but this doesn't work yet. Coming soon!`)
+  if(localStorage.isLoggedIn == 'true'){
+    const deleteURL = `${codexURL}?user_id=${localStorage.user_id}&coffee_id=${id}`
+
+    var returnData = await fetch(`${deleteURL}`, {
+      method: "DELETE",
+  })
+  returnData = await returnData.json();
+  renderCodex();
+  }
+  else{console.log('you must be logged in to remove a coffee to your Codex.')}
 }
 
-function makeElement(type, text) {
-  // Usage: 
-  // const h1 = (text) => makeElement(`h1`, text);
-  // document.body.appendChild(h1('hey h1 dude'));
-  const element = document.createElement(type);
-  const textNode = document.createTextNode(text);
-  
-  element.appendChild(textNode);
-  
-  return element;
-}
+
+

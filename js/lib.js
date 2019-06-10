@@ -19,8 +19,15 @@ function makeElement(type, text) {
     // document.body.appendChild(h1('hey h1 dude'));
     const element = document.createElement(type);
     const textNode = document.createTextNode(text);
-    
-    element.appendChild(textNode);
-    
+    element.appendChild(textNode); 
     return element;
-  }
+}
+
+//WIP-Not Implemented Considering Abstracting our fetch function away. 
+async function fetcher(url, method){
+    return await fetch(url, {
+        method: method,
+    })
+    .then( (response => {return response.json()}))
+    .catch(error => console.error('Error:', error));
+}
