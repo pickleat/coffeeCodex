@@ -109,8 +109,24 @@ async function findCoffeeInfo() {
     <td>Producer</td>
     <td>MASL</td>
     <td>Processing</td>
+    <td>Date Added</td>
   </tr>
 </thead>`
+  if(localStorage.isLoggedIn == 'true'){
+    searchResults.innerHTML = ` 
+  <thead>
+  <tr>
+    <td>Roaster</td>
+    <td>Country</td>
+    <td>Producer</td>
+    <td>MASL</td>
+    <td>Processing</td>
+    <td>Date Added</td>
+    <td>Rate Coffee</td>
+    <td>Add To Codex</td>
+  </tr>
+</thead>`
+  }
   var totalResultsNum = document.getElementById('totalResultsNum');
   var roaster = input.value;
   roaster = roaster.replace(/ /g, '_')
@@ -127,29 +143,10 @@ async function findCoffeeInfo() {
   keys = sortBy(keys, 'country')
   
   keys.forEach(item => {
-    var tr = document.createElement('tr');
-    var link = document.createElement('a');
-    // link.setAttribute('onclick', `getCoffeeInfo(${item.id})`);
-    var roaster = document.createElement('td');
-    roaster.appendChild(document.createTextNode(item.roaster));
-    roaster.appendChild(link);
-    var country = document.createElement('td');
-    country.appendChild(document.createTextNode(item.country));
-    var producer = document.createElement('td');
-    var link = document.createElement('a');
-    link.setAttribute('onclick', `showOneCoffee('${item.id}')`)
-    link.innerText = item.producer;
-    producer.appendChild(link);
-    var MASL = document.createElement('td');
-    MASL.appendChild(document.createTextNode(item.masl));
-    var processing = document.createElement('td');
-    processing.appendChild(document.createTextNode(item.processing));
-    tr.appendChild(roaster);
-    tr.appendChild(country);
-    tr.appendChild(producer);
-    tr.appendChild(MASL);
-    tr.appendChild(processing);
-    searchResults.appendChild(tr)
+    console.log(item);
+    var returnKeys = ["roaster", "country", "producer", "masl", "processing", "createdAt", "rate", "add"];
+    var row = rowBuilder(item, returnKeys);
+    searchResults.appendChild(row)
     console.log(`${item.producer} coffee id is ${item.id}`)
   })
 }
@@ -263,24 +260,12 @@ async function editCoffeeListener(coffeeInfo){
       }
       if(coffeeInfo[id] == val){return}
       coffeeInfo[id] = val;
-      // console.log(`id: ${id}
-      // val: ${val}
-      // coffeeInfo: ${coffeeInfo[id]}`)
     })
     var coffee_id = coffeeInfo.id
     const newURL = `${url}${coffee_id}`
     console.log(newURL);
     coffeeInfo = JSON.stringify(coffeeInfo)
     console.log(coffeeInfo)
-
-    // putReq(url, coffeeInfo).promise()
-    // .then( (res) => {
-    //   console.log('you made it back from putReq');
-    //   console.log(res);
-    // });
-
-    // var keys = Object.keys(returnData);
-  
 
   var http = new XMLHttpRequest();
       http.onreadystatechange = function() {
@@ -329,18 +314,6 @@ async function editCoffeeListener(coffeeInfo){
 })
 }
 
-function sortBy(data, sortKey){
-  data.sort(function(a, b) {
-      var nameA = a[sortKey].toUpperCase(); // ignore upper and lowercase
-      var nameB = b[sortKey].toUpperCase(); // ignore upper and lowercase
-      if (nameA < nameB) {return -1;}
-      if (nameA > nameB) {return 1;}
-      // If names are equal
-      return 0;
-      });
-  // console.log(data);
-  return data
-}
 
 function putReq(url, data){
   fetch(url, {
@@ -383,38 +356,9 @@ async function renderCodex(){
     returnData = returnData.Item;
     // console.log(returnData);  
     console.log(returnData);
-    var returnKeys = Object.keys(returnData);
-    console.log(returnKeys);
-
-      var row = document.createElement('tr');
-      const roaster = (text) => makeElement('td', text);
-      const country = (text) => makeElement('td', text);
-      const MASL = (text) => makeElement('td', text);
-      const processing = (text) => makeElement('td', text);
-      const dateAdded = (text) => makeElement('td', text);
-      const producer = document.createElement('td');
-      const producerLink = makeElement('a', returnData.producer);
-      producerLink.setAttribute('onclick', `showOneCoffee('${returnData.id}')`)
-      producer.appendChild(producerLink);
-      const rate = document.createElement('td');
-      const rateCoffee = makeElement('a', 'coming soon')
-      // rateCoffee.setAttribute('onclick', `rateCoffee('${returnData.id}')`)
-      rate.appendChild(rateCoffee);
-      const remove = document.createElement('td');
-      const removeLink = makeElement('a', 'X')
-      removeLink.setAttribute('onclick', `removeCoffeeFromCodex('${returnData.id}')`)
-      remove.setAttribute('class', "cenText");
-      remove.appendChild(removeLink);
-      
-      row.appendChild(roaster(returnData.roaster));
-      row.appendChild(country(returnData.country));
-      row.appendChild(producer);
-      row.appendChild(MASL(returnData.masl));
-      row.appendChild(processing(returnData.processing));
-      row.appendChild(dateAdded(formatTimestamp(item.createdAt)))
-      row.appendChild(rate)
-      row.appendChild(remove)
-      codexTable.appendChild(row)
+    var returnKeys = ["roaster", "country", "producer", "masl", "processing", "createdAt", "rate", "remove"];
+    var row = rowBuilder(returnData, returnKeys);
+    codexTable.appendChild(row)
 
 })
 }
@@ -444,7 +388,7 @@ async function removeCoffeeFromCodex(id){
     const deleteURL = `${codexURL}?user_id=${localStorage.user_id}&coffee_id=${id}`
 
     var returnData = await fetch(`${deleteURL}`, {
-      method: "DELETE",
+      method: "DELETE"
   })
   returnData = await returnData.json();
   renderCodex();
