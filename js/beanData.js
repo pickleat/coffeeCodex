@@ -61,72 +61,20 @@ async function listCoffees(returnData){
   returnData = await returnData.json()
   localStorage.setItem('coffeeList', returnData);
   var allCoffees = document.getElementById('allCoffees');
-  allCoffees.innerHTML = `
-  <thead>
-  <tr>
-    <td>Roaster</td>
-    <td>Country</td>
-    <td>Producer</td>
-    <td>MASL</td>
-    <td>Processing</td>
-    <td>Add Coffee</td>
-  </tr>
-</thead>`
+  allCoffees.innerHTML = getTable('list')
   returnData = sortBy(returnData, 'roaster')
 
   returnData.forEach(item => {
-    var row = document.createElement('tr');
-
-    const roaster = (text) => makeElement('td', text);
-    const country = (text) => makeElement('td', text);
-    const MASL = (text) => makeElement('td', text);
-    const processing = (text) => makeElement('td', text);
-    const producer = document.createElement('td');
-    const producerLink = makeElement('a', item.producer);
-    producerLink.setAttribute('onclick', `showOneCoffee('${item.id}')`)
-    producer.appendChild(producerLink);
-    const addButton = makeElement('a', '+')
-    addButton.setAttribute('onclick', `addToMyCodex('${item.id}')`)
-    
-    row.appendChild(roaster(item.roaster));
-    row.appendChild(country(item.country));
-    row.appendChild(producer);
-    row.appendChild(MASL(item.masl));
-    row.appendChild(processing(item.processing));
-    row.appendChild(addButton)
-    allCoffees.appendChild(row)
+    var returnKeys = ["roaster", "country", "producer", "masl", "processing", "add"];
+    var row = rowBuilder(item, returnKeys);
+    allCoffees.appendChild(row);
   })
 }
 
 async function findCoffeeInfo() {
   var input = document.getElementById('roasterSearch')
   var searchResults = document.getElementById('searchResults');
-  searchResults.innerHTML = ` 
-  <thead>
-  <tr>
-    <td>Roaster</td>
-    <td>Country</td>
-    <td>Producer</td>
-    <td>MASL</td>
-    <td>Processing</td>
-    <td>Date Added</td>
-  </tr>
-</thead>`
-  if(localStorage.isLoggedIn == 'true'){
-    searchResults.innerHTML = ` 
-  <thead>
-  <tr>
-    <td>Roaster</td>
-    <td>Country</td>
-    <td>Producer</td>
-    <td>MASL</td>
-    <td>Processing</td>
-    <td>Date Added</td>
-    <td>Rate Coffee</td>
-    <td>Add To Codex</td>
-  </tr>
-</thead>`
-  }
+  searchResults.innerHTML = getTable('search');
   var totalResultsNum = document.getElementById('totalResultsNum');
   var roaster = input.value;
   roaster = roaster.replace(/ /g, '_')
@@ -144,7 +92,7 @@ async function findCoffeeInfo() {
   
   keys.forEach(item => {
     console.log(item);
-    var returnKeys = ["roaster", "country", "producer", "masl", "processing", "createdAt", "rate", "add"];
+    var returnKeys = ["roaster", "country", "producer", "masl", "processing", "rate", "add"];
     var row = rowBuilder(item, returnKeys);
     searchResults.appendChild(row)
     console.log(`${item.producer} coffee id is ${item.id}`)
@@ -331,18 +279,7 @@ async function renderCodex(){
   var codex = document.getElementById('coffeeCodex');
   codex.innerHTML = `
   <table id="codexTable">
-    <thead>
-    <tr>
-      <td>Roaster</td>
-      <td>Country</td>
-      <td>Producer</td>
-      <td>MASL</td>
-      <td>Processing</td>
-      <td>Date Added</td>
-      <td>Rate Coffee</td>
-      <td>Remove</td>
-    </tr>
-    </thead>
+    ${getTable('codex')}
   </table>`
   var returnData = await fetch(`${codexURL}${localStorage.user_id}`, {method: "GET"})
   returnData = await returnData.json();
@@ -356,7 +293,7 @@ async function renderCodex(){
     returnData = returnData.Item;
     // console.log(returnData);  
     console.log(returnData);
-    var returnKeys = ["roaster", "country", "producer", "masl", "processing", "createdAt", "rate", "remove"];
+    var returnKeys = ["roaster", "country", "producer", "masl", "processing", "rate", "remove"];
     var row = rowBuilder(returnData, returnKeys);
     codexTable.appendChild(row)
 

@@ -98,3 +98,34 @@ function sortBy(data, sortKey){
       })
       return row
   }
+
+  function getTable(table){
+      var tableVal = `<thead>
+      <tr>
+      <td>Roaster</td>
+      <td>Country</td>
+      <td>Producer</td>
+      <td>MASL</td>
+      <td>Processing</td>`
+    if(localStorage.isLoggedIn === 'true'){
+        if(table == 'codex'){
+            tableVal += `
+            <td>Rate Coffee</td>
+            <td>Remove</td>`
+        }
+        if(table == 'search'){
+            tableVal += `
+            <td>Rate Coffee</td>
+            <td>Add To Codex</td>`
+        }
+        if(table === 'list'){
+            tableVal += `<td>Add Coffee</td>`
+        }
+    }
+    else {
+        tableVal += `
+        </tr>
+        </thead>`
+    }
+    return tableVal  
+  }
