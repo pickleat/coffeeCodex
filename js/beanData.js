@@ -165,20 +165,15 @@ async function showOneCoffee(coffee_id) {
 }
 
 async function editCoffeeListener(coffeeInfo){
-  console.log('you made it to editcoffeelistener')
-  console.log(coffeeInfo);
   var editCoffeeButton = document.getElementById('editCoffee');
   editCoffeeButton.addEventListener('click', () => {
-    console.log(coffeeInfo);
     coffeeInfoCard.innerHTML = '';
-    // var keys = Object.keys(coffeeInfo);
     var keys = coffeeInfoKeys;
-    console.log(keys);
     keys.forEach(key => {
       if(key == 'createdAt' || key == 'updatedAt' || key == 'id'){
         return
       }
-      var input = document.createElement('input');
+      var input = makeElement('input');
       var br = document.createElement('br')
       input.value = coffeeInfo[key];
       input.placeholder = key;
@@ -218,40 +213,9 @@ async function editCoffeeListener(coffeeInfo){
   var http = new XMLHttpRequest();
       http.onreadystatechange = function() {
         if (http.readyState == XMLHttpRequest.DONE) {
-          console.log('you made it back');
-          console.log(typeof(http.response));
-          console.log(JSON.parse(http.response));
-          var resp = JSON.parse(http.response.Attributes);
-          var respKeys = Object.keys(resp);
-          console.log(respKeys);
-          console.log(JSON.parse(http.response));
-
-          var editedCoffee = JSON.parse(http.response);
+          var resp = JSON.parse(http.response);
+          var editedCoffee = resp.Attributes.id;
           showOneCoffee(editedCoffee);
-          console.log(http.response);
-          var oneCoffeeInfo = JSON.parse(http.responseText)
-          oneCoffeeInfo = oneCoffeeInfo.Item;
-          console.log(oneCoffeeInfo); 
-          var keys = Object.keys(oneCoffeeInfo);
-    
-          // keys.forEach(key => {
-          //   var keyElem = document.createElement('ul');
-          //   var value = oneCoffeeInfo[key];
-          //   console.log(value);
-          //   keyElem.innerHTML = `${key}: ${value}`;
-          //   coffeeInfoCard.appendChild(keyElem);
-          // })
-          // coffeeInfoCard.innerText = keys;
-          coffeeInfoCard.innerHTML = `<h1>${oneCoffeeInfo.country} ${oneCoffeeInfo.name}</h1>
-          <button id='editCoffee'>Edit</button>
-          <li>Producer: ${oneCoffeeInfo.producer}</li>
-          <li>Roaster: ${oneCoffeeInfo.roaster}</li>
-          <li>Processing: ${oneCoffeeInfo.processing}</li>
-          <li>Flavor Notes: ${oneCoffeeInfo.notes}</li>
-          <li>Varietals: ${oneCoffeeInfo.varietals}</li>
-          <li>MASL: ${oneCoffeeInfo.masl}</li>
-          <li>ID: ${oneCoffeeInfo.id}</li>`
-          editCoffeeListener(oneCoffeeInfo);
         }
       }
     
