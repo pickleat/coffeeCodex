@@ -276,28 +276,31 @@ function putReq(url, data){
 }
 
 async function renderCodex(){
-  var codex = document.getElementById('coffeeCodex');
-  codex.innerHTML = `
-  <table id="codexTable">
+  if(localStorage.isLoggedIn == 'true'){
+    var codex = document.getElementById('coffeeCodex');
+    codex.innerHTML = `
+    <table id="codexTable">
     ${getTable('codex')}
-  </table>`
-  var returnData = await fetch(`${codexURL}${localStorage.user_id}`, {method: "GET"})
-  returnData = await returnData.json();
-  // returnData = sortBy(returnData, 'roaster')
-  var codexTable = document.getElementById("codexTable");
-  returnData.forEach(async(item) => {
-    const coffee_id = item.coffee_id;
-    const newURL = `${url}${coffee_id}`
-    var returnData = await fetch(newURL, {method: "GET"})
+    </table>`
+    var returnData = await fetch(`${codexURL}${localStorage.user_id}`, {method: "GET"})
     returnData = await returnData.json();
-    returnData = returnData.Item;
-    // console.log(returnData);  
-    console.log(returnData);
-    var returnKeys = ["roaster", "country", "producer", "masl", "processing", "rate", "remove"];
-    var row = rowBuilder(returnData, returnKeys);
-    codexTable.appendChild(row)
-
-})
+    // returnData = sortBy(returnData, 'roaster')
+    var codexTable = document.getElementById("codexTable");
+    returnData.forEach(async(item) => {
+      const coffee_id = item.coffee_id;
+      const newURL = `${url}${coffee_id}`
+      var returnData = await fetch(newURL, {method: "GET"})
+      returnData = await returnData.json();
+      returnData = returnData.Item;
+      // console.log(returnData);  
+      console.log(returnData);
+      var returnKeys = ["roaster", "country", "producer", "masl", "processing", "rate", "remove"];
+      var row = rowBuilder(returnData, returnKeys);
+      codexTable.appendChild(row)
+      
+    })
+  }
+  else{console.log(`You're not logged in`)}
 }
 
 async function addToMyCodex(id){
@@ -314,6 +317,7 @@ async function addToMyCodex(id){
   })
   returnData = await returnData.json();
   console.log(returnData);
+  renderCodex()
   // console.log(`coffee_id: ${id}`);
   // console.log(`user_id: ${localStorage.user_id}`);
   }
@@ -332,6 +336,3 @@ async function removeCoffeeFromCodex(id){
   }
   else{console.log('you must be logged in to remove a coffee to your Codex.')}
 }
-
-
-
