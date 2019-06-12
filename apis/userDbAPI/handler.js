@@ -20,6 +20,9 @@ const Create = (evt, ctx, cb) => {
     if (!data.coffee_id || typeof data.coffee_id !== 'string' || data.coffee_id.length <= 0) {
       throw new Error(`Country must be input as a string`);
     }
+    if (!data.rating || typeof data.rating !== 'number' || data.rating > 100 || data.rating < 0){
+      data.rating = 0;
+    }
   } catch (err) {
     cb(null, {
       statusCode: 400, 
@@ -33,6 +36,7 @@ const Create = (evt, ctx, cb) => {
     Item: {
       user_id: data.user_id,
       coffee_id: data.coffee_id,
+      coffee_rating: data.rating,
       createdAt: timestamp
     },
   };
