@@ -69,7 +69,7 @@ function sortBy(data, sortKey){
         if(localStorage.isLoggedIn == 'true'){
             if(listItem == 'rate'){
                 const rate = makeElement('td');
-                const rateCoffee = makeElement('a', 'coming soon')
+                const rateCoffee = makeElement('a', returnData.coffee_rating || 'coming soon');
                 // rateCoffee.setAttribute('onclick', `rateCoffee('${returnData.id}')`)
                 rate.appendChild(rateCoffee);
                 row.appendChild(rate)

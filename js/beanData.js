@@ -259,6 +259,8 @@ async function renderCodex(){
 
     var codexTable = document.getElementById("codexTable");
     returnData.forEach(async(item) => {
+      const coffee_rating = item.coffee_rating;
+      // console.log(coffee_rating);
       const coffee_id = item.coffee_id;
       const newURL = `${url}${coffee_id}`
       var returnData = await fetch(newURL, {method: "GET"})
@@ -266,7 +268,8 @@ async function renderCodex(){
       // In order to use the sort, you'll need to append into a sortable list of coffees. After you've gotten them.
       // returnData = sortBy(returnData, 'roaster')
       returnData = returnData.Item;
-      // console.log(returnData);  
+      returnData['coffee_rating'] = coffee_rating;
+
       console.log(returnData);
       var returnKeys = ["roaster", "country", "producer", "masl", "processing", "rate", "remove"];
       var row = rowBuilder(returnData, returnKeys);
