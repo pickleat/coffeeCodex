@@ -36,6 +36,7 @@ function makeElement(type, text) {
 }
 
 function sortBy(data, sortKey){
+    // console.log(data);
     data.sort(function(a, b) {
         var nameA = a[sortKey].toUpperCase(); // ignore upper and lowercase
         var nameB = b[sortKey].toUpperCase(); // ignore upper and lowercase

@@ -127,12 +127,16 @@ async function infoSubmit() {
     // console.log(beanData);
 
     // Send Data
-    var returnData = await fetch(url, {
+    var returnData = fetch(url, {
       method: "POST",
       body: beanData,
+    }).then( (response) => {
+      console.log(response)
+    }).catch((err) => {
+      console.error(err);
     })
-    returnData = await returnData.json()
-    console.log(returnData);
+    // returnData = await returnData.json()
+    // console.log(returnData.id);
 }
 
 
@@ -213,9 +217,13 @@ async function editCoffeeListener(coffeeInfo){
   var http = new XMLHttpRequest();
       http.onreadystatechange = function() {
         if (http.readyState == XMLHttpRequest.DONE) {
-          var resp = JSON.parse(http.response);
-          var editedCoffee = resp.Attributes.id;
-          showOneCoffee(editedCoffee);
+          console.log(http.responseText)
+          console.log(http.responseType)
+          // console.log(http.response);
+          // var resp = JSON.parse(http.response);
+          // console.log(resp);
+          // var editedCoffee = resp.Attributes.id;
+          showOneCoffee(coffee_id);
         }
       }
     
@@ -248,13 +256,15 @@ async function renderCodex(){
     </table>`
     var returnData = await fetch(`${codexURL}${localStorage.user_id}`, {method: "GET"})
     returnData = await returnData.json();
-    // returnData = sortBy(returnData, 'roaster')
+
     var codexTable = document.getElementById("codexTable");
     returnData.forEach(async(item) => {
       const coffee_id = item.coffee_id;
       const newURL = `${url}${coffee_id}`
       var returnData = await fetch(newURL, {method: "GET"})
       returnData = await returnData.json();
+      // In order to use the sort, you'll need to append into a sortable list of coffees. After you've gotten them.
+      // returnData = sortBy(returnData, 'roaster')
       returnData = returnData.Item;
       // console.log(returnData);  
       console.log(returnData);
