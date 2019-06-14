@@ -157,10 +157,13 @@ const Update = (evt, ctx, cb) => {
       throw new Error('Empty message body or does not parse to JSON');
     }
     if (data.user_id && typeof data.user_id !== 'string' && data.user_id.length <= 0) {
-      throw new Error(`Roaster must be of type string`)
+      throw new Error(`Must be of type string`)
     }
     if (data.coffee_id && typeof data.coffee_id !== 'string' && data.coffee_id.length <= 0) {
-      throw new Error(`Country must be input as a string`);
+      throw new Error(`Must be of type string`);
+    }
+    if (data.coffee_rating && typeof data.coffee_rating !== 'number'){
+      throw new Error(`Must be of type number`);
     }
   } catch (err) {
     cb(null, {

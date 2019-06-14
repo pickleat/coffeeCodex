@@ -68,9 +68,11 @@ function sortBy(data, sortKey){
         }
         if(localStorage.isLoggedIn == 'true'){
             if(listItem == 'rate'){
+                console.log(returnData.coffee_rating);
                 const rate = makeElement('td');
-                const rateCoffee = makeElement('a', returnData.coffee_rating || 'coming soon');
-                // rateCoffee.setAttribute('onclick', `rateCoffee('${returnData.id}')`)
+                const rateCoffee = makeElement('a', returnData.coffee_rating);
+                rateCoffee.setAttribute('onclick', `editRating('${returnData.id}', ${returnData.coffee_rating})`)
+                rateCoffee.setAttribute('id', `rate-${returnData.id}`)
                 rate.appendChild(rateCoffee);
                 row.appendChild(rate)
                 return
@@ -111,7 +113,7 @@ function sortBy(data, sortKey){
     if(localStorage.isLoggedIn === 'true'){
         if(table == 'codex'){
             tableVal += `
-            <td>Rate Coffee</td>
+            <td>Rating</td>
             <td>Remove</td>`
         }
         if(table == 'search'){

@@ -260,7 +260,7 @@ async function renderCodex(){
     var codexTable = document.getElementById("codexTable");
     returnData.forEach(async(item) => {
       const coffee_rating = item.coffee_rating;
-      // console.log(coffee_rating);
+      console.log(coffee_rating);
       const coffee_id = item.coffee_id;
       const newURL = `${url}${coffee_id}`
       var returnData = await fetch(newURL, {method: "GET"})
@@ -280,11 +280,12 @@ async function renderCodex(){
   else{console.log(`You're not logged in`)}
 }
 
-async function addToMyCodex(id){
+async function addToMyCodex(id, rating){
   if(localStorage.isLoggedIn == 'true'){
     var body = {
       user_id: localStorage.user_id,
-      coffee_id: id
+      coffee_id: id, 
+      rating: rating || 1
     }
     body = JSON.stringify(body);
     var returnData = await fetch(`${codexURL}`, {
@@ -295,10 +296,23 @@ async function addToMyCodex(id){
   returnData = await returnData.json();
   console.log(returnData);
   renderCodex()
-  // console.log(`coffee_id: ${id}`);
-  // console.log(`user_id: ${localStorage.user_id}`);
   }
   else{console.log('you must be logged in to add a coffee to your Codex.')}
+}
+
+async function editRating(id, rating){
+  var editRating = document.getElementById(`rate-${id}`);
+  editRating.removeAttribute('onclick')
+  editRating.innerHTML = ''
+  var input = makeElement('input');
+  input.value = rating;
+  editRating.appendChild(input);
+  input.addEventListener('keyup', (e) => {
+    var rating = Number(input.value);
+    if(e.keyCode === 13) {
+      addToMyCodex(id, rating)
+    }
+  })
 }
 
 async function removeCoffeeFromCodex(id){
@@ -313,3 +327,4 @@ async function removeCoffeeFromCodex(id){
   }
   else{console.log('you must be logged in to remove a coffee to your Codex.')}
 }
+
