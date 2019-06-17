@@ -44,6 +44,7 @@ h1 {
 
 a {
     color: rgb(251, 255, 254);
+    cursor: pointer;
 }
 a:hover {
     color: rgb(73, 203, 233);
@@ -88,6 +89,7 @@ button:disabled {
 }
 button:hover {
     background: rgb(164, 186, 183, .8);
+    cursor: pointer;
 }
 input {
     border-style: none;
@@ -169,6 +171,10 @@ thead {
     background-color: indianred;
 }
 
+tr:hover {
+    background: rgb(69, 68, 73);
+    /* color: black; */
+}
 .cenText {
     text-align: center;
 }
