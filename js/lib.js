@@ -22,6 +22,37 @@ function formatTimestamp(timestamp) {
     return formatedTime;
 }
 
+function getTable(table){
+    var tableVal = `<thead>
+    <tr>
+    <td>Roaster</td>
+    <td>Country</td>
+    <td>Producer</td>
+    <td>MASL</td>
+    <td>Processing</td>`
+  if(localStorage.isLoggedIn === 'true'){
+      if(table == 'codex'){
+          tableVal += `
+          <td>Rating</td>
+          <td>Remove</td>`
+      }
+      if(table == 'search'){
+          tableVal += `
+          <td>Rate Coffee</td>
+          <td>Add To Codex</td>`
+      }
+      if(table === 'list'){
+          tableVal += `<td>Add Coffee</td>`
+      }
+  }
+  else {
+      tableVal += `
+      </tr>
+      </thead>`
+  }
+  return tableVal  
+}
+
 // Helper function: Makes an HTML Element
 function makeElement(type, text) {
     // Usage: 
@@ -35,7 +66,59 @@ function makeElement(type, text) {
     return element;
 }
 
-function sortBy(data, sortKey){
+function rowBuilder(returnData, list){
+    row = makeElement('tr');
+    list.forEach((listItem) => {
+    if(listItem == 'producer'){
+        const producer = makeElement('td');
+        const producerLink = makeElement('a', returnData.producer);
+        producerLink.setAttribute('onclick', `showOneCoffee('${returnData.id}')`)
+        producer.appendChild(producerLink);
+        row.appendChild(producer);
+        return
+    }
+    if(listItem == 'createdAt'){
+        const dateAdded = (text) => makeElement('td', text);
+        row.appendChild(dateAdded(formatTimestamp(returnData.createdAt)))
+        return
+    }
+    if(localStorage.isLoggedIn == 'true'){
+        if(listItem == 'rate'){
+            console.log(returnData.coffee_rating);
+            const rate = makeElement('td');
+            const rateCoffee = makeElement('a', returnData.coffee_rating);
+            rateCoffee.setAttribute('onclick', `editRating('${returnData.id}', ${returnData.coffee_rating})`)
+            rateCoffee.setAttribute('id', `rate-${returnData.id}`)
+            rate.appendChild(rateCoffee);
+            row.appendChild(rate)
+            return
+        }
+        if(listItem == 'remove'){
+            const remove = document.createElement('td');
+            const removeLink = makeElement('a', 'X')
+            removeLink.setAttribute('onclick', `removeCoffeeFromCodex('${returnData.id}')`)
+            remove.setAttribute('class', "cenText");
+            remove.appendChild(removeLink);
+            row.appendChild(remove)
+            return
+        }
+        if(listItem == 'add'){
+            const add = makeElement('td');
+            const addCoffee = makeElement('a', '+');
+            addCoffee.setAttribute('onclick', `addToMyCodex('${returnData.id}')`)
+            add.setAttribute('class', "cenText");
+            add.appendChild(addCoffee)
+            row.appendChild(add);
+        }
+        // Need to add "Add to Codex"
+    }
+    const thing = makeElement('td', returnData[listItem]);
+    row.appendChild(thing);
+    })
+    return row
+}
+
+  function sortBy(data, sortKey){
     // console.log(data);
     data.sort(function(a, b) {
         var nameA = a[sortKey].toUpperCase(); // ignore upper and lowercase
@@ -47,88 +130,4 @@ function sortBy(data, sortKey){
         });
     // console.log(data);
     return data
-  }
-
-
-  function rowBuilder(returnData, list){
-      row = makeElement('tr');
-      list.forEach((listItem) => {
-        if(listItem == 'producer'){
-            const producer = makeElement('td');
-            const producerLink = makeElement('a', returnData.producer);
-            producerLink.setAttribute('onclick', `showOneCoffee('${returnData.id}')`)
-            producer.appendChild(producerLink);
-            row.appendChild(producer);
-            return
-        }
-        if(listItem == 'createdAt'){
-            const dateAdded = (text) => makeElement('td', text);
-            row.appendChild(dateAdded(formatTimestamp(returnData.createdAt)))
-            return
-        }
-        if(localStorage.isLoggedIn == 'true'){
-            if(listItem == 'rate'){
-                console.log(returnData.coffee_rating);
-                const rate = makeElement('td');
-                const rateCoffee = makeElement('a', returnData.coffee_rating);
-                rateCoffee.setAttribute('onclick', `editRating('${returnData.id}', ${returnData.coffee_rating})`)
-                rateCoffee.setAttribute('id', `rate-${returnData.id}`)
-                rate.appendChild(rateCoffee);
-                row.appendChild(rate)
-                return
-            }
-            if(listItem == 'remove'){
-                const remove = document.createElement('td');
-                const removeLink = makeElement('a', 'X')
-                removeLink.setAttribute('onclick', `removeCoffeeFromCodex('${returnData.id}')`)
-                remove.setAttribute('class', "cenText");
-                remove.appendChild(removeLink);
-                row.appendChild(remove)
-                return
-            }
-            if(listItem == 'add'){
-                const add = makeElement('td');
-                const addCoffee = makeElement('a', '+');
-                addCoffee.setAttribute('onclick', `addToMyCodex('${returnData.id}')`)
-                add.setAttribute('class', "cenText");
-                add.appendChild(addCoffee)
-                row.appendChild(add);
-            }
-            // Need to add "Add to Codex"
-        }
-        const thing = makeElement('td', returnData[listItem]);
-        row.appendChild(thing);
-      })
-      return row
-  }
-
-  function getTable(table){
-      var tableVal = `<thead>
-      <tr>
-      <td>Roaster</td>
-      <td>Country</td>
-      <td>Producer</td>
-      <td>MASL</td>
-      <td>Processing</td>`
-    if(localStorage.isLoggedIn === 'true'){
-        if(table == 'codex'){
-            tableVal += `
-            <td>Rating</td>
-            <td>Remove</td>`
-        }
-        if(table == 'search'){
-            tableVal += `
-            <td>Rate Coffee</td>
-            <td>Add To Codex</td>`
-        }
-        if(table === 'list'){
-            tableVal += `<td>Add Coffee</td>`
-        }
-    }
-    else {
-        tableVal += `
-        </tr>
-        </thead>`
-    }
-    return tableVal  
   }
