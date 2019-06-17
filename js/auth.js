@@ -1,6 +1,5 @@
 // Auth0 Authorization Logic
 
-
 window.addEventListener('load', function() {
     var idToken;
     var accessToken;
@@ -26,7 +25,9 @@ window.addEventListener('load', function() {
 
 
     if (localStorage.getItem('isLoggedIn') === 'true') {
-      renewTokens();
+      // Originally used renewTokens() but that was buggy so this is a workaround
+      // renewTokens();
+      handleAuthentication();
     } else {
       handleAuthentication();
     }
@@ -89,6 +90,7 @@ window.addEventListener('load', function() {
           console.log(authResult);
           // console.log(authResult.accessToken);
           // console.log(authResult.idToken);
+
           if (authResult && authResult.accessToken && authResult.idToken) {
             localLogin(authResult);
           } else if (err) {
@@ -125,7 +127,6 @@ window.addEventListener('load', function() {
           loginBtn.style.display = 'none';
           logoutBtn.style.display = 'inline-block';
           renderCodex();
-          // render homepage?
         } else {
           loginBtn.style.display = 'inline-block';
           logoutBtn.style.display = 'none';
