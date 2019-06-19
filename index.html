@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+<html>
     <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coffee Timer</title>
     <link rel="icon" href="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/mozilla/36/hot-beverage_2615.png">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto" rel="stylesheet">
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="output.css">
     <script src="./js/beanData.js"></script>
     <script src="./js/auth.js"></script>
     <script src="./js/lib.js"></script>
@@ -12,35 +13,61 @@
     <!-- <script type="text/javascript" src="node_modules/auth0-js/build/auth0.js"></script> -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script> -->
     </head>
-<html>
-  
-<nav>
-  <a id="btn-home-view" class="btn btn-primary btn-margin">Home</a>
-  <span>|</span>
-  <a id='beanDataButton'>Add a Coffee</a>
-  <span>|</span>
-  <a id='getCoffeeData'>Search</a>
-  <span>|</span>
-  <a id='seeAllCoffees'>List Coffees</a>
-  <span>|</span>
-  <a id='oneCoffeeButton'>One Coffee</a>
-  <span>|</span>
-  <a id='btn-login'>Login</a>
-  <a id="btn-logout">Log Out</a>
-</nav>
+
+<body>
+    <nav class="">
+        <a class="flex items-center flex-shrink-0 text-gray-900 mr-6" id="btn-home-view">
+          <span class="font-semibold text-xl tracking-tight">CoffeeCodex</span>
+        </a>
+        <div class="block lg:hidden">
+          <button class="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white">
+            <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
+          </button>
+        </div>
+        <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
+          <div class="text-sm lg:flex-grow">
+            <a class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4" id='beanDataButton'>Add a Coffee</a>
+            <a class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4" id='getCoffeeData'>Search</a>
+            <a class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4" id='seeAllCoffees'>List Coffees</a>
+            <a class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white hidden" id='oneCoffeeButton'>One Coffee</a>
+          </div>
+          <div>
+            <a class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0" id='btn-login'>Login</a>
+            <a class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0" id='btn-logout'>Logout</a>
+          </div>
+        </div>
+  <!-- <nav class="flex items-center justify-between flex-wrap bg-green-300 p-3">
+          <a id="btn-home-view" class="flex items-center flex-shrink-0 text-white mr-6">
+            <span  class="font-semibold text-xl tracking-tight">CoffeeCodex</span>
+          </a>
+          <div class="block lg:hidden"></div>
+          <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
+            <div class="text-sm lg:flex-grow">
+              <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-gray-900 hover:text-white mr-4" id='beanDataButton'>Add a Coffee</a>
+              <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-gray-900 hover:text-white mr-4" id='getCoffeeData'>Search</a>
+              <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-gray-900 hover:text-white mr-4" id='seeAllCoffees'>List Coffees</a>
+              <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-gray-900 hover:text-white mr-4" id='oneCoffeeButton'>One Coffee</a>
+              <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-gray-900 hover:text-white mr-4"  id='btn-login'>Login</a>
+              <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-gray-900 hover:text-white mr-4"  id='btn-logout'>Logout</a>
+            </div>
+          </div>
+    <a id="btn-home-view" class="btn btn-primary btn-margin">Home</a> -->
+    <!-- <a id='beanDataButton'>Add a Coffee</a> -->
+    <!-- <a id='getCoffeeData'>Search</a> -->
+    <!-- <a id='seeAllCoffees'>List Coffees</a> -->
+    <!-- <a id='oneCoffeeButton'>One Coffee</a> -->
+    <!-- <a id='btn-login'>Login</a> -->
+    <!-- <a id="btn-logout">Log Out</a> -->
+  </nav>
 <main class="container">
     <!-- home view -->
     <div id="home-view"></div>
     <div id='login-view'></div>
-    
-  </main>
-  <body class="container">
-    <h1>Coffee Codex</h1>
     <div id='coffeeCodex'>
       <h4></h4>
     </div>
-    <div id="recipeCard">
-      <span id="recipeHeader">enter your coffee info:<br></span>
+    <div id="recipeCard" class="p-4 m-4">
+      <h2 id="recipeHeader">Add a Coffee to our Codex:<br></h2>
       <input id="country" placeholder="country"><br></input>
       <input id="roaster" placeholder="roaster"><br></input>
       <input id="producer" placeholder="producer"><br></input>
@@ -51,9 +78,9 @@
       <input id='notes' placeholder='flavor notes, separated by comma'><br></input>
       <button id="infoSubmit" title="submit coffee info">Submit Info</button>
     </div>
-    <div id='getCoffeeDataCard'>
+    <div id='getCoffeeDataCard' class="p-4 m-4">
       <!-- <input id="coffeeID" placeholder="enter the unique id of the coffee"></input><br> -->
-      <span id="recipeHeader">Search Coffees by:<br></span>
+      <h2 id="recipeHeader">Search Coffees by:<br></h2>
       <!-- <select>
         <option value="AG">Antigua and Barbuda</option>
         <option value="AR">Argentina</option>
@@ -127,12 +154,14 @@
       <div id='totalResultsNum'></div>
         <table id='searchResults'></table>
     </div>
-    <div id='seeAllCoffeesCard'>
+    <div id='seeAllCoffeesCard' class="p-4 m-4">
       <table id='allCoffees'></table>
     </div>
-    <div id='coffeeInfoCard'>
+    <div class="p-4 m-4" id='coffeeInfoCard'>
+      <h2>Enter the uniqute ID of the coffee</h2>
       <input id='coffee_id' placeholder="coffee_id">
       <button type="button" id='getOneCoffeeInfo'>Search</button>
     </div>
+    <main>
   </body>
 </html>

@@ -1,145 +1,112 @@
-/* Need to implement Styling at some point */
-/* Fonts */
-/* 
-Serif
-font-family: 'Open Sans', Georgia;
-Sans-Serif
-font-family: 'Roboto', Arial, sans-serif; 
-*/
-/* Colors */
-/* 
-Black: rgb(11,17,29);
-Red: rgb(214, 40, 40);
-Blue: rgb(34, 85, 96);
-Light Blue/Green rgb(164, 186, 183);
-Yellow: rgb(240, 196, 44);
-White: rgb(251, 255, 254); 
-*/
+@tailwind base;
 
 html {
-    background: rgb(30, 44, 71);
+    @apply .bg-gray-100;
+}
+a {
+    /* color: rgb(251, 255, 254); */
+    @apply text-gray-900 underline cursor-pointer
+}
+a:hover {
+
 }
 
-header {
-    background: rgb(240,196,44);
-    width: 100%;
-    height: 40px;
-    color: rgb(34,85,96);
-    font-family: 'Open Sans', Georgia;
-    grid-area: 'header';
-    justify-content: center;
-    font-size: 25px;
-    text-align: center;
-    margin-top: -10px;
-    padding-left: 20px;
-}
-
-h4 {
-    color: rgb(251, 255, 254);
+nav {
+    @apply flex items-center justify-between flex-wrap bg-teal-500 p-3
 }
 
 h1 {
-    color: rgb(251, 255, 254);
+    @apply text-4xl text-gray-900 text-center .font-medium
+}
+h2 {
+    @apply text-xl;
+}
+h4 {
+    @apply text-lg;
+}
+table {
+    @apply bg-gray-300 text-gray-900 m-8 mx-auto rounded;
+}
+thead {
+    @apply bg-teal-500 text-gray-900
 }
 
-a {
-    color: rgb(251, 255, 254);
-    cursor: pointer;
+tr {
+
 }
-a:hover {
-    color: rgb(73, 203, 233);
+tr:hover {
+    @apply shadow-xl bg-gray-500
 }
+
 body {
-    display: grid;
-    background: rgb(251, 255, 254);
-    font-family: 'Roboto', Arial, sans-serif;    
+    @apply text-gray-900
 }
 
 div {
-    color:rgb(251, 255, 254);
-    font-family: 'Roboto', Arial, sans-serif;    
-
 }
 
 .timerArea {
-    grid-area: "timer";
+    /* grid-area: "timer"; */
     /* background: fuchsia; */
 }
 #timer {
-    font-family: 'Roboto', Helvetica, sans-serif;
+    /* font-family: 'Roboto', Helvetica, sans-serif;
     font-weight: 100;
     font-size: 100px;
     color: rgb(251, 255, 254);
-    align-content: center;
+    align-content: center; */
 }
 button {
-    background: rgb(164, 186, 183);
-    color: rgb(11, 17, 29);
-    font-weight: bold;
-    border-style: none;
-    /* border-radius: 5px; */
-    width: 100px;
-    height: 40px;
-    margin: 10px;
-    
+    @apply font-bold py-2 px-4 rounded bg-teal-500 .text-gray-900 shadow;
 }
 
 button:disabled {
-    background: rgb(164, 186, 183, .4);
+    /* background: rgb(164, 186, 183, .4); */
 }
 button:hover {
-    background: rgb(164, 186, 183, .8);
+    /* background: rgb(164, 186, 183, .8); */
+    @apply font-black;
     cursor: pointer;
 }
 input {
-    border-style: none;
+    /* border-style: none; */
+    @apply border rounded p-2 m-1
+}
+
+.svg {
+    max-width: 1rem;
 }
 
 #events {
-    display: none;
+    /* display: none;
     margin: 10px;
-    padding: 10px;
+    padding: 10px; */
     /* padding: 5px; */
-    background: rgb(164, 186, 183);
+    /* background: rgb(164, 186, 183);
     justify-self: center;
     grid-area: "events";
-    text-align: center;
+    text-align: center; */
 }
 #events input {
-    width: 33%;
-    margin-left: 10px;
+    /* width: 33%;
+    margin-left: 10px; */
 }
 
 #recipeCard {
-    justify-self: center;
+    /* justify-self: center;
     align-content: center;
-    margin: 10px;
+    margin: 10px; */
 }
 
 #chart-container {
-    display: grid;
+    /* display: grid;
     min-width: 100%;
     position: relative;
-    grid-area: "chart";
+    grid-area: "chart"; */
 }
 
 .container {
-/* width: 100%; */
-/* min-height: 300px;
-max-height: 100%; */
-display: grid;
-grid-template-columns: auto;
-grid-template-rows: auto;
-grid-template-areas: 
-    "header"
-    "timer"
-    "buttons"
-    "coffee info"
-    "events"
-    "chart";
-background-color: rgb(30, 44, 71);
-align-items: center;
-justify-items: center;
+    @apply text-center
 }
 
 .beanDataContainer {
@@ -162,19 +129,6 @@ justify-items: center;
     display: none;
 }
 
-table {
-    background: rgb(51, 50, 54);
-    outline: none;
-}
+@tailwind components;
 
-thead {
-    background-color: indianred;
-}
-
-tr:hover {
-    background: rgb(69, 68, 73);
-    /* color: black; */
-}
-.cenText {
-    text-align: center;
-}
+@tailwind utilities;
