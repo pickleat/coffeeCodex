@@ -84,9 +84,13 @@ function rowBuilder(returnData, list){
     }
     if(localStorage.isLoggedIn == 'true'){
         if(listItem == 'rate'){
+            var rater = returnData.coffee_rating;
+            if(returnData.coffee_rating == '1'){
+                rater = 'Rate Me!'
+            }
             console.log(returnData.coffee_rating);
             const rate = makeElement('td');
-            const rateCoffee = makeElement('a', returnData.coffee_rating);
+            const rateCoffee = makeElement('a', rater);
             rateCoffee.setAttribute('onclick', `editRating('${returnData.id}', ${returnData.coffee_rating})`)
             rateCoffee.setAttribute('id', `rate-${returnData.id}`)
             rate.appendChild(rateCoffee);
@@ -95,18 +99,26 @@ function rowBuilder(returnData, list){
         }
         if(listItem == 'remove'){
             const remove = document.createElement('td');
-            const removeLink = makeElement('a', 'X')
+            const removeLink = makeElement('a')
+            const svgRemove = makeElement('img')
+            svgRemove.setAttribute('src', '../resources/close-outline.svg');
+            svgRemove.setAttribute('class', 'svg')
             removeLink.setAttribute('onclick', `removeCoffeeFromCodex('${returnData.id}')`)
-            remove.setAttribute('class', "cenText");
+            // remove.setAttribute('class', "text-center");
+            removeLink.appendChild(svgRemove);
             remove.appendChild(removeLink);
             row.appendChild(remove)
             return
         }
         if(listItem == 'add'){
             const add = makeElement('td');
-            const addCoffee = makeElement('a', '+');
+            const addCoffee = makeElement('a');
+            const svgPlus = makeElement('img');
+            svgPlus.setAttribute('src', '../resources/add-outline.svg')
+            svgPlus.setAttribute('class', 'svg align-center')
             addCoffee.setAttribute('onclick', `addToMyCodex('${returnData.id}')`)
-            add.setAttribute('class', "cenText");
+            // add.setAttribute('class', "text-center");
+            addCoffee.appendChild(svgPlus);
             add.appendChild(addCoffee)
             row.appendChild(add);
         }
