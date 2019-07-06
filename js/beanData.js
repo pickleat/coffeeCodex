@@ -59,7 +59,7 @@ function containerView(clickedContainer) {
 async function listCoffees(returnData){
   var returnData = await fetch(url, {method: "GET"})
   returnData = await returnData.json()
-  localStorage.setItem('coffeeList', returnData);
+  // localStorage.setItem('coffeeList', returnData);
   var allCoffees = document.getElementById('allCoffees');
   allCoffees.innerHTML = getTable('list')
   returnData = sortBy(returnData, 'roaster')
