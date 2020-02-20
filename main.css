@@ -1,7 +1,7 @@
 @tailwind base;
 
 html {
-    @apply .bg-gray-100;
+    @apply bg-gray-100;
 }
 a {
     /* color: rgb(251, 255, 254); */
@@ -35,7 +35,7 @@ tr {
 
 }
 tr:hover {
-    @apply shadow-xl bg-gray-500
+    @apply bg-gray-400
 }
 
 body {

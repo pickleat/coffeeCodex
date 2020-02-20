@@ -607,7 +607,7 @@ a {
   /* color: rgb(251, 255, 254); */
   color: #1a202c;
   text-decoration: underline;
-  cursor: pointer;
+  cursor: pointer
 }
 
 a:hover {
@@ -655,8 +655,7 @@ tr {
 }
 
 tr:hover {
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  background-color: #a0aec0
+  background-color: #cbd5e0
 }
 
 body {
