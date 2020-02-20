@@ -43,7 +43,7 @@ window.onload = () => {
       if (hamburger_items.classList != "hidden") {
         hamburger_items.classList = 'hidden'
       } else {
-        hamburger_items.classList = "w-full block flex-grow";
+        hamburger_items.classList = "w-full block flex-grow lg:block lg:flex-grow lg:flex lg:items-center lg:w-auto";
       }
   })
   submitcoffeeInfoButton.addEventListener("click", () => {
