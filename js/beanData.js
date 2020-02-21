@@ -7,18 +7,10 @@ var beanData = {}
 
 window.onload = () => {
   // Declare Buttons
-  // Choose navbar button listeners based on screensize
-  if(document.body.clientWidth >= 1024) {
-    var submitcoffeeInfoButton = document.getElementById('beanDataButton-lg');
-    var getCoffeeInfoButton = document.getElementById('getCoffeeData-lg');
-    var seeAllCoffees = document.getElementById('seeAllCoffees-lg');
-    var oneCoffeeButton = document.getElementById('oneCoffeeButton-lg');
-  } else {
-    var submitcoffeeInfoButton = document.getElementById('beanDataButton');
-    var getCoffeeInfoButton = document.getElementById('getCoffeeData');
-    var seeAllCoffees = document.getElementById('seeAllCoffees');
-    var oneCoffeeButton = document.getElementById('oneCoffeeButton');
-  }
+  var submitcoffeeInfoButton = document.getElementById('beanDataButton');
+  var getCoffeeInfoButton = document.getElementById('getCoffeeData');
+  var seeAllCoffees = document.getElementById('seeAllCoffees');
+  var oneCoffeeButton = document.getElementById('oneCoffeeButton');
 
   const homeButton = document.getElementById('btn-home-view');
   var submit = document.getElementById('infoSubmit');
@@ -40,10 +32,10 @@ window.onload = () => {
   }) 
   hamburger.addEventListener('click', () => {
       const hamburger_items = document.getElementById('hamburger-items')
-      if (hamburger_items.classList != "hidden") {
-        hamburger_items.classList = 'hidden'
-      } else {
+      if (hamburger_items.classList == "hidden") {
         hamburger_items.classList = "w-full block flex-grow lg:block lg:flex-grow lg:flex lg:items-center lg:w-auto";
+      } else {
+        hamburger_items.classList = 'hidden'
       }
   })
   submitcoffeeInfoButton.addEventListener("click", () => {
