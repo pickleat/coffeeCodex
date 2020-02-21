@@ -20,6 +20,8 @@ window.onload = () => {
   submit.addEventListener("click", infoSubmit, false);
   homeButton.addEventListener('click', () => {containerView(coffeeCodex); renderCodex();})
   searchByRoaster.addEventListener('click', findCoffeeInfo, false);
+  // Opens and Closes Hamburger Menu
+  hamburger.addEventListener('click', () => {document.getElementById('hamburger-items').classList.toggle('hidden')})
   
   // Complex Listeners
   getOneCoffeeInfo.addEventListener('click', () => {
@@ -30,14 +32,7 @@ window.onload = () => {
   getCoffeeInfoButton.addEventListener("click", () => {
     containerView(getCoffeeDataCard);
   }) 
-  hamburger.addEventListener('click', () => {
-      const hamburger_items = document.getElementById('hamburger-items')
-      if (hamburger_items.classList == "hidden") {
-        hamburger_items.classList = "w-full block flex-grow lg:block lg:flex-grow lg:flex lg:items-center lg:w-auto";
-      } else {
-        hamburger_items.classList = 'hidden'
-      }
-  })
+
   submitcoffeeInfoButton.addEventListener("click", () => {
     containerView(recipeCard);
   })  
