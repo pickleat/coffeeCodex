@@ -25,10 +25,10 @@
 
 ## Coffee Database
 
-- [ ] Create user sign-in (offload/outsource/library?)
+- [x] Create user sign-in (offload/outsource/library?)
 - [ ] User Settings/Save
 - [ ] Save Brews
-- [ ] Save Coffees
+- [x] Save Coffees
     - Issues:
         - Same coffee from different roasters
         - Same Coffee different **roasts**
@@ -43,7 +43,7 @@
 - [ ] Make each section its own grid section, make the final card a single card that can be exported.
     - [ ] Learn how to export items, and to also send data.
 - [ ] Do some design research to make sure it doesn't look bad
-- [ ] Decide on a CSS structure (Sass, other framework, vanilla?)
+- [x] Decide on a CSS structure (Sass, other framework, vanilla?)
 - [ ] Decide on a color pallete
 - [ ] Decide on fonts
 - [ ] Don't over do it.
