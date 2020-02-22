@@ -61,13 +61,16 @@ function containerView(clickedContainer) {
   })
 }
 
-async function listCoffees(returnData){
-  var returnData = await fetch(url, {method: "GET"})
-  returnData = await returnData.json()
+
+
+async function listCoffees(sortKey){
+    var returnData = await fetch(url, {method: "GET"})
+    returnData = await returnData.json()
   // localStorage.setItem('coffeeList', returnData);
+  // console.log(returnData)
   var allCoffees = document.getElementById('allCoffees');
   allCoffees.innerHTML = getTable('list')
-  returnData = sortBy(returnData, 'roaster')
+  returnData = sortBy(returnData, sortKey || 'roaster')
 
   returnData.forEach(item => {
     var returnKeys = ["roaster", "country", "producer", "masl", "processing", "add"];

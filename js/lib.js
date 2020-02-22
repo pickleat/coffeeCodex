@@ -25,11 +25,11 @@ function formatTimestamp(timestamp) {
 function getTable(table){
     var tableVal = `<thead>
     <tr>
-    <td>Roaster</td>
-    <td>Country</td>
-    <td>Producer</td>
-    <td>MASL</td>
-    <td>Processing</td>`
+    <td><a onclick=listCoffees("roaster")>Roaster</a></td>
+    <td><a onclick=listCoffees("country")>Country   </a></td>
+    <td><a onclick=listCoffees("producer")>Producer  </a></td>
+    <td><a onclick=listCoffees("masl")>MASL      </a></td>
+    <td><a onclick=listCoffees("processing")>Processing</a></td>`
   if(localStorage.isLoggedIn === 'true'){
       if(table == 'codex'){
           tableVal += `
@@ -51,6 +51,10 @@ function getTable(table){
       </thead>`
   }
   return tableVal  
+}
+
+function columnHeaders(){
+
 }
 
 // Helper function: Makes an HTML Element
@@ -132,13 +136,21 @@ function rowBuilder(returnData, list){
 
   function sortBy(data, sortKey){
     data.sort(function(a, b) {
-        var nameA = a[sortKey].toUpperCase(); // ignore upper and lowercase
-        var nameB = b[sortKey].toUpperCase(); // ignore upper and lowercase
+        if(sortKey == 'masl'){        
+            if(!a[sortKey]){ var nameA = 9999}
+            if(!b[sortKey]){ var nameB = 9999}
+            if(a[sortKey]){ var nameA = parseInt(a[sortKey])}
+            if(b[sortKey]){ var nameB = parseInt(b[sortKey])}
+        } else {
+            if(!a[sortKey]){ var nameA = 'ZZZ'}
+            if(!b[sortKey]){ var nameB = 'ZZZ'}
+            if(a[sortKey]){ var nameA = a[sortKey].toUpperCase();}
+            if(b[sortKey]){ var nameB = b[sortKey].toUpperCase();}
+        }
         if (nameA < nameB) {return -1;}
         if (nameA > nameB) {return 1;}
         // If names are equal
         return 0;
         });
-    // console.log(data);
     return data
   }
