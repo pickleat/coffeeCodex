@@ -164,15 +164,24 @@ async function showOneCoffee(coffee_id) {
   var keys = Object.keys(returnData);
 
   coffeeInfoCard.innerHTML = `
-  <h1>${returnData.country} ${returnData.name}</h1>
-  <button id='editCoffee'>Edit</button>
-  <li>Producer: ${returnData.producer}</li>
-  <li>Roaster: ${returnData.roaster}</li>
-  <li>Processing: ${returnData.processing}</li>
-  <li>Flavor Notes: ${returnData.notes}</li>
-  <li>Varietals: ${returnData.varietals}</li>
-  <li>MASL: ${returnData.masl}</li>
-  <li>ID: ${returnData.id}</li>`
+  <div class='mx-auto p-2 max-w-md bg-gray-300 rounded shadow-lg hover:shadow-xl'>
+    <div class='flex justify-between'>
+      <h1>${returnData.country} ${returnData.name}</h1>
+      <button class='h-12' id='editCoffee'>Edit</button>
+    </div>
+    <div class='text-left'>
+      <ul>
+        <li>Producer: ${returnData.producer}</li>
+        <li>Roaster: ${returnData.roaster}</li>
+        <li>Processing: ${returnData.processing}</li>
+        <li>Flavor Notes: ${returnData.notes}</li>
+        <li>Varietals: ${returnData.varietals}</li>
+        <li>MASL: ${returnData.masl}</li>
+        <li>ID: ${returnData.id}</li>
+      </ul>
+    </div>
+  </div>`
+
   editCoffeeListener(returnData);
 }
 

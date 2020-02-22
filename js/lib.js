@@ -92,7 +92,7 @@ function rowBuilder(returnData, list){
             if(returnData.coffee_rating == '1'){
                 rater = 'Rate Me!'
             }
-            console.log(returnData.coffee_rating);
+            // console.log(returnData.coffee_rating);
             const rate = makeElement('td');
             const rateCoffee = makeElement('a', rater);
             rateCoffee.setAttribute('onclick', `editRating('${returnData.id}', ${returnData.coffee_rating})`)
