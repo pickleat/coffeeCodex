@@ -64,12 +64,14 @@ function containerView(clickedContainer) {
   // document.getElementById('welcomeScreen').classList.toggle('md:flex')
 
   containers.forEach(container => {
-    if(clickedContainer == container){
+    if(clickedContainer === container){
       clickedContainer.style.display = 'block';
-      if(localStorage.isLoggedIn || clickedContainer != coffeeCodexCard){
-        document.getElementById('welcomeScreen').classList.toggle('hidden')
-        document.getElementById('welcomeScreen').classList.toggle('md:flex')
+      if(localStorage.isLoggedIn || clickedContainer !== coffeeCodexCard){
+        document.getElementById('welcomeScreen').classList = 'hidden'
       }
+      if(clickedContainer === coffeeCodexCard){
+      document.getElementById('welcomeScreen').classList = 'md:flex'
+    }
     }else {
       container.style.display = 'none';
     }
