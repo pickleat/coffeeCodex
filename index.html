@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="antialiased">
     <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coffee Timer</title>
@@ -14,7 +14,7 @@
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script> -->
     </head>
 
-<body>
+
     <nav class="">
         <a class="flex items-center flex-shrink-0 text-white mr-6" id="btn-home-view">
           <span class="font-semibold text-xl tracking-tight">CoffeeCodex</span>
@@ -29,6 +29,7 @@
             <a class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4" id='beanDataButton'>Add a Coffee</a>
             <a class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4" id='getCoffeeData'>Search</a>
             <a class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4" id='seeAllCoffees'>List Coffees</a>
+            <a class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4" id='coffeeFeed'>Coffee Feed</a>
             <a class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white hidden" id='oneCoffeeButton'>One Coffee</a>
           </div>
           <div>
@@ -38,12 +39,73 @@
         </div>
 
   </nav>
-<main class="container">
-    <!-- home view -->
-    <div id="home-view"></div>
-    <div id='login-view'></div>
+<body class="w-full">
+    <header class="w-full text-center p-4 bg-gray-900">
+      <h2 class="text-2xl text-gray-100 tracking-tighter font-bold">Welcome to Coffee Codex!</h2>
+      <h3 class="italic text-gray-300 font-light leading-snug text-2xl">Travel the world with coffee.</h3> 
+
+    </header>
+    <main class="container w-full">
+    <div id="home-view">
+
+    </div>
+    <div id='login-view' class="w-full">
+      <div>
+       <h4></h4> 
+      </div>
+    </div>
+    
     <div id='coffeeCodex'>
       <h4></h4>
+        <div class="md:flex" id='welcomeScreen'>
+          <div class='p-2'>
+            <div class="mx-auto bg-white rounded-lg m-2 max-w-lg">
+              <img class='h-64 w-full object-cover rounded-t' src='resources/images/chemex-brewing.jpg'>
+              <div class="p-6">
+                <h5 class="text-xl text-gray-800 font-bold tracking-tighter">Unique Coffees</h5>
+                <div class="uppercase tracking-wide text-gray-600 text-sm font-semibold">Added daily</div>
+                <ul class="py-2">
+                  <li>100+ of Origins</li>
+                  <li>20+ Roasters</li>
+                  <li>40+ Countries</li>
+                </ul>
+                <button id='tryItNowUnique'>Join Now</button> 
+              </div>
+            </div>
+          </div>
+          <div class='p-2'>
+            <div class="mx-auto bg-white rounded-lg m-2 max-w-lg">
+              <img class='h-64 w-full object-cover object-center rounded-t' src='resources/images/journal.jpg'>
+              <div class="p-6">
+                <h5 class="text-xl text-gray-800 font-bold tracking-tighter">Never Forget a Coffee</h5>
+                <div class="uppercase tracking-wide text-gray-600 text-sm font-semibold">Unlimited Ratings</div>
+                <ul class="py-2">
+                  <li>Unlimited Codex Entries</li>
+                  <li>Rate Coffees</li>
+                  <li>Another Reason</li>
+                </ul>
+                <button id='tryItNowNeverForget'>Join Now</button> 
+              </div>
+            </div>
+          </div>
+          <div class="p-2">
+            <div class="mx-auto bg-white rounded-lg m-2 max-w-lg">
+              <img class='h-64 w-full object-cover object-center rounded-t' src='resources/images/v60-stagg-brewing.jpg'>
+              <div class="p-6">
+                <h5 class="text-xl text-gray-800 font-bold tracking-tighter">Brew Timer</h5>
+                <div class="uppercase tracking-wide text-gray-600 text-sm font-semibold">Track Every Brew</div>
+                <ul class="py-2">
+                  
+                  <li>Time, Dose, Pour <span class='uppercase text-sm italic text-gray-500'>In Beta!</span></li>
+                  <span class='uppercase text-sm italic text-gray-500'>Coming Soon!</span>
+                  <li>Rate each Brew</li>
+                  <!-- <li>Make notes for next time <span class='uppercase text-sm italic text-gray-500'>Coming Soon!</span></li> -->
+                </ul>
+                <button onclick='location.href = "/timer.html"'>Try It Now</button> 
+              </div>
+            </div>
+          </div>
+        </div>
     </div>
     <div id="recipeCard" class="p-4 m-4">
       <h2 id="recipeHeader">Add a Coffee to our Codex:<br></h2>
@@ -135,6 +197,9 @@
     </div>
     <div id='seeAllCoffeesCard' class="p-4 m-4">
       <table id='allCoffees'></table>
+    </div>
+    <div id='coffeeFeedCard' class="p-4 m-4">
+      <table id='coffeeFeedTable'></table>
     </div>
     <div class="p-4 m-4" id='coffeeInfoCard'>
       <h2>Enter the unique ID of the coffee</h2>

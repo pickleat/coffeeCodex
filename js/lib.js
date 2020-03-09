@@ -75,6 +75,7 @@ function rowBuilder(returnData, list){
     list.forEach((listItem) => {
     if(listItem == 'producer'){
         const producer = makeElement('td');
+        producer.className = 'max-w-xs truncate'
         const producerLink = makeElement('a', returnData.producer);
         producerLink.setAttribute('onclick', `showOneCoffee('${returnData.id}')`)
         producer.appendChild(producerLink);

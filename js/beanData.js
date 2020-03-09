@@ -6,11 +6,13 @@ const coffeeInfoKeys = ['country','roaster','producer', 'name', 'masl', 'varieta
 var beanData = {}
 
 window.onload = () => {
+  
   // Declare Buttons
   var submitcoffeeInfoButton = document.getElementById('beanDataButton');
   var getCoffeeInfoButton = document.getElementById('getCoffeeData');
   var seeAllCoffees = document.getElementById('seeAllCoffees');
   var oneCoffeeButton = document.getElementById('oneCoffeeButton');
+  var coffeeFeedButton = document.getElementById('coffeeFeed');
 
   const homeButton = document.getElementById('btn-home-view');
   var submit = document.getElementById('infoSubmit');
@@ -29,6 +31,7 @@ window.onload = () => {
     if(coffee_id){return showOneCoffee(coffee_id);}
     alert('you need a value for this to work')
   });
+
   getCoffeeInfoButton.addEventListener("click", () => {
     containerView(getCoffeeDataCard);
   }) 
@@ -43,7 +46,12 @@ window.onload = () => {
   oneCoffeeButton.addEventListener('click', () => {
     containerView(coffeeInfoCard);
   })
+  coffeeFeedButton.addEventListener('click', () => {
+    containerView(coffeeFeedCard);
+  })
 }
+
+
 
 function containerView(clickedContainer) {
   var coffeeInfoCard = document.getElementById('coffeeInfoCard');
@@ -51,10 +59,17 @@ function containerView(clickedContainer) {
   var recipeCard = document.getElementById('recipeCard');
   var getCoffeeDataCard = document.getElementById('getCoffeeDataCard');
   var coffeeCodexCard = document.getElementById('coffeeCodex');
-  var containers = [coffeeInfoCard, seeAllCoffeesCard, recipeCard, getCoffeeDataCard, coffeeCodexCard]
+  var coffeeFeedCard = document.getElementById('coffeeFeedCard');
+  var containers = [coffeeInfoCard, seeAllCoffeesCard, recipeCard, getCoffeeDataCard, coffeeCodexCard, coffeeFeedCard]
+  // document.getElementById('welcomeScreen').classList.toggle('md:flex')
+
   containers.forEach(container => {
     if(clickedContainer == container){
       clickedContainer.style.display = 'block';
+      if(localStorage.isLoggedIn || clickedContainer != coffeeCodexCard){
+        document.getElementById('welcomeScreen').classList.toggle('hidden')
+        document.getElementById('welcomeScreen').classList.toggle('md:flex')
+      }
     }else {
       container.style.display = 'none';
     }
@@ -67,7 +82,7 @@ async function listCoffees(sortKey){
     var returnData = await fetch(url, {method: "GET"})
     returnData = await returnData.json()
   // localStorage.setItem('coffeeList', returnData);
-  // console.log(returnData)
+  console.log(returnData)
   var allCoffees = document.getElementById('allCoffees');
   allCoffees.innerHTML = getTable('list')
   returnData = sortBy(returnData, sortKey || 'roaster')
@@ -166,11 +181,12 @@ async function showOneCoffee(coffee_id) {
   coffeeInfoCard.innerHTML = `
   <div class='mx-auto p-2 max-w-md bg-gray-300 rounded shadow-lg hover:shadow-xl'>
     <div class='flex justify-between'>
-      <h1>${returnData.country} ${returnData.name}</h1>
+      <h1 class='max-w-sm truncate'>${returnData.name}</h1>
       <button class='h-12' id='editCoffee'>Edit</button>
     </div>
     <div class='text-left'>
       <ul>
+        <li>Country: ${returnData.country} </liv>
         <li>Producer: ${returnData.producer}</li>
         <li>Roaster: ${returnData.roaster}</li>
         <li>Processing: ${returnData.processing}</li>
@@ -294,7 +310,9 @@ async function renderCodex(){
       
     })
   }
-  else{console.log(`You're not logged in`)}
+  else{
+    console.log(`You're not logged in`)
+  }
 }
 
 async function addToMyCodex(id, rating){

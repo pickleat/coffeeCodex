@@ -14,7 +14,7 @@ window.addEventListener('load', function() {
     });
 
     // ...
-    var loginStatus = document.querySelector('h4');
+    var loginStatus = document.querySelector('h4'); 
     var loginView = document.getElementById('login-view');
     var homeView = document.getElementById('btn-home-view');
 
@@ -22,6 +22,11 @@ window.addEventListener('load', function() {
     var homeViewBtn = document.getElementById('btn-home-view');
     var loginBtn = document.getElementById('btn-login');
     var logoutBtn = document.getElementById('btn-logout');
+
+    // home page buttons
+    var tryItNowUniqueBtn = document.getElementById('tryItNowUnique');
+    var tryItNowNeverForgetBtn = document.getElementById('tryItNowNeverForget');
+
 
 
     if (localStorage.getItem('isLoggedIn') === 'true') {
@@ -34,6 +39,18 @@ window.addEventListener('load', function() {
 
 
     loginBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      webAuth.authorize();
+    });
+
+    // repeating the above for our homepage trial buttons
+
+    tryItNowUniqueBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      webAuth.authorize();
+    });
+
+    tryItNowNeverForgetBtn.addEventListener('click', function(e) {
       e.preventDefault();
       webAuth.authorize();
     });
@@ -130,8 +147,8 @@ window.addEventListener('load', function() {
         } else {
           loginBtn.style.display = 'inline-block';
           logoutBtn.style.display = 'none';
-          loginStatus.innerHTML =
-            'Login to see your Codex.';
+          loginStatus.innerHTML = 
+          'You must login to see your Codex.';
         }
       }
   

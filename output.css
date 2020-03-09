@@ -600,7 +600,7 @@ video {
 }
 
 html {
-  background-color: #f7fafc;
+  background-color: #edf2f7;
 }
 
 a {
@@ -679,14 +679,15 @@ div {
 }
 
 button {
-  font-weight: 700;
+  font-weight: 600;
+  margin: 0.5rem;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   padding-left: 1rem;
   padding-right: 1rem;
-  border-radius: 0.25rem;
+  border-radius: 0.5rem;
   background-color: #38b2ac;
-  color: #1a202c;
+  color: #f7fafc;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
 }
 
@@ -696,7 +697,7 @@ button:disabled {
 
 button:hover {
   /* background: rgb(164, 186, 183, .8); */
-  font-weight: 900;
+  text-decoration: underline;
   cursor: pointer;
 }
 

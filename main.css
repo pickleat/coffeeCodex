@@ -1,7 +1,7 @@
 @tailwind base;
 
 html {
-    @apply bg-gray-100;
+    @apply bg-gray-200;
 }
 a {
     /* color: rgb(251, 255, 254); */
@@ -57,7 +57,7 @@ div {
     align-content: center; */
 }
 button {
-    @apply font-bold py-2 px-4 rounded bg-teal-500 .text-gray-900 shadow;
+    @apply font-semibold m-2 py-2 px-4 rounded-lg bg-teal-500 .text-gray-100 shadow;
 }
 
 button:disabled {
@@ -65,7 +65,7 @@ button:disabled {
 }
 button:hover {
     /* background: rgb(164, 186, 183, .8); */
-    @apply font-black;
+    @apply .underline;
     cursor: pointer;
 }
 input {
