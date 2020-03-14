@@ -88,7 +88,7 @@ async function listCoffees(sortKey){
   var allCoffees = document.getElementById('allCoffees');
   allCoffees.innerHTML = getTable('list')
   returnData = sortBy(returnData, sortKey || 'roaster')
-
+  document.getElementById('sortedBy').innerHTML = sortKey || 'roaster';
   returnData.forEach(item => {
     var returnKeys = ["roaster", "country", "producer", "masl", "processing", "add"];
     var row = rowBuilder(item, returnKeys);
@@ -98,29 +98,68 @@ async function listCoffees(sortKey){
 
 async function findCoffeeInfo() {
   var input = document.getElementById('roasterSearch')
-  var searchResults = document.getElementById('searchResults');
-  searchResults.innerHTML = getTable('search');
+  // var searchResults = document.getElementById('searchResults');
+  // searchResults.innerHTML = getTable('search');
+  var searchResults2 = document.getElementById('searchResults2');
   var totalResultsNum = document.getElementById('totalResultsNum');
   var roaster = input.value;
   roaster = roaster.replace(/ /g, '_')
   console.log(roaster);
   const newURL = `${url}?roaster=${roaster}`
-  console.log(newURL);
+  // console.log(newURL);
 
   var returnData = await fetch(newURL, {method: "GET"})
   returnData = await returnData.json()
-  console.log(returnData);
-  totalResultsNum.innerHTML = `Your Search Resulted in ${returnData.Count} coffees.`
+  // console.log(returnData);
+  totalResultsNum.innerHTML = `
+    <div class='text-4xl text-gray-800 font-bold tracking-tighter'>${returnData.Items[0]['roaster']}</div>
+     <div class='text-xl uppercase tracking-wide text-gray-600 font-semibold'>Your search resulted in ${returnData.Count} coffees.</div>
+  `
   // returns the items found for each ROASTER needs to be formatted as shown to user.
   var keys = returnData.Items
   keys = sortBy(keys, 'country')
   
   keys.forEach(item => {
-    console.log(item);
-    var returnKeys = ["roaster", "country", "producer", "masl", "processing", "rate", "add"];
-    var row = rowBuilder(item, returnKeys);
-    searchResults.appendChild(row)
-    console.log(`${item.producer} coffee id is ${item.id}`)
+    // console.log(item);
+
+    var NewDiv = document.createElement('div')
+    NewDiv.classList = `p-2`
+    
+    NewDiv.innerHTML = `
+    <div class="mx-auto bg-white rounded-lg m-2 min-w-sm max-w-sm">
+              <div class='flex justify-center items-center p-2'>
+                <object id='${item['id']}+${item['country']}' class='h-20 w-auto object-center fill-current text-purple-500' data='${countryLookup(item['country'])}' type="image/svg+xml"></object> 
+              <div class="flex flex-col content-center items-center pl-2 flex-wrap" >
+                <h5 class="text-xl text-gray-800 font-bold tracking-tighter">${item['country']} </h5>
+                <div class="uppercase tracking-wide text-gray-600 text-sm font-semibold">${item['producer'] || 'Unknown'}</div>
+              </div>
+              </div>
+              <div class="px-6 pb-6">
+                <ul class="py-2">
+                  <li>Elevation: ${item['masl'] || 'Unknown'}</li>
+                  <li>Processing: ${item['processing'] || 'Unknown'}</li>
+                  <li class='truncate'>Varietals: ${item['varietals'] || 'Unknown'}</li>
+                  <li>Flavor Notes: ${item['notes'] || 'Unknown'}</li>
+                  </ul>
+                  <button class='inline-flex items-center' id='addSingleCoffeeToCodex'>
+                    <svg class='fill-current w-4 h-4' viewBox="0 0 20 20"><path d="M11 9h4v2h-4v4H9v-4H5V9h4V5h2v4zm-1 11a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16z"/>
+                    </svg>
+                    <span class='pl-2'>Add</span>     
+                </button>
+                <button class='inline-flex items-center' id='' onclick='showOneCoffee("${item['id']}")'>
+                <svg class='fill-current w-4 h-4' viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg>
+                <span class='pl-2'>More Info</span>
+                </button> 
+              </div>
+      `
+
+
+    searchResults2.appendChild(NewDiv)
+    var SVGObject = document.getElementById(`${item['id']}+${item['country']}`)
+    // var returnKeys = ["roaster", "country", "producer", "masl", "processing", "rate", "add"];
+    // var row = rowBuilder(item, returnKeys);
+    // searchResults.appendChild(row)
+    // console.log(`${item.producer} coffee id is ${item.id}`)
   })
 }
 
@@ -181,21 +220,41 @@ async function showOneCoffee(coffee_id) {
   var keys = Object.keys(returnData);
 
   coffeeInfoCard.innerHTML = `
-  <div class='mx-auto p-2 max-w-md bg-gray-300 rounded shadow-lg hover:shadow-xl'>
-    <div class='flex justify-between'>
-      <h1 class='max-w-sm truncate'>${returnData.name}</h1>
-      <button class='h-12' id='editCoffee'>Edit</button>
+  <div class='mx-auto p-2 max-w-md bg-white rounded-lg shadow-lg hover:shadow-xl'>
+  <div class='flex justify-between items-center'>
+    <div class='flex flex-col justify-center p-2'>
+      <object id='${returnData['id']}+${returnData['country']}' class='h-20 w-auto object-center' data='${countryLookup(returnData['country'])}' type="image/svg+xml"></object> 
+      <h5 class="uppercase tracking-wide text-gray-600 text-sm font-semibold">${returnData['country']} </h5>
+    </div>  
+    <div class="flex flex-col content-start items-start px-2 flex-wrap" >
+      <h3 class='mx-auto text-2xl text-center text-gray-800 font-bold tracking-tighter'>${returnData.name}</h3>
+      <div class="uppercase tracking-wide text-gray-600 text-sm font-semibold">${returnData['producer']}</div>
     </div>
+    <div class='flex flex-col items-center'>
+    <button class='inline-flex items-center mb-2' id='editCoffee'>
+      <svg class='fill-current w-4 h-4' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+        <path d="M12.3 3.7l4 4L4 20H0v-4L12.3 3.7zm1.4-1.4L16 0l4 4-2.3 2.3-4-4z"/>
+      </svg>
+      <span class='pl-2'>Edit</span>
+    </button>
+    <button class='inline-flex items-center' id='addSingleCoffeeToCodex'>
+      <svg class='fill-current w-4 h-4' viewBox="0 0 20 20"><path d="M11 9h4v2h-4v4H9v-4H5V9h4V5h2v4zm-1 11a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16z"/>
+      </svg>
+      <span class='pl-2'>Add</span>
+    </button>
+    </div>
+  </div>
+
+  
+  
     <div class='text-left'>
       <ul>
-        <li>Country: ${returnData.country} </liv>
-        <li>Producer: ${returnData.producer}</li>
-        <li>Roaster: ${returnData.roaster}</li>
-        <li>Processing: ${returnData.processing}</li>
-        <li>Flavor Notes: ${returnData.notes}</li>
-        <li>Varietals: ${returnData.varietals}</li>
-        <li>MASL: ${returnData.masl}</li>
-        <li>ID: ${returnData.id}</li>
+        <li><span class="font-bold">Roaster: </span>${returnData.roaster}</li>
+        <li><span class="font-bold">Processing: </span>${returnData.processing}</li>
+        <li><span class="font-bold">Flavor Notes: </span>${returnData.notes || 'Unknown'}</li>
+        <li><span class="font-bold">Varietals: </span>${returnData.varietals || 'Unknown'}</li>
+        <li><span class="font-bold">MASL: </span>${returnData.masl || 'Unknown'}</li>
+        <li><span class="font-bold">ID: </span>${returnData.id}</li>
       </ul>
     </div>
   </div>`

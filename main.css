@@ -16,7 +16,7 @@ nav {
 }
 
 h1 {
-    @apply text-4xl text-gray-900 text-center .font-medium
+    /* @apply text-4xl text-gray-900 text-center .font-medium */
 }
 h2 {
     @apply text-xl;
@@ -57,7 +57,7 @@ div {
     align-content: center; */
 }
 button {
-    @apply font-semibold m-2 py-2 px-4 rounded-lg bg-teal-500 .text-gray-100 shadow;
+    @apply font-semibold py-2 px-4 rounded-lg bg-teal-500 .text-gray-100 shadow;
 }
 
 button:disabled {
@@ -75,6 +75,10 @@ input {
 
 .svg {
     max-width: 1rem;
+}
+
+.svg-country {
+    @apply w-32 h-32 object-cover fill-current object-center text-purple-500
 }
 
 #events {

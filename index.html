@@ -41,8 +41,8 @@
   </nav>
 <body class="w-full">
     <header class="w-full text-center p-4 bg-gray-900">
-      <h2 class="text-2xl text-gray-100 tracking-tighter font-bold">Welcome to Coffee Codex!</h2>
-      <h3 class="italic text-gray-300 font-light leading-snug text-2xl">Travel the world with coffee.</h3> 
+      <h1 class="text-2xl text-gray-100 tracking-tighter font-bold">Welcome to Coffee Codex</h1>
+      <h2 class="italic text-gray-300 font-light leading-snug text-2xl">Travel the world with coffee.</h2> 
 
     </header>
     <main class="container w-full">
@@ -60,7 +60,7 @@
         <div class="md:flex" id='welcomeScreen'>
           <div class='p-2'>
             <div class="mx-auto bg-white rounded-lg m-2 max-w-lg">
-              <img class='h-64 w-full object-cover rounded-t' src='resources/images/chemex-brewing.jpg'>
+              <img class='h-64  object-cover object-center rounded-t-lg' src='resources/images/chemex-brewing.jpg'>
               <div class="p-6">
                 <h5 class="text-xl text-gray-800 font-bold tracking-tighter">Unique Coffees</h5>
                 <div class="uppercase tracking-wide text-gray-600 text-sm font-semibold">Added daily</div>
@@ -75,7 +75,7 @@
           </div>
           <div class='p-2'>
             <div class="mx-auto bg-white rounded-lg m-2 max-w-lg">
-              <img class='h-64 w-full object-cover object-center rounded-t' src='resources/images/journal.jpg'>
+              <img class='h-64 object-cover object-center rounded-t-lg' src='resources/images/journal-macbook.jpg'>
               <div class="p-6">
                 <h5 class="text-xl text-gray-800 font-bold tracking-tighter">Never Forget a Coffee</h5>
                 <div class="uppercase tracking-wide text-gray-600 text-sm font-semibold">Unlimited Ratings</div>
@@ -90,7 +90,7 @@
           </div>
           <div class="p-2">
             <div class="mx-auto bg-white rounded-lg m-2 max-w-lg">
-              <img class='h-64 w-full object-cover object-center rounded-t' src='resources/images/v60-stagg-brewing.jpg'>
+                <img class='h-64 object-cover object-center rounded-t-lg' src='resources/images/v60-stagg-brewing.jpg'>
               <div class="p-6">
                 <h5 class="text-xl text-gray-800 font-bold tracking-tighter">Brew Timer</h5>
                 <div class="uppercase tracking-wide text-gray-600 text-sm font-semibold">Track Every Brew</div>
@@ -121,7 +121,7 @@
     </div>
     <div id='getCoffeeDataCard' class="p-4 m-4">
       <!-- <input id="coffeeID" placeholder="enter the unique id of the coffee"></input><br> -->
-      <h2 id="recipeHeader">Search Coffees by:<br></h2>
+      <div id="recipeHeader">Search Coffees by Roaster:<br></div>
       <!-- <select>
         <option value="AG">Antigua and Barbuda</option>
         <option value="AR">Argentina</option>
@@ -190,12 +190,60 @@
         <option value="ZM">Zambia</option>
         <option value="ZW">Zimbabwe</option>
       </select> -->
-      <input id="roasterSearch" placeholder="roaster"><br></input>
+      <input list='roasters-to-search' class='m-2' id="roasterSearch" placeholder="roaster" /><br>
+        <datalist id='roasters-to-search'>
+          <option value='1000 Faces'>
+          <option value='Anthology'>
+          <option value='Blue Sail'>
+          <option value='Brandywine'>
+          <option value='Caron'>
+          <option value='Case'>
+          <option value='Cat & Cloud'>
+          <option value='Ceremony'>
+          <option value='Coava'>
+          <option value='Counter Culture'>
+          <option value='Crema'>
+          <option value="Dr. Bean's">
+          <option value='Duck Rabbit'>
+          <option value='Evans Brothers'>
+          <option value='Huck'>
+          <option value='Huckleberry'>
+          <option value='Intelligentsia'>
+          <option value="Kaldi's">
+          <option value='Kickapoo'>
+          <option value='Kuma'>
+          <option value='Ladro'>
+          <option value='Metric'>
+          <option value='Mountain Bird'>
+          <option value='Olympia'>
+          <option value='Onyx'>
+          <option value='Onyx Coffee Lab'>
+          <option value='Origin'>
+          <option value='Panther'>
+          <option value='Passionhouse'>
+          <option value='Populace'>
+          <option value='Portola Coffee Roasters'>
+          <option value="Quill's Coffee">
+          <option value='Red Light Roastery'>
+          <option value='Ruby'>
+          <option value='Spyhouse'>
+          <option value='Sump'>
+          <option value='Tandem'>
+          <option value='Topeca'>
+          <option value='Variety Coffee Roasters'>
+          <option value='Verve'>
+          <option value='YesPlz'>
+        </datalist>
       <button type="button" id='searchByRoaster'>Search</button>
       <div id='totalResultsNum'></div>
-        <table id='searchResults'></table>
+        <div id='searchResults2' class="flex flex-wrap"></div>
+        <!-- <table id='searchResults'></table> -->
     </div>
     <div id='seeAllCoffeesCard' class="p-4 m-4">
+      <div class="mx-auto max-w-md rounded">
+        <h3 class="text-2xl font-bold tracking-tight">Global Coffee Codex</h3>
+        <div>Sorted By: <span class='uppercase tracking-wide text-gray-600 text-sm font-semibold' id='sortedBy'>Roaster</span></div>
+      </div>
       <table id='allCoffees'></table>
     </div>
     <div id='coffeeFeedCard' class="p-4 m-4">
