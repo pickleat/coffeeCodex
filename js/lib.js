@@ -243,7 +243,9 @@ function countryLookup(country){
         "Zambia": "ZM",
         "Zimbabwe": "ZW"
     }
-    return countries[country] ? `resources/countries/all/${countries[country]}/vector.svg` : 'resources/earth.svg'
+    // console.log('your country is:', countries[country])
+    // console.log('path to svg: ',`resources/countries/all/${countries[country].toLowerCase()}/vector.svg`)
+    return countries[country] ? `resources/countries/all/${countries[country].toLowerCase()}/vector.svg` : 'resources/earth.svg'
     
 }
 
