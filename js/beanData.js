@@ -66,14 +66,15 @@ function containerView(clickedContainer) {
 
   containers.forEach(container => {
     if(clickedContainer === container){
-      clickedContainer.style.display = 'block';
-      if(localStorage.isLoggedIn || clickedContainer !== coffeeCodexCard){
-        document.getElementById('welcomeScreen').classList = 'hidden'
-      }
-      if(clickedContainer === coffeeCodexCard){
-      document.getElementById('welcomeScreen').classList = 'md:flex'
-    }
-    }else {
+      // if(localStorage.isLoggedIn || clickedContainer !== coffeeCodexCard){
+        if(localStorage.isLoggedIn && clickedContainer === coffeeCodexCard){
+          document.getElementById('welcomeScreen').classList = 'hidden'
+        }
+        if(!localStorage.isLoggedIn && clickedContainer === coffeeCodexCard){
+          document.getElementById('welcomeScreen').classList = 'md:flex'
+        }
+        clickedContainer.style.display = 'block';
+    } else {
       container.style.display = 'none';
     }
   })
