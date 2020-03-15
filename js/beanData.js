@@ -62,6 +62,7 @@ function containerView(clickedContainer) {
   var coffeeFeedCard = document.getElementById('coffeeFeedCard');
   var containers = [coffeeInfoCard, seeAllCoffeesCard, recipeCard, getCoffeeDataCard, coffeeCodexCard, coffeeFeedCard]
   // document.getElementById('welcomeScreen').classList.toggle('md:flex')
+  document.getElementById('hamburger-items').classList.toggle('hidden')
 
   containers.forEach(container => {
     if(clickedContainer === container){
