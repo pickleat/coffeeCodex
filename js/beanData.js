@@ -66,8 +66,15 @@ function containerView(clickedContainer) {
 
   containers.forEach(container => {
     if(clickedContainer === container){
-      clickedContainer.style.display = 'block';
-    }else {
+      // if(localStorage.isLoggedIn || clickedContainer !== coffeeCodexCard){
+        if(localStorage.isLoggedIn && clickedContainer === coffeeCodexCard){
+          document.getElementById('welcomeScreen').classList = 'hidden'
+        }
+        if(!localStorage.isLoggedIn && clickedContainer === coffeeCodexCard){
+          document.getElementById('welcomeScreen').classList = 'md:flex'
+        }
+        clickedContainer.style.display = 'block';
+    } else {
       container.style.display = 'none';
     }
   })
