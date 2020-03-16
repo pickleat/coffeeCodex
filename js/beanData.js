@@ -67,12 +67,6 @@ function containerView(clickedContainer) {
   containers.forEach(container => {
     if(clickedContainer === container){
       clickedContainer.style.display = 'block';
-      if(localStorage.isLoggedIn || clickedContainer !== coffeeCodexCard){
-        document.getElementById('welcomeScreen').classList = 'hidden'
-      }
-      if(clickedContainer === coffeeCodexCard){
-      document.getElementById('welcomeScreen').classList = 'md:flex'
-    }
     }else {
       container.style.display = 'none';
     }
@@ -344,11 +338,10 @@ function putReq(url, data){
 
 async function renderCodex(){
   if(localStorage.isLoggedIn == 'true'){
-    var codex = document.getElementById('coffeeCodex');
-    codex.innerHTML = `
-    <table id="codexTable">
-    ${getTable('codex')}
-    </table>`
+    document.getElementById('welcomeScreen').classList = 'hidden'
+    var codexTable = document.getElementById('codexTable');
+    codexTable.classList.remove('hidden')
+    codexTable.innerHTML = getTable('codex')
     var returnData = await fetch(`${codexURL}${localStorage.user_id}`, {method: "GET"})
     returnData = await returnData.json();
 
@@ -373,6 +366,7 @@ async function renderCodex(){
     })
   }
   else{
+    document.getElementById('welcomeScreen').classList = 'md:flex'
     console.log(`You're not logged in`)
   }
 }
