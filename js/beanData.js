@@ -128,7 +128,7 @@ async function findCoffeeInfo() {
     NewDiv.classList = `p-2`
     
     NewDiv.innerHTML = `
-    <div class="mx-auto bg-white rounded-lg m-2 min-w-sm max-w-sm">
+    <div class="mx-auto bg-white rounded-lg m-2 max-w-sm">
               <div class='flex justify-center items-center p-2'>
                 <object id='${item['id']}+${item['country']}' class='h-20 w-auto object-center fill-current text-purple-500' data='${countryLookup(item['country'])}' type="image/svg+xml"></object> 
               <div class="flex flex-col content-center items-center pl-2 flex-wrap" >
@@ -137,13 +137,13 @@ async function findCoffeeInfo() {
               </div>
               </div>
               <div class="px-6 pb-6">
-                <ul class="py-2">
-                  <li>Elevation: ${item['masl'] || 'Unknown'}</li>
-                  <li>Processing: ${item['processing'] || 'Unknown'}</li>
-                  <li class='truncate'>Varietals: ${item['varietals'] || 'Unknown'}</li>
-                  <li>Flavor Notes: ${item['notes'] || 'Unknown'}</li>
-                  </ul>
-                  <button class='inline-flex items-center' id='addSingleCoffeeToCodex'>
+                <ul class="py-2 text-left">
+                  <li><span class="font-bold">Elevation: </span>${item['masl'] || 'Unknown'}</li>
+                  <li><span class="font-bold">Processing: </span>${item['processing'] || 'Unknown'}</li>
+                  <li><span class="flex-wrap font-bold">Varietals: </span>${item['varietals'] || 'Unknown'}</li>
+                  <li><span class="font-bold">Flavor Notes: </span>${item['notes'] || 'Unknown'}</li>
+                </ul>
+                <button class='inline-flex items-center' id='addSingleCoffeeToCodex'>
                     <svg class='fill-current w-4 h-4' viewBox="0 0 20 20"><path d="M11 9h4v2h-4v4H9v-4H5V9h4V5h2v4zm-1 11a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16z"/>
                     </svg>
                     <span class='pl-2'>Add</span>     
@@ -223,41 +223,38 @@ async function showOneCoffee(coffee_id) {
 
   coffeeInfoCard.innerHTML = `
   <div class='mx-auto p-2 max-w-md bg-white rounded-lg shadow-lg hover:shadow-xl'>
-  <div class='flex justify-between items-center'>
-    <div class='flex flex-col justify-center p-2'>
-      <object id='${returnData['id']}+${returnData['country']}' class='h-20 w-auto object-center' data='${countryLookup(returnData['country'])}' type="image/svg+xml"></object> 
-      <h5 class="uppercase tracking-wide text-gray-600 text-sm font-semibold">${returnData['country']} </h5>
-    </div>  
-    <div class="flex flex-col content-start items-start px-2 flex-wrap" >
-      <h3 class='mx-auto text-2xl text-center text-gray-800 font-bold tracking-tighter'>${returnData.name}</h3>
-      <div class="uppercase tracking-wide text-gray-600 text-sm font-semibold">${returnData['producer']}</div>
+    <div class='flex justify-between items-center'>
+      <div class='flex flex-col justify-center p-2'>
+        <object id='${returnData['id']}+${returnData['country']}' class='h-20 w-auto object-center' data='${countryLookup(returnData['country'])}' type="image/svg+xml"></object> 
+        <h5 class="uppercase tracking-wide text-gray-600 text-sm font-semibold">${returnData['country']} </h5>
+      </div>  
+      <div class="flex flex-col content-start items-start px-2 flex-shrink" >
+        <h3 class='mx-auto text-2xl text-center text-gray-800 font-bold tracking-tighter'>${returnData.name}</h3>
+        <div class="uppercase tracking-wide text-gray-600 text-sm font-semibold">${returnData['producer']}</div>
+      </div>
     </div>
-    <div class='flex flex-col items-center'>
-    <button class='inline-flex items-center mb-2' id='editCoffee'>
-      <svg class='fill-current w-4 h-4' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-        <path d="M12.3 3.7l4 4L4 20H0v-4L12.3 3.7zm1.4-1.4L16 0l4 4-2.3 2.3-4-4z"/>
-      </svg>
-      <span class='pl-2'>Edit</span>
-    </button>
-    <button class='inline-flex items-center' id='addSingleCoffeeToCodex'>
-      <svg class='fill-current w-4 h-4' viewBox="0 0 20 20"><path d="M11 9h4v2h-4v4H9v-4H5V9h4V5h2v4zm-1 11a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16z"/>
-      </svg>
-      <span class='pl-2'>Add</span>
-    </button>
-    </div>
-  </div>
-
-  
-  
     <div class='text-left'>
       <ul>
         <li><span class="font-bold">Roaster: </span>${returnData.roaster}</li>
         <li><span class="font-bold">Processing: </span>${returnData.processing}</li>
         <li><span class="font-bold">Flavor Notes: </span>${returnData.notes || 'Unknown'}</li>
         <li><span class="font-bold">Varietals: </span>${returnData.varietals || 'Unknown'}</li>
-        <li><span class="font-bold">MASL: </span>${returnData.masl || 'Unknown'}</li>
+        <li><span class="font-bold">Elevation: </span>${returnData.masl || 'Unknown'}</li>
         <li><span class="font-bold">ID: </span>${returnData.id}</li>
       </ul>
+    </div>
+    <div class='mx-auto flex flex-row py-2 justify-center items-center'>
+      <button class='inline-flex items-center' id='addSingleCoffeeToCodex'>
+        <svg class='fill-current w-4 h-4' viewBox="0 0 20 20"><path d="M11 9h4v2h-4v4H9v-4H5V9h4V5h2v4zm-1 11a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16z"/>
+        </svg>
+        <span class='pl-2'>Add</span>
+      </button>
+      <button class='inline-flex items-center ml-2' id='editCoffee'>
+        <svg class='fill-current w-4 h-4' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+          <path d="M12.3 3.7l4 4L4 20H0v-4L12.3 3.7zm1.4-1.4L16 0l4 4-2.3 2.3-4-4z"/>
+        </svg>
+        <span class='pl-2'>Edit</span>
+      </button>
     </div>
   </div>`
 
