@@ -3,14 +3,12 @@
     <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coffee Codex</title>
-    <link rel="icon" href="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/mozilla/36/hot-beverage_2615.png">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto" rel="stylesheet">
+    <link rel="icon" href="./resources/coffeeEmoji.png">
     <link rel="stylesheet" href="output.css">
     <script src="./js/beanData.js"></script>
     <script src="./js/auth.js"></script>
     <script src="./js/lib.js"></script>
     <script src="https://cdn.auth0.com/js/auth0/9.10/auth0.min.js"></script>
-    <!-- <script type="text/javascript" src="node_modules/auth0-js/build/auth0.js"></script> -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script> -->
     </head>
 
@@ -295,9 +293,11 @@
       <table id='coffeeFeedTable'></table>
     </div>
     <div class="p-4 m-4" id='coffeeInfoCard'>
-      <h2>Enter the unique ID of the coffee</h2>
-      <input id='coffee_id' placeholder="coffee_id">
-      <button type="button" id='getOneCoffeeInfo'>Search</button>
+      <div class="flex flex-col bg-white m-4 mx-auto max-w-sm rounded-lg">
+        <label  class='text-2xl text-gray-800 font-bold tracking-tighter'>Enter the Coffee's ID</label>
+        <input class='m-2' id='coffee_id' placeholder="coffee_id">
+        <button class='m-2 mx-auto' type="button" id='getOneCoffeeInfo'>Search</button>
+      </div>
     </div>
     <main>
   </body>
