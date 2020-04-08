@@ -1,5 +1,9 @@
 # coffeeTimer
 
+## Tailwind Build
+
+`npx tailwind build main.css -o output.css`
+
 ## Goals
 
 1. Create a better coffee timer, initially for personal use.

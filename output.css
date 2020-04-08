@@ -662,6 +662,13 @@ body {
 div {
 }
 
+hr {
+  /* This is Tailwind gray-500 */
+  border-top: 2px solid #A0AEC0;
+  text-align: center;
+  height: 3px;
+}
+
 .timerArea {
   /* grid-area: "timer"; */
   /* background: fuchsia; */

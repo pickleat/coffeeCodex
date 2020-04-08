@@ -51,7 +51,14 @@ window.onload = () => {
   })
 }
 
+// let containerList = []
 
+// function backOneContainer(){
+
+//   containerList.shift()
+//   console.log(containerList[0])
+//   containerView(containerList[0])
+// }
 
 function containerView(clickedContainer) {
   var coffeeInfoCard = document.getElementById('coffeeInfoCard');
@@ -63,6 +70,10 @@ function containerView(clickedContainer) {
   var containers = [coffeeInfoCard, seeAllCoffeesCard, recipeCard, getCoffeeDataCard, coffeeCodexCard, coffeeFeedCard]
   // document.getElementById('welcomeScreen').classList.toggle('md:flex')
   document.getElementById('hamburger-items').classList.toggle('hidden')
+
+  // // console.log(clickedContainer.id)
+  // containerList.unshift(clickedContainer.id)
+  // console.log(containerList)
 
   containers.forEach(container => {
     if(clickedContainer === container){
@@ -86,10 +97,10 @@ async function listCoffees(sortKey){
     var returnData = await fetch(url, {method: "GET"})
     returnData = await returnData.json()
   // localStorage.setItem('coffeeList', returnData);
-  console.log(returnData)
+  // console.log(returnData)
   var allCoffees = document.getElementById('allCoffees');
   allCoffees.innerHTML = getTable('list')
-  returnData = sortBy(returnData, sortKey || 'roaster')
+  returnData = await sortBy(returnData, sortKey || 'roaster')
   document.getElementById('sortedBy').innerHTML = sortKey || 'roaster';
   returnData.forEach(item => {
     var returnKeys = ["roaster", "country", "producer", "masl", "processing", "add"];
@@ -119,7 +130,7 @@ async function findCoffeeInfo() {
   `
   // returns the items found for each ROASTER needs to be formatted as shown to user.
   var keys = returnData.Items
-  keys = sortBy(keys, 'country')
+  keys = await sortBy(keys, 'country')
   
   keys.forEach(item => {
     // console.log(item);
@@ -340,39 +351,126 @@ function putReq(url, data){
 .catch(error => console.error('Error:', error));
 }
 
-async function renderCodex(){
+const combineCodex = async (data) => {
+  // console.log(data)
+  const combinedData = data.map( async item => {
+    let coffee_id = item.coffee_id
+      let coffee_rating = item.coffee_rating
+      const newURL = `${url}${coffee_id}`
+      var returnData = await fetch(newURL, {method: "GET"})
+      returnData = await returnData.json()
+      returnData.Item['coffee_rating'] = coffee_rating
+      // console.log('ret', returnData.Item)
+      return returnData.Item
+  })
+return Promise.all(combinedData)
+}
+
+async function codexCreator(returnData, sortKey){
+  var codexCards = document.getElementById('codexCards')
+  codexCards.innerHTML = ''
+  let sortedHeading;
+  let detailsList = ['roaster', 'country', 'producer', 'coffee_rating', 'masl', 'processing', 'notes']
+  var sortKey = sortKey || 'roaster'
+  console.log('codexCreator sorting by', sortKey)
+  returnData.forEach((item) => {
+
+    if(!document.getElementById(`grouping-${item[sortKey]}`)){
+      const grouping = makeElement('div')
+      grouping.classList = 'mt-2 flex flex-wrap justify-center'
+      grouping.id = `grouping-${item[sortKey]}`
+      const groupHeader = makeElement('div')
+      groupHeader.classList = 'flex-row w-full text-4xl text-gray-800 font-bold tracking-tighter'
+      groupHeader.innerHTML = `${item[sortKey]}`
+      codexCards.appendChild(grouping)
+      document.getElementById(`grouping-${item[sortKey]}`).appendChild(groupHeader)
+    }
+    const coffeeItem = makeElement('div')
+    console.log('specific item', sortKey)
+    coffeeItem.classList = 'px-1 max-w-sm flex flex-col '
+    // <object id="${item['id']}+${item['country']}" class='h-20 w-auto object-center fill-current text-purple-500' data='${countryLookup(item['country'])}' type="image/svg+xml"></object> 
+    coffeeItem.innerHTML = `
+    <div class="bg-white rounded-lg mt-2">
+        <a class='' title='remove this coffee from your codex' onclick="removeCoffeeFromCodex(\'${item['id']}\')"><svg class='m-4 h-4 w-4 fill-current text-gray-500 float-right' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm1.41-1.41A8 8 0 1 0 15.66 4.34 8 8 0 0 0 4.34 15.66zm9.9-8.49L11.41 10l2.83 2.83-1.41 1.41L10 11.41l-2.83 2.83-1.41-1.41L8.59 10 5.76 7.17l1.41-1.41L10 8.59l2.83-2.83 1.41 1.41z"/></svg></a>
+        <div class='flex justify-between items-center p-2'>
+        <div class="flex flex-col text-left justify-start content-center items-center pl-2 flex-wrap" >
+        <h5 class="text-xl text-left text-gray-800 w-full font-bold tracking-tighter">${item['country']} </h5>
+        <div class="uppercase leading-tight tracking-wide text-gray-600 text-sm font-semibold">${item['producer'] || 'Unknown'}</div>
+        </div>
+        </div>
+        <div class="px-6 pb-6">
+          <ul class="py-2 text-left">
+            <li><span class="font-bold">Roaster: </span>${item['roaster'] || 'Unknown'}</li>
+            <li><span class="font-bold">Name: </span>${item['name'] || 'Unknown'}</li>
+            <li><span class="font-bold">Elevation: </span>${item['masl'] || 'Unknown'}</li>
+            <li><span class="font-bold">Processing: </span>${item['processing'] || 'Unknown'}</li>
+            <li><span class="flex-wrap font-bold">Varietals: </span>${item['varietals'] || 'Unknown'}</li>
+            <li><span class="font-bold">Flavor Notes: </span>${item['notes'] || 'Unknown'}</li>
+          </ul>
+          <button class='inline-flex items-center' onclick='editRating("${item['id']}", "${item['coffee_rating']}")' id="rate-${item['id']}">
+            <svg class='fill-current w-4 h-4' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+            <span class='pl-2'>Rating ${item['coffee_rating'] != 1 ? item['coffee_rating'] : "--"}</span>     
+          </button>
+          <button class='inline-flex items-center' id='' onclick='showOneCoffee("${item['id']}")'>
+            <svg class='fill-current w-4 h-4' viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg>
+            <span class='pl-2'>More Info</span>
+          </button> 
+          </div>
+      </div>
+      `
+      // codexCards.appendChild(coffeeItem)
+      document.getElementById(`grouping-${item[sortKey]}`).appendChild(coffeeItem)
+  })
+}
+
+
+async function renderCodex(sortKey){
   if(localStorage.isLoggedIn == 'true'){
     document.getElementById('welcomeScreen').classList = 'hidden'
-    var codexTable = document.getElementById('codexTable');
-    codexTable.classList.remove('hidden')
-    codexTable.innerHTML = getTable('codex')
+    document.getElementById('codexSorters').classList = 'mx-auto max-w-md '
+    document.getElementById('userNameCodex').innerHTML = `${localStorage.name}'s Codex` || 'Your Codex'
+    document.getElementById('sortedUserCodex').innerHTML = sortKey || "Roaster"
+    
     var returnData = await fetch(`${codexURL}${localStorage.user_id}`, {method: "GET"})
-    returnData = await returnData.json();
+    const jsonedreturnData = await returnData.json();
+    const combinedCodex = await combineCodex(jsonedreturnData)
+    const sortedCodex = await  sortBy(combinedCodex, sortKey || 'roaster')
+    //   Removing this section for now, but leaving in case we want to toggle in the future. 
+    // if(localStorage.codexToggle === 'list'){
+    //   const codexTable = document.getElementById('codexTable');
+    //   codexTable.classList.remove('hidden')
+    //   codexTable.innerHTML = getTable('codex')
 
-    var codexTable = document.getElementById("codexTable");
-    returnData.forEach(async(item) => {
-      const coffee_rating = item.coffee_rating;
+    // }
+    // if(localStorage.codexToggle === 'cards'){
+    //   const createdCodex = await codexCreator(sortedCodex)
+    // }
+    const createdCodex = await codexCreator(sortedCodex, sortKey)
+  }
+  else{
+    document.getElementById('welcomeScreen').classList = 'md:flex'
+    console.log(`You're not logged in`)
+  }
+}
+
+async function coffeesWithRatings(item){
+
+    console.log('item', item)
+    const coffee_rating = item.coffee_rating;
       console.log(coffee_rating);
       const coffee_id = item.coffee_id;
       const newURL = `${url}${coffee_id}`
       var returnData = await fetch(newURL, {method: "GET"})
       returnData = await returnData.json();
       // In order to use the sort, you'll need to append into a sortable list of coffees. After you've gotten them.
-      // returnData = sortBy(returnData, 'roaster')
+      
       returnData = returnData.Item;
       returnData['coffee_rating'] = coffee_rating;
+      console.log('return data', returnData)
+      // compiledData.push(returnData)
 
-      console.log(returnData);
-      var returnKeys = ["roaster", "country", "producer", "masl", "processing", "rate", "remove"];
-      var row = rowBuilder(returnData, returnKeys);
-      codexTable.appendChild(row)
-      
-    })
-  }
-  else{
-    document.getElementById('welcomeScreen').classList = 'md:flex'
-    console.log(`You're not logged in`)
-  }
+  return await returnData
+  
 }
 
 async function addToMyCodex(id, rating){
@@ -400,6 +498,7 @@ async function editRating(id, rating){
   editRating.removeAttribute('onclick')
   editRating.innerHTML = ''
   var input = makeElement('input');
+  input.classList = 'text-black'
   input.value = rating;
   editRating.appendChild(input);
   input.addEventListener('keyup', (e) => {

@@ -383,9 +383,10 @@ function rowBuilder(returnData, list){
     return row
 }
 
-  function sortBy(data, sortKey){
+async function sortBy(data, sortKey){
+      console.log('sortby data')
     data.sort(function(a, b) {
-        if(sortKey == 'masl'){        
+        if(sortKey == 'masl' || sortKey == 'coffee_rating'){        
             if(!a[sortKey]){ var nameA = 9999}
             if(!b[sortKey]){ var nameB = 9999}
             if(a[sortKey]){ var nameA = parseInt(a[sortKey])}
