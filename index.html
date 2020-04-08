@@ -38,9 +38,14 @@
 
   </nav>
 <body class="w-full">
-    <header class="w-full text-center p-4 bg-gray-900">
-      <h1 class="text-2xl text-gray-100 tracking-tighter font-bold">Welcome to Coffee Codex</h1>
-      <h2 class="italic text-gray-300 font-light leading-snug text-2xl">Travel the world with coffee.</h2> 
+    <header class="flex text-center p-4 bg-gray-900">
+      <div class='flex items-center mx-auto'>
+        <!-- <a title='back' class='text-gray-200 pr-6' onclick="backOneContainer()"><svg class='fill-current h-8 w-8' viewBox="0 0 20 20"><path d="M0 10a10 10 0 1 1 20 0 10 10 0 0 1-20 0zm2 0a8 8 0 1 0 16 0 8 8 0 0 0-16 0zm8-2h5v4h-5v3l-5-5 5-5v3z"/></svg></a> -->
+        <div class="">
+          <h1 class="text-2xl text-gray-100 tracking-tighter font-bold">Welcome to Coffee Codex</h1>
+          <h2 class="italic text-gray-300 font-light leading-snug text-2xl">Travel the world with coffee.</h2> 
+        </div>
+      </div>
 
     </header>
     <main class="container w-full">
@@ -104,8 +109,20 @@
             </div>
           </div>
         </div>
-        <table class="hidden" id="codexTable">
-        </table>
+        <div class=''>
+          <div class='hidden' id='codexSorters'>
+            <h3 class="text-2xl font-bold tracking-tight" id='userNameCodex'></h3>
+            <div >Sorted By: <span class='uppercase tracking-wide text-gray-600 text-sm font-semibold' id='sortedUserCodex'>Roaster</span></div>
+            <div class='flex justify-center'>
+              <a onclick="renderCodex('roaster')">Roaster</a>
+              <a class='ml-2' onclick="renderCodex('country')">Country</a>
+              <a class='ml-2' onclick="renderCodex('processing')">Processing</a>
+              <a class='ml-2' onclick="renderCodex('coffee_rating')">Rating</a>
+            </div>
+          </div>
+          <div class='flex flex-wrap justify-center' id='codexCards'></div>
+          <table class="hidden" id="codexTable"></table>
+        </div>
     </div>
     <div id="recipeCard">
       <div class="mx-auto flex flex-col p-4 m-4 bg-white rounded-lg max-w-sm">
@@ -115,7 +132,7 @@
         <label class='flex items-center' title='Start typing to filter countries currently in our Database or enter a new Country.' for='countriesForNewCoffee'>Country
           <svg xmlns="http://www.w3.org/2000/svg" class='mx-2 fill-current h-4 w-4 hover:text-gray-600'viewBox="0 0 20 20"><path d="M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm2-13c0 .28-.21.8-.42 1L10 9.58c-.57.58-1 1.6-1 2.42v1h2v-1c0-.29.21-.8.42-1L13 9.42c.57-.58 1-1.6 1-2.42a4 4 0 1 0-8 0h2a2 2 0 1 1 4 0zm-3 8v2h2v-2H9z"/></svg>
         </label>
-        <input class="flex-grow" type='text' list='countriesForNewCoffeeList' id='countriesForNewCoffee' placeholder="pick a country" title='country'>
+        <input class="flex-grow" type='text' list='countriesForNewCoffeeList' id='country' placeholder="pick a country" title='country'>
         <datalist id="countriesForNewCoffeeList">
           <option value="Antigua and Barbuda">Antigua and Barbuda</option>
           <option value="Argentina">Argentina</option>
