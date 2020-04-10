@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/pickleat/coffeeTimer#readme",
   "dependencies": {
-    "auth0-js": "^9.10.2",
+    "auth0-js": "^9.13.2",
     "serverless": "^1.42.3",
     "tailwindcss": "^1.0.4"
   }
